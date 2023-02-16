@@ -1,6 +1,22 @@
 import numpy as np
 from tqdm import trange
 
+#path mac
+
+#path hjemme
+path = 'D:\\VSCode\\'
+
+#path UiO
+path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+
+data_list = ['PCP_flag']
+sat_list = ['A', 'B', 'C']
+
+
+for sat in tqdm(sat_list, desc = 'Loading satellite data'):
+    for name in data_list:
+        exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
+
 
 a= np.random.randint(0,4,20)
 
@@ -29,4 +45,3 @@ to = np.where((a == 0) & (a != np.roll(a,-1)))[0]
 array = np.concatenate((en, to))
 array1 = np.sort(array)
 print(array1)
-#test hjemme
