@@ -15,7 +15,5 @@ print(np.where(a == 0)[0])
 print('###########')
 #MEN IKKE DENNE.... POKKER HELLER
 print(np.where((a[:-1] == 0) & (a[:-1] != a[1:]) & (a[1:] != a[:-1]))[0])
-
+#test 123456
     # print(np.where(a == 0)[0]) hei
-
-
