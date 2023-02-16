@@ -1,5 +1,6 @@
 import numpy as np
 from tqdm import tqdm, trange
+import matplotlib.pyplot as plt
 #testtest
 #path mac
 path = 'Data/'
@@ -9,7 +10,8 @@ path = 'Data/'
 # #path UiO
 # path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
-data_list = ['PCP_flag']
+data_list = ['PCP_flag', 'MLAT', 'Ne', 'Timestamp']
+#data_list = ['PCP_flag']
 sat_list = ['A', 'B', 'C']
 
 
@@ -36,11 +38,22 @@ array = np.concatenate((en, to))
 array1 = np.sort(array)
 print(array1)
 """
+PCP_flag_A = PCP_flag_A[:100]
 en = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,1)))[0]
 to = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,-1)))[0]
 
 array = np.concatenate((en, to))
 array1 = np.sort(array)
+print(PCP_flag_A[:100])
 print(array1)
 
 print(len(array1) / 2)
+
+plt.scatter(MLAT_A[850:950], Ne_A[850:950], label = 'Ne over MLAT')
+plt.legend()
+plt.show()
+
+plt.scatter(Timestamp_A[850:950], Ne_A[850:950], label = 'Ne over time')
+plt.legend()
+plt.show()
+
