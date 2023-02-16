@@ -2,10 +2,9 @@ import numpy as np
 from tqdm import tqdm, trange
 #testtest
 #path mac
-# path = 'Data/'
 # #path hjemme
-path = 'D:\\Git_Codes\\Data\\'
-#
+#path = 'D:\\Git_Codes\\Data\\'
+
 # #path UiO
 # path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
