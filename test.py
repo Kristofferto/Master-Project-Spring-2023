@@ -29,3 +29,4 @@ to = np.where((a == 0) & (a != np.roll(a,-1)))[0]
 array = np.concatenate((en, to))
 array1 = np.sort(array)
 print(array1)
+#test hjemme
