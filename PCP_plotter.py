@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm, trange
 # data_list = ['Background_Ne', 'Foreground_Ne', 'Grad_Ne_at_100km', 'Grad_Ne_at_20km', 'Grad_Ne_at_50km', 'Grad_Ne_at_PCP_edge',  'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude', 'MLT']
-data_list = ['Longitude', 'Ne', 'PCP_flag', 'Timestamp', 'Latitude', 'MLT']
+data_list = ['Ne', 'PCP_flag', 'Timestamp', 'MLT', 'MLAT']
 sat_list = ['A', 'B', 'C']
 
 path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
@@ -13,30 +13,39 @@ for sat in tqdm(sat_list, desc = 'Loading satellite data'):
         exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
 
 
-def PCP_plotter(Lat, PCP, MLT, Ne, Time, patchcount):
-    Northcount = 0
-    Southcount = 0
-    for i in trange(PCP_flag_A, desc = 'Finding and plotting PCP'):
-        if Lat[i] > 0:
-            #northern hemisphere
-            
-            Northcount += 1
+def PCP_plotter_north(PCP, MLT, MLAT, Ne, Time, patchcount):
+    for i in trange(PCP, desc = 'Finding and plotting PCP'):
+        if MLAT[i] > 0:
+            patch_start = np.where(PCP[i] == 0 and PCP[i] PCP[])
 
+
+
+
+            #northern hemisphere
+            np.where(PCP[i] == 0 and )
+            Northcount += 1
+            patch_start = 
+            patch_end = 
             plt.title('Polar Cap Patches Northern Hemisphere')
             plt.scatter(Time[patch_start:patch_end], Ne[patch_start:patch_end], label = 'Ne', marker = '.')
             plt.legend()
-            
+            plt.show()
 
 
-        elif Lat[i] < 0:
+
+
+"""
+
+        elif MLAT[i] < 0:
             #southern hemisphere
 
             Southcount += 1
-
+            patch_start = 
+            patch_end = 
             plt.title('Polar Cap Patches Southern Hemisphere')
             plt.scatter(Time[patch_start:patch_end], Ne[patch_start:patch_end], label = 'Ne', marker = '.')
             plt.legend()
-
+"""
 
 
 
