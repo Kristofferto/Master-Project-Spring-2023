@@ -1,6 +1,6 @@
 import numpy as np
 from tqdm import tqdm, trange
-
+#testtest
 #path mac
 path = 'Users/kfaustnes/Desktop/Masteroppgave_Kristoffer_Falk_Austnes/Data/'
 # #path hjemme
