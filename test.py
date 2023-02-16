@@ -1,13 +1,13 @@
 import numpy as np
-from tqdm import trange
+from tqdm import tqdm, trange
 
 #path mac
-
-#path hjemme
-path = 'D:\\VSCode\\'
-
-#path UiO
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+path = 'Users/kfaustnes/Desktop/Masteroppgave_Kristoffer_Falk_Austnes/Data/'
+# #path hjemme
+# path = 'D:\\VSCode\\'
+#
+# #path UiO
+# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 data_list = ['PCP_flag']
 sat_list = ['A', 'B', 'C']
