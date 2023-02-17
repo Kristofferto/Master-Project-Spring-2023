@@ -52,7 +52,8 @@ print(len(array1) / 2)
 count = 0
 for i in trange(0, len(array1), 2):
     count += 1
-    plt.plot(np.arange(0, array1[i+1] - array1[i]), Ne_A[array1[i]:array1[i+1]], label = f'Patch{count}')
+    
+    plt.plot(np.arange(0, array1[i+1] - array1[i]), Ne_A[array1[i]:array1[i+1]], label = f'Patch_{count}')
 
     print(array1[i])
     print(array1[i+1])
