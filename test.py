@@ -10,7 +10,7 @@ path = 'Data/'
 # #path UiO
 # path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
-data_list = ['PCP_flag', 'MLAT', 'Ne', 'Timestamp']
+data_list = ['PCP_flag', 'MLAT', 'MLT', 'Ne', 'Timestamp']
 #data_list = ['PCP_flag']
 sat_list = ['A', 'B', 'C']
 
@@ -59,6 +59,7 @@ for i in trange(0, len(array1), 2):
     print(array1[i+1])
 plt.legend()
 plt.show()
+
 """
 plt.scatter(MLAT_A[850:950], Ne_A[850:950], label = 'Ne over MLAT')
 plt.legend()
