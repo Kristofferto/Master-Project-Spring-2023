@@ -38,17 +38,27 @@ array = np.concatenate((en, to))
 array1 = np.sort(array)
 print(array1)
 """
-PCP_flag_A = PCP_flag_A[:100]
+PCP_flag_A = PCP_flag_A[:5000]
 en = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,1)))[0]
 to = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,-1)))[0]
 
 array = np.concatenate((en, to))
 array1 = np.sort(array)
-print(PCP_flag_A[:100])
+print(PCP_flag_A[:1000])
 print(array1)
 #test
 print(len(array1) / 2)
 
+count = 0
+for i in trange(0, len(array1), 2):
+    count += 1
+    plt.plot(np.arange(0, array1[i+1] - array1[i]), Ne_A[array1[i]:array1[i+1]], label = f'Patch{count}')
+
+    print(array1[i])
+    print(array1[i+1])
+plt.legend()
+plt.show()
+"""
 plt.scatter(MLAT_A[850:950], Ne_A[850:950], label = 'Ne over MLAT')
 plt.legend()
 plt.show()
@@ -57,3 +67,4 @@ plt.scatter(Timestamp_A[850:950], Ne_A[850:950], label = 'Ne over time')
 plt.legend()
 plt.show()
 
+"""
