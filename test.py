@@ -51,24 +51,26 @@ print(len(array1) / 2)
 
 count = 0
 for i in trange(0, len(array1), 2):
-    count += 1
+    
     if MLAT_A[array1[i]] > MLAT_A[array1[i+1]]:
         start = array1[i+1]
         end = array1[i]
     elif MLAT_A[array1[i]] < MLAT_A[array1[i+1]]:
         start = array1[i]
         end = array1[i+1]
-    if MLT_A[start] > 9  and MLT_A[end] < 15:
-        plt.plot(MLAT_A[start:end], Ne_A[start:end], label = f'Patch_{count}')
+    # if MLT_A[start] > 9  and MLT_A[end] < 15:
+        count += 1
+        plt.plot(np.arange(0,end - start), Ne_A[start:end], label = f'Patch_{count}')
+        #MLAT_A[start:end]
 
     print(array1[i])
     print(array1[i+1])
 
-    if count ==100:
+    if count ==20:
         break
 plt.legend()
 plt.show()
-
+print(count)
 """
 plt.scatter(MLAT_A[850:950], Ne_A[850:950], label = 'Ne over MLAT')
 plt.legend()
