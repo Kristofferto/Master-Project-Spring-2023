@@ -38,13 +38,13 @@ array = np.concatenate((en, to))
 array1 = np.sort(array)
 print(array1)
 """
-PCP_flag_A = PCP_flag_A[:100]
+PCP_flag_A = PCP_flag_A[:10000]
 en = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,1)))[0]
 to = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,-1)))[0]
 
 array = np.concatenate((en, to))
 array1 = np.sort(array)
-print(PCP_flag_A[:1000])
+print(PCP_flag_A[:10000])
 print(array1)
 #test
 print(len(array1) / 2)
@@ -59,7 +59,7 @@ for i in trange(0, len(array1), 2):
         start = array1[i]
         end = array1[i+1]
 
-    plt.plot(np.arange(0, np.abs(end - start)), Ne_A[array1[i]:array1[i+1]], label = f'Patch_{count}')
+    plt.plot(MLAT_A[start:end], Ne_A[start:end], label = f'Patch_{count}')
 
     print(array1[i])
     print(array1[i+1])
