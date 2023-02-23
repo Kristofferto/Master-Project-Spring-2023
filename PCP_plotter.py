@@ -51,12 +51,14 @@ def PCP_plotter(PCP, MLT, MLAT, Ne, Time):
             fig2, ax2 = plt.subplots()
             ax2.title.set_text('Polar Cap Patches Southern Hemisphere')
             ax2.scatter(np.arange(0,end - start), Ne[start:end], label = f'Patch_{scount}', marker = '.')
-        if ncount == 10:
+
+        #Save each plot of 5 PCPs
+        if ncount == 5:
             fig1.legend()
             fig1.savefig('test1')
             
             ncount = 0
-        elif scount == 10:
+        elif scount == 5:
             fig2.legend()
             fig2.savefig('test2')
             
