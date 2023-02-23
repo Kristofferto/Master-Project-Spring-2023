@@ -15,7 +15,6 @@ path = 'D:\\Git_Codes\\Data\\'
 # path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 
-
 for sat in tqdm(sat_list, desc = 'Loading satellite data'):
     for name in data_list:
         exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
