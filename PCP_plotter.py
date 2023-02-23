@@ -20,12 +20,11 @@ for sat in tqdm(sat_list, desc = 'Loading satellite data'):
     for name in data_list:
         exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
 
-PCP_flag_A = PCP_flag_A
-en = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,1)))[0]
-to = np.where((PCP_flag_A == 0) & (PCP_flag_A != np.roll(PCP_flag_A,-1)))[0]
-
-PCP_indices = np.concatenate((en, to))
-PCP_index_list = np.sort(PCP_indices)
+for name in sat_list:
+    exec(f'change01 = np.where((PCP_flag_{name} == 0) & (PCP_flag_{name} != np.roll(PCP_flag_{name},1)))[0]')
+    exec(f'change10 = np.where((PCP_flag_{name} == 0) & (PCP_flag_{name} != np.roll(PCP_flag_{name},-1)))[0]')
+    PCP_indices = np.concatenate((change01, change10))
+    exec(f'PCP_index_{name} = np.sort(PCP_indices)')
 
 
 
@@ -33,39 +32,59 @@ def PCP_plotter(PCP, MLT, MLAT, Ne, Time):
     ncount = 0    
     scount = 0
 
-    for i in trange(0, len(PCP), 2, desc = 'Finding and plotting PCP'):
+    for i in range(0, len(PCP), 2):
+        #, desc = 'Finding and plotting PCP'
         
-        if MLAT_A[PCP[i]] > MLAT_A[PCP[i+1]]:
+        if MLAT[PCP[i]] > MLAT[PCP[i+1]]:
             start = PCP[i+1]
             end = PCP[i]
-        elif MLAT_A[PCP[i]] < MLAT_A[PCP[i+1]]:
+        elif MLAT[PCP[i]] < MLAT[PCP[i+1]]:
             start = PCP[i]
             end = PCP[i+1]
-        if MLAT[i] > 0 and MLAT[i+1] > 0:
+        if MLAT[start] > 0 and MLAT[end] > 0 and 12 > MLT[start] > 9 and 9 < MLT[end] < 12 and np.abs(start - end) > 100 and np.abs(MLAT[start] - MLAT[end]) > 2:
             ncount +=1
-            fig1, ax1 = plt.subplots()
-            ax1.title.set_text('Polar Cap Patches Northern Hemisphere')
-            ax1.scatter(np.arange(0,end - start), Ne[start:end], label = f'Patch_{ncount}', marker = '.')
-        elif MLAT[i] < 0 and MLAT[i+1] < 0:
-            scount +=1
-            fig2, ax2 = plt.subplots()
-            ax2.title.set_text('Polar Cap Patches Southern Hemisphere')
-            ax2.scatter(np.arange(0,end - start), Ne[start:end], label = f'Patch_{scount}', marker = '.')
+            print('start:', start)
+            print('end:', end)
+            print('lengde:', np.abs(start-end))
+            # fig1, ax1 = plt.subplots()
+            plt.title('Polar Cap Patches Northern Hemisphere. Dayside.')
+            plt.xlabel('MLAT')
+            plt.ylabel('Ne')
+            plt.plot(MLAT[start:end], Ne[start:end], label = f'Patch number: {ncount}', marker = '.')
+
+            if ncount % 3 == 0:
+                plt.legend()
+                plt.savefig(f'test_{ncount}')
+                plt.close()
+
+        # elif MLAT[start] < 0 and MLAT[end] < 0:
+        #     scount +=1
+        #     fig2, ax2 = plt.subplots()
+        #     ax2.title.set_text('Polar Cap Patches Southern Hemisphere')
+        #     ax2.plot(np.arange(0,end - start), Ne[start:end], label = f'Patch number: {scount}', marker = '.')
+
+        #     if scount % 5 == 0:
+        #         fig2.legend()
+        #         fig2.savefig(f'test_{scount}')
+        #         plt.close()
 
         #Save each plot of 5 PCPs
-        if ncount == 5:
-            fig1.legend()
-            fig1.savefig('test1')
+        # if ncount % 5 == 0:
+        #     fig1.legend()
+        #     fig1.savefig(f'test_{ncount}')
             
-            ncount = 0
-        elif scount == 5:
-            fig2.legend()
-            fig2.savefig('test2')
             
-            scount = 0
+        # elif scount % 5 == 0:
+        #     fig2.legend()
+        #     fig2.savefig(f'test_{scount}')
+            
+            
+            
+            
+            
         
-
-PCP_plotter(PCP_index_list, MLT_A, MLAT_A, Ne_A, Timestamp_A)
+for name in sat_list:
+    exec(f'PCP_plotter(PCP_index_{name}, MLT_{name}, MLAT_{name}, Ne_{name}, Timestamp_{name})')
 
 def PCP_plotter(PCP, MLT, MLAT, Ne, Time):
     for i in trange(0, len(PCP), 2, desc = 'Plotting PCP'):
