@@ -40,7 +40,7 @@ def PCP_plotter(PCP, MLT, MLAT, Ne, Time):
         elif MLAT[PCP[i]] < MLAT[PCP[i+1]]:
             start = PCP[i]
             end = PCP[i+1]
-        if MLAT[start] > 0 and MLAT[end] > 0 and 12 > MLT[start] > 9 and 9 < MLT[end] < 12 and np.abs(start - end) > 100 and np.abs(MLAT[start] - MLAT[end]) > 2:
+        if MLAT[start] > 0 and MLAT[end] > 0 and 12 > MLT[start] > 11 and 11 < MLT[end] < 12 and np.abs(start - end) > 100 and np.abs(MLAT[start] - MLAT[end]) > 2:
             ncount +=1
             print('start:', start)
             print('end:', end)
