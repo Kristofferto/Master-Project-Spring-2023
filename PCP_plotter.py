@@ -26,7 +26,7 @@ for name in sat_list:
     PCP_indices = np.concatenate((change01, change10))
     exec(f'PCP_index_{name} = np.sort(PCP_indices)')
 
-
+#håper du liker bolognese
 
 def PCP_plotter(PCP, MLT, MLAT, Ne, Time):
     ncount = 0    
