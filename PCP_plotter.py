@@ -116,9 +116,6 @@ for sat in sat_list:
         plt.close()
 
 
-# PCP_plotter(PCP_index_A, MLT_A, MLT_max, MLT_min, MLAT_A, Ne_A, Timestamp_A, 'A')
-# PCP_plotter(PCP_index_B, MLT_B, MLAT_B, Ne_B, Timestamp_B, 'B')
-# PCP_plotter(PCP_index_C, MLT_C, MLAT_C, Ne_C, Timestamp_C, 'C')
 
 def PCP_plotter123(PCP, MLT, MLAT, Ne, Time):
     for i in trange(0, len(PCP), 2, desc = 'Plotting PCP'):
@@ -136,4 +133,3 @@ def PCP_plotter123(PCP, MLT, MLAT, Ne, Time):
 # plt.show()
 
 
-#test
