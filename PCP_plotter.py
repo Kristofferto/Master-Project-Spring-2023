@@ -40,21 +40,39 @@ def PCP_plotter(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP
 
     for i in trange(0, len(PCP), 2, desc = F'Finding and plotting PCP for satellite {sat}'):
         #, desc = 'Finding and plotting PCP'
-        
-        if np.abs(MLAT[PCP[i]]) > np.abs(MLAT[PCP[i+1]]):
-            start = PCP[i+1]
-            end = PCP[i]
 
-        elif np.abs(MLAT[PCP[i]]) < np.abs(MLAT[PCP[i+1]]):
-            start = PCP[i]
-            end = PCP[i+1]
+        if (9 <= MLT_max <= 15) & (9 <= MLT_min <= 15):
+            if np.abs(MLAT[PCP[i]]) > np.abs(MLAT[PCP[i+1]]):
+                start = PCP[i+1]
+                end = PCP[i]
+
+            elif np.abs(MLAT[PCP[i]]) < np.abs(MLAT[PCP[i+1]]):
+                start = PCP[i]
+                end = PCP[i+1]
+                
+        elif ((21 <= MLT_max <= 24) & (21 <= MLT_min <= 24)) | (( 0 <= MLT_max <= 3) & (0 <= MLT_min <= 3)):
+            if np.abs(MLAT[PCP[i]]) < np.abs(MLAT[PCP[i+1]]):
+                start = PCP[i+1]
+                end = PCP[i]
+
+            elif np.abs(MLAT[PCP[i]]) > np.abs(MLAT[PCP[i+1]]):
+                start = PCP[i]
+                end = PCP[i+1]
+        
+        # if np.abs(MLAT[PCP[i]]) > np.abs(MLAT[PCP[i+1]]):
+        #     start = PCP[i+1]
+        #     end = PCP[i]
+
+        # elif np.abs(MLAT[PCP[i]]) < np.abs(MLAT[PCP[i+1]]):
+        #     start = PCP[i]
+        #     end = PCP[i+1]
         
         x_range = np.linspace(0, 100, 100001)
 
         # & (MLT_max >= MLT[start] >= MLT_min) & (MLT_min <= MLT[end] <= MLT_max)
         # & (np.all(( MLT_max >= MLT[start:end] >= MLT_min)) == True)
 
-        if (np.all((MLAT[start:end] < 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
+        if (np.all((MLAT[start:end] > 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
                                                      (MLT_max >= MLT[start] >= MLT_min) & \
                                                      (MLT_min <= MLT[end] <= MLT_max) & \
                                                      ((end - start) > 30) & \
@@ -89,9 +107,9 @@ def PCP_plotter(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP
 
 
             if ncount % 5 == 0:
-                plt.title(f'Five Polar Cap Patches Southern Hemisphere, SWARM {sat}. \n For MLT {MLT_min}-{MLT_max}')
+                plt.title(f'Five Polar Cap Patches Northern Hemisphere, SWARM {sat}. \n For MLT {MLT_min}-{MLT_max}')
                 plt.legend(loc = 'lower center', fontsize = 5)
-                plt.savefig(f'SH_SWARM_{sat}_MLT{MLT_max}_{MLT_min}_PCP{ncount}.png')
+                plt.savefig(f'NH_SWARM_{sat}_MLT{MLT_max}_{MLT_min}_PCP{ncount}.png')
                 plt.close()
         # if ncount == 20:
         #     break
