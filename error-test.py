@@ -98,7 +98,7 @@ print(f'### Currently saving the data for satellite {sat} ###')
 # print('A:', len(MLT_A) - count_A)
 # print('B:', len(MLT_B) - count_B)
 # print('C:', len(MLT_C) - count_C)
-
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -128,3 +128,24 @@ for sat in sat_list:
 
 print(PCP_flag_B[:200])
 print(PCP_index_B[:100])
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate random data
+data = np.random.normal(size=100)
+
+# Calculate standard deviation
+std_dev = np.std(data)
+
+# Create box plot
+fig, ax = plt.subplots()
+ax.boxplot(data)
+
+# Add standard deviation to plot
+ax.axhline(y=std_dev, color='r', linestyle='-')
+ax.axhline(y=-std_dev, color='r', linestyle='-')
+
+# Show plot
+plt.show()
