@@ -117,19 +117,3 @@ for sat in sat_list:
 
 
 
-def PCP_plotter123(PCP, MLT, MLAT, Ne, Time):
-    for i in trange(0, len(PCP), 2, desc = 'Plotting PCP'):
-        if MLAT[i] > 0:
-            plt.title('Polar Cap Patches Northern Hemisphere')
-            plt.scatter(Time[patch_start:patch_end], Ne[patch_start:patch_end], label = 'Ne', marker = '.')
-
-
-
-
-# plt.title('Testplot')
-# plt.scatter(Timestamp_A[100000:100200] ,Ne_A[100000:100200], label = 'Ne', marker = '.')
-# plt.scatter(Timestamp_A[100000:100200] ,PCP_flag_A[100000:100200]*1000, label = 'PCP flag', marker = '.')
-# plt.legend()
-# plt.show()
-
-
