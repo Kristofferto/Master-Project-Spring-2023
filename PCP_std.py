@@ -113,15 +113,16 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP_fla
                                                      (start < start_prop) & \
                                                      (start_prop < end_prop) & \
                                                      (end_prop < end):
-            y1 = np.interp(x_range, np.linspace(0, 100, len(MLAT[start:start_prop])), Ne[start:end])
+            y1 = np.interp(x_range, np.linspace(0, 100, len(MLAT[start:start_prop])), Ne[start:start_prop])
+            y2 = np.interp(x_range, np.linspace(0, 100, len(MLAT[end_prop:end])), Ne[end_prop:end])
 
-            m, b = np.polyfit(x_range, y1)
+            # m, b = np.polyfit(x_range, y1)
 
-            y2 = np.interp(x_range, np.linspace(0, 100, len(Ne[start:end])), Ne[start:end])
+            #y2 = np.interp(x_range, np.linspace(0, 100, len(Ne[start:end])), Ne[start:end])
 
             if (start_prop - start <= 5) & (end - end_prop) <= 5:
-                a = np.std(Ne[start:start_prop])
-                b = np.std(Ne[end_prop:end])
+                a = np.std(y1)
+                b = np.std(y2)
             # c = np.std(Ne[start_prop:end_prop])
                 std_trail += a
                 std_lead += b
