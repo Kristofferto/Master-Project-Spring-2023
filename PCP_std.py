@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm, trange
 import sys
+from scipy import stats
 # data_list = ['Background_Ne', 'Foreground_Ne', 'Grad_Ne_at_100km', 'Grad_Ne_at_20km', 'Grad_Ne_at_50km', 'Grad_Ne_at_PCP_edge',  'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude', 'MLT']
 data_list = ['Ne', 'PCP_flag', 'Timestamp', 'MLT', 'MLAT', 'Background_Ne']
 sat_list = ['A', 'C']
@@ -113,16 +114,17 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP_fla
                                                      (start < start_prop) & \
                                                      (start_prop < end_prop) & \
                                                      (end_prop < end):
-            y1 = np.interp(x_range, np.linspace(0, 100, len(MLAT[start:start_prop])), Ne[start:start_prop])
-            y2 = np.interp(x_range, np.linspace(0, 100, len(MLAT[end_prop:end])), Ne[end_prop:end])
+            # y1 = np.interp(x_range, np.linspace(0, 100, len(MLAT[start:start_prop])), Ne[start:start_prop])
+            # y2 = np.interp(x_range, np.linspace(0, 100, len(MLAT[end_prop:end])), Ne[end_prop:end])
 
             # m, b = np.polyfit(x_range, y1)
 
             #y2 = np.interp(x_range, np.linspace(0, 100, len(Ne[start:end])), Ne[start:end])
-
-            if (start_prop - start <= 5) & (end - end_prop) <= 5:
-                a = np.std(y1)
-                b = np.std(y2)
+            slope, intercept, r_value, p_value, std_err = stats.linregress(MLAT[start:start_prop], Ne[start:start_prop])
+            slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(MLAT[end_prop:end], Ne[end_prop:end])
+            if (np.isnan(std_err) == False) & (np.isnan(std_err1) == False):
+                a = std_err
+                b = std_err1
             # c = np.std(Ne[start_prop:end_prop])
                 std_trail += a
                 std_lead += b
@@ -133,17 +135,10 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP_fla
             # print('start prop:', start_prop)
             # print('end prop:', end_prop)
             # print('Std trail            :', a)
-            # print(Ne[start:start_prop])
-            # print(PCP_flag[start:start_prop])
-            
             # print('Std lead             :', b)
-            # print(PCP_flag[end_prop:end])
-            # print(Ne[end_prop:end])
-
-            # print('PCP flag:', PCP_flag[start:end])
             # print('Ratio trail / lead   :', a/b)
             
-            ncount +=1
+                ncount +=1
             # print('#######')
             # print('start:', start)
             # print('end:', end)
@@ -154,8 +149,8 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP_fla
             # print('MLAT start:', MLAT[start])
             # print('MLAT end:', MLAT[end])
     
-        if ncount == 100:
-            break
+        # if ncount == 100:
+        #     break
     print('##################################')
     print(f'std_trail: {std_trail}')
     print(f'std_lead: {std_lead}')
