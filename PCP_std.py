@@ -71,6 +71,8 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP_fla
     std_trail = 0
     std_lead = 0
     std_prop = 0
+    a_count = 0
+    b_count = 0
     for i in trange(0, len(PCP), 2, desc = F'Calculating the standard deviation for satellite {sat}'):
         #, desc = F'Finding and plotting PCP for satellite {sat}'
         if (9 <= MLT_max <= 15) & (9 <= MLT_min <= 15):
@@ -125,6 +127,8 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP_fla
             if (np.isnan(std_err) == False) & (np.isnan(std_err1) == False):
                 a = std_err
                 b = std_err1
+                a_count += 1
+                b_count += 1
             # c = np.std(Ne[start_prop:end_prop])
                 std_trail += a
                 std_lead += b
