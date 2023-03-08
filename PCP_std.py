@@ -128,7 +128,11 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
             slope3, intercept3, r_value3, p_value3, std_err2 = stats.linregress(MLAT[start:start_prop], Foreground[start:start_prop])
             slope4, intercept4, r_value4, p_value4, std_err3 = stats.linregress(MLAT[end_prop:end], Foreground[end_prop:end])
 
-            if (np.isnan(std_err) == False) & (np.isnan(std_err1) == False) & (np.isnan(std_err2) == False) & (np.isnan(std_err3) == False):
+            if (np.isnan(std_err) == False) & (np.isnan(std_err1) == False) & \
+                                              (np.isnan(std_err2) == False) & \
+                                              (np.isnan(std_err3) == False) & \
+                                              ((std_err1 != 0) == True) & \
+                                              ((std_err3 != 0) == True):
                 f_Ne = std_err / std_err1
                 f_Foreground = std_err2 / std_err3
 
@@ -145,7 +149,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                     f_list_Ne_0_03.append(f_Ne)
                     f_list_Fg_0_03.append(f_Foreground)
                 
-
+    
             #     c = std_err2
             #     d = std_err3
             #     a_count += 1
@@ -193,8 +197,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
 
 #Input variables for plotting
 
-MLT_max_list = np.array([12, 15, 24, 3])
-MLT_min_list = np.array([9, 12, 21, 0])
+
 f_list_Ne_9_12 = []
 f_list_Fg_9_12 = []
 
@@ -206,6 +209,9 @@ f_list_Fg_21_24 = []
 
 f_list_Ne_0_03 = []
 f_list_Fg_0_03 = []
+
+MLT_max_list = np.array([12, 15, 24, 3])
+MLT_min_list = np.array([9, 12, 21, 0])
 for sat in sat_list:
     for i in range(len(MLT_max_list)):
         MLT_max = MLT_max_list[i]
@@ -225,7 +231,3 @@ np.save(f"C:/Users/krisfau/Desktop/VSCode/Data/Data_fratio_SH_Fg_21_24", np.arra
 
 np.save(f"C:/Users/krisfau/Desktop/VSCode/Data/Data_fratio_SH_Ne_0_03", np.array(f_list_Ne_0_03))
 np.save(f"C:/Users/krisfau/Desktop/VSCode/Data/Data_fratio_SH_Fg_0_03", np.array(f_list_Ne_0_03))
-
-
-
-#test
