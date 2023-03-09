@@ -38,8 +38,8 @@ for indicator in hemisphere_indicator:
 
 
 # NH
-print(Data_fratio_NH_Ne_9_12)
-print(Data_fratio_NH_Fg_9_12)
+# print(Data_fratio_NH_Ne_9_12)
+# print(Data_fratio_NH_Fg_9_12)
 # print(Data_fratio_NH_Ne_12_15)
 # print(Data_fratio_NH_Fg_12_15)
 # print(Data_fratio_NH_Ne_21_24)
@@ -57,7 +57,6 @@ print(Data_fratio_NH_Fg_9_12)
 # Data_fratio_SH_Ne_0_03
 # Data_fratio_SH_Fg_0_03
 
-print(max(Data_fratio_NH_Ne_0_03))
 
 
 # plt.hist(Data_fratio_NH_Ne_9_12,  alpha = 0.5, label = '9-12')
