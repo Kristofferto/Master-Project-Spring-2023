@@ -11,12 +11,12 @@ sat_list = ['A', 'C']
 hemisphere_indicator = ['NH', 'SH']
 
 #path mac
-# path = 'Data/'
+path = 'Data/'
 # #path hjemme
 # path = 'D:\\Git_Codes\\Data\\'
 
 # #path UiO
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 
 for sat in tqdm(sat_list, desc = 'Loading locally stored data'):
@@ -68,20 +68,21 @@ print(max(Data_fratio_NH_Ne_0_03))
 # plt.show()
 plt.title('Histogram')
 plt.hist([Data_fratio_NH_Ne_9_12, Data_fratio_NH_Ne_12_15, Data_fratio_NH_Ne_21_24, Data_fratio_NH_Ne_0_03],  alpha = 0.5, label = ['9-12', '12-15', '21-24', '0-03'])
+plt.xlim(0,100)
 plt.legend()
 plt.show()
 
-mask1 = Data_fratio_NH_Ne_9_12 <= 10
-arr1 = Data_fratio_NH_Ne_9_12[mask1]
+# mask1 = Data_fratio_NH_Ne_9_12 <= 10
+arr1 = Data_fratio_NH_Ne_9_12
 
-mask2 = Data_fratio_NH_Ne_12_15 <= 10
-arr2 = Data_fratio_NH_Ne_12_15[mask2]
+# mask2 = Data_fratio_NH_Ne_12_15 <= 10
+arr2 = Data_fratio_NH_Ne_12_15
 
-mask3 = Data_fratio_NH_Ne_21_24 <= 10
-arr3 = Data_fratio_NH_Ne_21_24[mask3]
+# mask3 = Data_fratio_NH_Ne_21_24 <= 10
+arr3 = Data_fratio_NH_Ne_21_24
 
-mask4 = Data_fratio_NH_Ne_0_03 <= 10
-arr4 = Data_fratio_NH_Ne_0_03[mask4]
+# mask4 = Data_fratio_NH_Ne_0_03 <= 10
+arr4 = Data_fratio_NH_Ne_0_03
 
 # plt.title('Boxplot')
 # plt.boxplot([Data_fratio_NH_Ne_9_12, Data_fratio_NH_Ne_12_15, Data_fratio_NH_Ne_21_24, Data_fratio_NH_Ne_0_03][mask], labels = ['9-12', '12-15', '21-24', '0-03'])
@@ -93,4 +94,5 @@ plt.title('Boxplot')
 plt.boxplot([arr1, arr2, arr3, arr4], labels = ['9-12', '12-15', '21-24', '0-03'])
 plt.xlabel('Magnetic Local Time [MLT]')
 plt.ylabel('PCP edge ratio [f]')
+plt.ylim(-5,40)
 plt.show()
