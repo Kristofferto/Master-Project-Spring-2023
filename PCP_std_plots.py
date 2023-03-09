@@ -58,13 +58,14 @@ for indicator in hemisphere_indicator:
 # Data_fratio_SH_Fg_0_03
 
 
+plt.title('Histogram')
+plt.hist(Data_fratio_NH_Ne_9_12,  alpha = 0.5, label = '9-12')
+plt.hist(Data_fratio_NH_Ne_12_15,  alpha = 0.5, label = '12-15')
+plt.hist(Data_fratio_NH_Ne_21_24,  alpha = 0.5, label = '21-24')
+plt.hist(Data_fratio_NH_Ne_0_03,  alpha = 0.5, label = '0-03')
+plt.legend()
+plt.show()
 
-# plt.hist(Data_fratio_NH_Ne_9_12,  alpha = 0.5, label = '9-12')
-# plt.hist(Data_fratio_NH_Ne_12_15,  alpha = 0.5, label = '12-15')
-# plt.hist(Data_fratio_NH_Ne_21_24,  alpha = 0.5, label = '21-24')
-# plt.hist(Data_fratio_NH_Ne_0_03,  alpha = 0.5, label = '0-03')
-# plt.legend()
-# plt.show()
 plt.title('Histogram')
 plt.hist([Data_fratio_NH_Ne_9_12, Data_fratio_NH_Ne_12_15, Data_fratio_NH_Ne_21_24, Data_fratio_NH_Ne_0_03],  alpha = 0.5, label = ['9-12', '12-15', '21-24', '0-03'])
 plt.xlim(0,100)
@@ -72,16 +73,20 @@ plt.legend()
 plt.show()
 
 # mask1 = Data_fratio_NH_Ne_9_12 <= 10
-arr1 = Data_fratio_NH_Ne_9_12
+N_9_12 = Data_fratio_NH_Ne_9_12
+S_9_12 = Data_fratio_NH_Ne_9_12
 
 # mask2 = Data_fratio_NH_Ne_12_15 <= 10
-arr2 = Data_fratio_NH_Ne_12_15
+N_12_15 = Data_fratio_NH_Ne_12_15
+S_12_15 = Data_fratio_SH_Ne_12_15
 
 # mask3 = Data_fratio_NH_Ne_21_24 <= 10
-arr3 = Data_fratio_NH_Ne_21_24
+N_21_24 = Data_fratio_NH_Ne_21_24
+S_21_24 = Data_fratio_SH_Ne_21_24
 
 # mask4 = Data_fratio_NH_Ne_0_03 <= 10
-arr4 = Data_fratio_NH_Ne_0_03
+N_0_03 = Data_fratio_NH_Ne_0_03
+S_0_03 = Data_fratio_SH_Ne_0_03
 
 # plt.title('Boxplot')
 # plt.boxplot([Data_fratio_NH_Ne_9_12, Data_fratio_NH_Ne_12_15, Data_fratio_NH_Ne_21_24, Data_fratio_NH_Ne_0_03][mask], labels = ['9-12', '12-15', '21-24', '0-03'])
@@ -90,8 +95,24 @@ arr4 = Data_fratio_NH_Ne_0_03
 # plt.show()
 
 plt.title('Boxplot')
-plt.boxplot([arr1, arr2, arr3, arr4], labels = ['9-12', '12-15', '21-24', '0-03'])
+plt.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
 plt.xlabel('Magnetic Local Time [MLT]')
 plt.ylabel('PCP edge ratio [f]')
 plt.ylim(-5,40)
+plt.show()
+
+plt.title('Boxplot')
+plt.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
+plt.xlabel('Magnetic Local Time [MLT]')
+plt.ylabel('PCP edge ratio [f]')
+plt.ylim(-5,100)
+plt.show()
+
+fig, (ax1, ax2) = plt.subplots(1, 2)
+fig.suptitle('Horizontally stacked subplots')
+ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
+ax1.set_ylim([-5, 40])
+ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
+ax2.set_ylim([-5, 100])
+
 plt.show()
