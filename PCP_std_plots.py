@@ -110,9 +110,9 @@ plt.show()
 
 fig, (ax1, ax2) = plt.subplots(1, 2)
 fig.suptitle('Horizontally stacked subplots')
-ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
+ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
 ax1.set_ylim([-5, 40])
-ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
+ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
 ax2.set_ylim([-5, 100])
 
 plt.show()
