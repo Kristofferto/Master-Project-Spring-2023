@@ -21,59 +21,25 @@ for sat in tqdm(sat_list, desc = 'Loading satellite data'):
     for name in data_list:
         exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
 
+#Locating where the PCP flag data indicates PCP edge
 for sat in sat_list:
     exec(f'change01 = np.where((PCP_flag_{sat} == 0) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},1)))[0]')
     exec(f'change10 = np.where((PCP_flag_{sat} == 0) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},-1)))[0]')
     PCP_indices = np.concatenate((change01, change10))
+    #Sorting the values in ascending order
     exec(f'PCP_index_{sat} = np.sort(PCP_indices)')
 
-
+#Loacting where the PCP flag data indicates PCP proper, ie. inside of a polar cap patch
 for sat in sat_list:
     exec(f'change14 = np.where((PCP_flag_{sat} == 4) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},1)))[0]')
     exec(f'change41 = np.where((PCP_flag_{sat} == 4) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},-1)))[0]')
     PCP_proper = np.concatenate((change14, change41))
+    #Sorting the values in ascending order
     exec(f'PCP_proper_{sat} = np.sort(PCP_proper)')
-# print(PCP_index_A[:100])
-# print(len(PCP_index_A))
-# print(PCP_proper_A[:100])
-# print(len(PCP_proper_A))
-
-# for i in range(0, len(PCP_index_A), 2):
-#         #, desc = F'Finding and plotting PCP_index_A for satellite {sat}'
-        
-#         if np.abs(MLAT_A[PCP_index_A[i]]) > np.abs(MLAT_A[PCP_index_A[i+1]]):
-#             start = PCP_index_A[i+1]
-#             end = PCP_index_A[i]
-#             start_prop = PCP_proper_A[np.argmin(np.abs(PCP_proper_A - start))]
-#             end_prop = PCP_proper_A[np.argmin(np.abs(PCP_proper_A - end))]
-
-#         elif np.abs(MLAT_A[PCP_index_A[i]]) < np.abs(MLAT_A[PCP_index_A[i+1]]):
-#             start = PCP_index_A[i]
-#             end = PCP_index_A[i+1]
-#             start_prop = PCP_proper_A[np.argmin(np.abs(PCP_proper_A - start))]
-#             end_prop = PCP_proper_A[np.argmin(np.abs(PCP_proper_A - end))]
-
-
-#         print('start :', start)
-#         print('end :', end)
-#         print('start_proper :', start_prop)
-#         print('end_proper :', end_prop)
-#         if i == 8:
-#             break
-
-# sys.exit()
-
-x_range = np.linspace(0, 100, 100001)
 
 
 def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_flag, PCP_proper):
-    ncount = 0    
-    std_trail = 0
-    std_lead = 0
-    std_prop = 0
-    a_count = 0
-    b_count = 0
-    
+    PCP_count = 0    
 
     for i in trange(0, len(PCP), 2, desc = F'Calculating the standard deviation for satellite {sat}'):
         #, desc = F'Finding and plotting PCP for satellite {sat}'
@@ -116,26 +82,25 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                                                      (start < start_prop) & \
                                                      (start_prop < end_prop) & \
                                                      (end_prop < end):
-            # y1 = np.interp(x_range, np.linspace(0, 100, len(MLAT[start:start_prop])), Ne[start:start_prop])
-            # y2 = np.interp(x_range, np.linspace(0, 100, len(MLAT[end_prop:end])), Ne[end_prop:end])
-
-            # m, b = np.polyfit(x_range, y1)
-
-            #y2 = np.interp(x_range, np.linspace(0, 100, len(Ne[start:end])), Ne[start:end])
+            
+            #Using a linear regression tool from scipy/stats to calculate the linear regression of the PCP trailing and leading edges
+            #This also provides us with the standard deviation 
             slope, intercept, r_value, p_value, std_err = stats.linregress(MLAT[start:start_prop], Ne[start:start_prop])
             slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(MLAT[end_prop:end], Ne[end_prop:end])
             
             slope3, intercept3, r_value3, p_value3, std_err2 = stats.linregress(MLAT[start:start_prop], Foreground[start:start_prop])
             slope4, intercept4, r_value4, p_value4, std_err3 = stats.linregress(MLAT[end_prop:end], Foreground[end_prop:end])
 
+            #Excluding values that are zero or NaN
             if (np.isnan(std_err) == False) & (np.isnan(std_err1) == False) & \
                                               (np.isnan(std_err2) == False) & \
                                               (np.isnan(std_err3) == False) & \
                                               ((std_err1 != 0) == True) & \
                                               ((std_err3 != 0) == True):
+                #Calculating the ratio for the standard deviation of the trailing and leading edge of individual polar cap patches
                 f_Ne = std_err / std_err1
                 f_Foreground = std_err2 / std_err3
-
+                #Splitting up the calculations of the standard deviation ratio for different intervals regarding magnetic local time
                 if (12 >= MLT[start] >= 9) & (9 <= MLT[end] <= 12):
                     f_list_Ne_9_12.append(f_Ne)
                     f_list_Fg_9_12.append(f_Foreground)
@@ -149,67 +114,24 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                     f_list_Ne_0_03.append(f_Ne)
                     f_list_Fg_0_03.append(f_Foreground)
                 
-    
-            #     c = std_err2
-            #     d = std_err3
-            #     a_count += 1
-            #     b_count += 1
-            # # c = np.std(Ne[start_prop:end_prop])
-            #     std_trail += a
-            #     std_lead += b
-            # std_prop += c
-            # print('########')
-            # print('start:', start)
-            # print('end:', end)
-            # print('start prop:', start_prop)
-            # print('end prop:', end_prop)
-            # print('Std trail            :', a)
-            # print('Std lead             :', b)
-            # print('Ratio trail / lead   :', a/b)
-            
-                ncount +=1
-            # print('#######')
-            # print('start:', start)
-            # print('end:', end)
-            # print('lengde:', np.abs(start-end))
-            # print('count:', ncount)
-            # print('Ne start:', Ne[start])
-            # print('Ne end:', Ne[end])
-            # print('MLAT start:', MLAT[start])
-            # print('MLAT end:', MLAT[end])
-    
-        # if ncount == 100:
-        #     break
-    # print('##################################')
-    # print(f'std_trail: {std_trail}')
-    # print(f'std_lead: {std_lead}')
-    # print(f'std_prop: {std_prop}')
-    # print(f'Sum Ratio trail / lead Sat {sat} \n MLT: {MLT_min} - {MLT_max} :', std_trail / std_lead)
-    # print('######################################################')
-    # print(f_list_Ne_9_12)
-    # print('######################################################')
-            
-        
-# for sat in sat_list:
-#     exec(f'PCP_plotter(PCP_index_{sat}, MLT_{sat}, MLAT_{sat}, Ne_{sat}, Timestamp_{sat}, sat)')
+                PCP_count +=1
 
-#PCP_plotter(PCP, MLT, MLT_max, MLT_min MLAT, Ne, Time, sat)
-
-#Input variables for plotting
-
-
+#Empty lists for appending the calculated standard deviation ratios
+#Two lists for every MLT interval, one calculated using density and one using foreground density
+#MLT 9-12
 f_list_Ne_9_12 = []
 f_list_Fg_9_12 = []
-
+#MLT 12-15
 f_list_Ne_12_15 = []
 f_list_Fg_12_15 = []
-
+#MLT 21-24
 f_list_Ne_21_24 = []
 f_list_Fg_21_24 = []
-
+#MLT 0-03
 f_list_Ne_0_03 = []
 f_list_Fg_0_03 = []
 
+#Making the calcuations using predetermined MLT intervals
 MLT_max_list = np.array([12, 15, 24, 3])
 MLT_min_list = np.array([9, 12, 21, 0])
 for sat in sat_list:
@@ -219,6 +141,7 @@ for sat in sat_list:
         exec(f'PCP_std(PCP_index_{sat}, MLT_{sat}, MLT_max, MLT_min, MLAT_{sat}, Ne_{sat}, Timestamp_{sat}, sat, Foreground_Ne_{sat}, PCP_flag_{sat}, PCP_proper_{sat})')
         plt.close()
 
+#Saving arrays containing the calculated standard deviation ratios
 print(f'### Currently saving the f ratio data... ###')
 np.save(path + "Data_fratio_NH_Ne_9_12", np.array(f_list_Ne_9_12))
 np.save(path + "Data_fratio_NH_Fg_9_12", np.array(f_list_Ne_9_12))
