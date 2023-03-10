@@ -13,7 +13,7 @@ hemisphere_indicator = ['NH', 'SH']
 #path mac
 path = 'Data/'
 # #path hjemme
-# path = 'D:\\Git_Codes\\Data\\'
+# path = 'D:/Git_Codes/Data/'
 
 # #path UiO
 # path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
@@ -72,19 +72,15 @@ plt.xlim(0,100)
 plt.legend()
 plt.show()
 
-# mask1 = Data_fratio_NH_Ne_9_12 <= 10
 N_9_12 = Data_fratio_NH_Ne_9_12
 S_9_12 = Data_fratio_NH_Ne_9_12
 
-# mask2 = Data_fratio_NH_Ne_12_15 <= 10
 N_12_15 = Data_fratio_NH_Ne_12_15
 S_12_15 = Data_fratio_SH_Ne_12_15
 
-# mask3 = Data_fratio_NH_Ne_21_24 <= 10
 N_21_24 = Data_fratio_NH_Ne_21_24
 S_21_24 = Data_fratio_SH_Ne_21_24
 
-# mask4 = Data_fratio_NH_Ne_0_03 <= 10
 N_0_03 = Data_fratio_NH_Ne_0_03
 S_0_03 = Data_fratio_SH_Ne_0_03
 
@@ -114,5 +110,7 @@ ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15
 ax1.set_ylim([-5, 40])
 ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
 ax2.set_ylim([-5, 100])
+ax1.set_title('Nortern Hemisphere')
+ax2.set_title('Southern Hemisphere')
 
 plt.show()
