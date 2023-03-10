@@ -38,9 +38,6 @@ for sat in sat_list:
         MLAT_array[i] = mlat
         MLT_array[i] = mlt
     
-
-#cutting the lists due to apexpy error? ie. removing the NaN values and similar indiced values
-
     #Saving the magnetic local time and magnetic latitude data
     print(f'### Currently saving the MLT and MLAT data for satellite {sat}... ###')
     np.save(f"C:/Users/krisfau/Desktop/VSCode/Data/Data_{sat}_MLT", MLT_array)
