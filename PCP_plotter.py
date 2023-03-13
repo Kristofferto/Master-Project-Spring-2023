@@ -62,7 +62,7 @@ def PCP_plotter(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP
         x_range = np.linspace(0, 100, 100001)
 
         #PCP requirements
-        if (np.all((MLAT[start:end] > 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
+        if (np.all((MLAT[start:end] < 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
                                                      (MLT_max >= MLT[start] >= MLT_min) & \
                                                      (MLT_min <= MLT[end] <= MLT_max) & \
                                                      ((end - start) > 30) & \
@@ -85,7 +85,7 @@ def PCP_plotter(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP
             if PCP_count % 5 == 0:
                 plt.title(f'Five Polar Cap Patches Northern Hemisphere, SWARM {sat}. \n MLT {MLT_min}-{MLT_max}')
                 plt.legend(loc = 'lower center', fontsize = 8)
-                plt.savefig(f'NH_SWARM_{sat}_MLT{MLT_max}_{MLT_min}_PCP{PCP_count}.png')
+                plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/SH_SWARM_{sat}_MLT{MLT_max}_{MLT_min}_PCP{PCP_count}.png')
                 plt.close()
             
 
