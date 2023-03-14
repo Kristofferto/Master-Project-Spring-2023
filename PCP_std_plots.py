@@ -11,12 +11,12 @@ sat_list = ['A', 'C']
 hemisphere_indicator = ['NH', 'SH']
 
 #path mac
-# path = 'Data/'
+path = 'Data/'
 # #path hjemme
 # path = 'D:/Git_Codes/Data/'
 
 # #path UiO
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 
 for sat in tqdm(sat_list, desc = 'Loading locally stored data'):
