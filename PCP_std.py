@@ -9,12 +9,12 @@ data_list = ['Ne', 'PCP_flag', 'Timestamp', 'MLT', 'MLAT', 'Foreground_Ne']
 sat_list = ['A', 'C']
 
 #path mac
-# path = 'Data/'
+path = 'Data/'
 # #path hjemme
 # path = 'D:/Git_Codes/Data/'
 
 # #path UiO
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+#path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 
 for sat in tqdm(sat_list, desc = 'Loading satellite data'):
