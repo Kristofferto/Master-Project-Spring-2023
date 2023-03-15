@@ -74,7 +74,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                                                      (MLT_max >= MLT[start] >= MLT_min) & \
                                                      (MLT_min <= MLT[end] <= MLT_max) & \
                                                      ((end - start) > 30) & \
-                                                     (np.abs(MLAT[end] - MLAT[start]) > 3) & \
+                                                     (np.abs(MLAT[end] - MLAT[start]) > 2) & \
                                                      (np.isnan(MLT[start]) == False) & \
                                                      (np.isnan(MLT[end]) == False) & \
                                                      (np.any((PCP_flag[start:end] == 4))) & \
