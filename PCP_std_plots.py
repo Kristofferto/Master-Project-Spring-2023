@@ -11,12 +11,12 @@ sat_list = ['A', 'C']
 hemisphere_indicator = ['NH', 'SH']
 
 #path mac
-path = 'Data/'
+# path = 'Data/'
 # #path hjemme
 # path = 'D:/Git_Codes/Data/'
 
 # #path UiO
-# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 
 for sat in tqdm(sat_list, desc = 'Loading locally stored data'):
@@ -100,26 +100,10 @@ S_0_03 = Data_fratio_SH_Ne_0_03
 N_index_0_03 = Data_fratio_NH_array_index_0_03
 S_index_0_03 = Data_fratio_SH_array_index_0_03
 
-# plt.title('Boxplot')
-# plt.boxplot([Data_fratio_NH_Ne_9_12, Data_fratio_NH_Ne_12_15, Data_fratio_NH_Ne_21_24, Data_fratio_NH_Ne_0_03][mask], labels = ['9-12', '12-15', '21-24', '0-03'])
-# plt.xlabel('Magnetic Local Time [MLT]')
-# plt.ylabel('PCP edge ratio [f]')
-# plt.show()
 
-# plt.title('Boxplot')
-# plt.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
-# plt.xlabel('Magnetic Local Time [MLT]')
-# plt.ylabel('PCP edge ratio [f]')
-# plt.ylim(-5,40)
-# plt.show()
 
-# plt.title('Boxplot')
-# plt.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['9-12', '12-15', '21-24', '0-03'])
-# plt.xlabel('Magnetic Local Time [MLT]')
-# plt.ylabel('PCP edge ratio [f]')
-# plt.ylim(-5,100)
-# plt.show()
 
+#Creating boxplots for the standard deviation ratio for the northern and southern hemisphere.
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
 fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
 ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
@@ -128,30 +112,15 @@ ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15
 ax2.set_ylim([-5, 100])
 ax1.set_title('Nortern Hemisphere')
 ax2.set_title('Southern Hemisphere')
-ax1.set_ylabel('standard deviation ratio f')
+ax1.set_ylabel('Standard deviation ratio f')
 plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-plt.show()
+# plt.show()
 plt.close()
 
 
-N_index_9_12_A = N_index_9_12[:270]
 
-# print('##########################################################################')
-
-# print(f'Antall PCP Nord: {len(N_9_12)} {len(N_12_15)} {len(N_21_24)} {len(N_0_03)}')
-# print('1:', N_index_9_12)
-# print('2:', N_index_12_15) 
-# print('3:', N_index_21_24) 
-# print('4:', N_index_0_03)
-# print('##########################################################################')
-# print(f'Antall PCP Sør: {len(S_9_12)} {len(S_12_15)} {len(S_21_24)} {len(S_0_03)}')
-# print('1:', S_index_9_12)
-# print('2:', S_index_12_15) 
-# print('3:', S_index_21_24) 
-# print('4:', S_index_0_03)
-# print('##########################################################################')
-
-
+#Function to find where the indices starts to indicate data for satellite C and not A 
+# - this is used to indicate where the timestamp data needs to be changed
 def find_index(array):
     index = -1
     for i in range(1, len(array)):
@@ -162,7 +131,9 @@ def find_index(array):
 print(find_index(N_index_9_12))
 print(N_index_9_12[find_index(N_index_9_12)])
 
+#Plotting the timeseries of the standard deviation ratios calculated for the northern hemisphere
 fig2, ax = plt.subplots(2, 2, figsize = (12, 10))
+fig2.autofmt_xdate()
 fig2.suptitle('Timeseries of the standard deviation ratio calculations \n Swarm A and C, Northern Hemisphere')
 for i in range(len(N_9_12)):
     if i <= find_index(N_index_9_12) - 1:
@@ -184,21 +155,21 @@ for i in range(len(N_0_03)):
         ax[1,1].scatter(Timestamp_A[N_index_0_03[i]] ,N_0_03[i], color = 'black')
     elif i > find_index(N_index_0_03) - 1:
         ax[1,1].scatter(Timestamp_C[N_index_0_03[i]] ,N_0_03[i], color = 'black')
-
+#Setting labels and titles
 ax[0,0].set_title('MLT 9-12')
 ax[0,1].set_title('MLT 12-15')
 ax[1,0].set_title('MLT 21-24')
 ax[1,1].set_title('MLT 0-03')
-
 ax[0,0].set_ylabel('Standard deviation ratio f')
 ax[1,0].set_ylabel('Standard deviation ratio f')
 
 plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_NH_AC.png')
-plt.show()
+# plt.show()
 plt.close()
 
-
+#Plotting the timeseries of the standard deviation ratios calculated for the southern hemisphere
 fig3, axs = plt.subplots(2, 2, figsize = (12, 10))
+fig3.autofmt_xdate()
 fig3.suptitle('Timeseries of the standard deviation ratio calculations \n Swarm A and C, Southern Hemisphere')
 for i in range(len(S_9_12)):
     if i <= find_index(S_index_9_12) - 1:
@@ -230,5 +201,54 @@ axs[0,0].set_ylabel('Standard deviation ratio f')
 axs[1,0].set_ylabel('Standard deviation ratio f')
 
 plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_SH_AC.png')
-plt.show()
+# plt.show()
+plt.close()
+
+
+#Plotting histograms for the standard deviation ratios for the southern hemisphere
+fig4, axs = plt.subplots(2, 2, figsize = (12, 10))
+fig4.suptitle('Histogram of the standard deviation ratio calculations \n Swarm A and C, Southern Hemisphere')
+hist_bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+axs[0,0].hist(S_9_12, bins = hist_bins)
+axs[0,1].hist(S_12_15, bins = hist_bins)
+axs[1,0].hist(S_21_24, bins = hist_bins)
+axs[1,1].hist(S_0_03, bins = hist_bins)
+
+axs[0,0].set_title('MLT 9-12')
+axs[0,1].set_title('MLT 12-15')
+axs[1,0].set_title('MLT 21-24')
+axs[1,1].set_title('MLT 0-03')
+
+axs[0,0].set_ylabel('Frequency')
+axs[1,0].set_ylabel('Frequency')
+axs[1,0].set_xlabel('Standard deviation ratio f')
+axs[1,1].set_xlabel('Standard deviation ratio f')
+
+plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_SH_AC.png')
+# plt.show()
+plt.close()
+
+
+#Plotting histograms for the standard deviation ratios for the northern hemisphere
+fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
+fig5.suptitle('Histogram of the standard deviation ratio calculations \n Swarm A and C, Northern Hemisphere')
+hist_bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+axs[0,0].hist(N_9_12, bins = hist_bins)
+axs[0,1].hist(N_12_15, bins = hist_bins)
+axs[1,0].hist(N_21_24, bins = hist_bins)
+axs[1,1].hist(N_0_03, bins = hist_bins)
+
+axs[0,0].set_title('MLT 9-12')
+axs[0,1].set_title('MLT 12-15')
+axs[1,0].set_title('MLT 21-24')
+axs[1,1].set_title('MLT 0-03')
+
+axs[0,0].set_ylabel('Frequency')
+axs[1,0].set_ylabel('Frequency')
+axs[1,0].set_xlabel('Standard deviation ratio f')
+axs[1,1].set_xlabel('Standard deviation ratio f')
+
+plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
+# plt.show()
+
 plt.close()
