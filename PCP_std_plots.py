@@ -252,3 +252,38 @@ plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
 # plt.show()
 
 plt.close()
+
+print('Antall ratios nord:', len(N_9_12) + len(N_12_15) + len(N_21_24) + len(N_0_03))
+print('Antall ratios sør:', len(S_9_12) + len(S_12_15) + len(S_21_24) + len(S_0_03))
+
+
+
+
+"""
+PLOTTING SUMMER AND WINTER SPLIT FOR NORTHERN AND SOUTHERN HEMISPHERE
+"""
+
+def boxplots(array):
+    
+    N_9_12[N_9_12 < 0.5] = -1
+    N_9_12[N_9_12 < 0.5] = -1
+
+    for i in range(len(N_9_12)):
+        if i <= find_index(S_index_9_12) - 1:
+
+
+
+    
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
+    fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
+    ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    ax1.set_ylim([-5, 40])
+    ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    ax2.set_ylim([-5, 100])
+    ax1.set_title('Summer Nortern Hemisphere')
+    ax2.set_title('Winter Northern Hemisphere')
+    ax1.set_ylabel('Standard deviation ratio f')
+    # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
+    # plt.show()
+    plt.close()
