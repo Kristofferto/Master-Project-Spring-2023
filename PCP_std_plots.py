@@ -210,11 +210,11 @@ plt.close()
 #Plotting histograms for the standard deviation ratios for the southern hemisphere
 fig4, axs = plt.subplots(2, 2, figsize = (12, 10))
 fig4.suptitle('Histogram of the standard deviation ratio calculations \n Swarm A and C, Southern Hemisphere')
-hist_bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-axs[0,0].hist(S_9_12, bins = hist_bins)
-axs[0,1].hist(S_12_15, bins = hist_bins)
-axs[1,0].hist(S_21_24, bins = hist_bins)
-axs[1,1].hist(S_0_03, bins = hist_bins)
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+axs[0,0].hist(S_9_12, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
+axs[0,1].hist(S_12_15, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
+axs[1,0].hist(S_21_24, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
+axs[1,1].hist(S_0_03, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
 
 axs[0,0].set_title('MLT 9-12')
 axs[0,1].set_title('MLT 12-15')
@@ -235,11 +235,11 @@ plt.close()
 #Plotting histograms for the standard deviation ratios for the northern hemisphere
 fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
 fig5.suptitle('Histogram of the standard deviation ratio calculations \n Swarm A and C, Northern Hemisphere')
-hist_bins = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-axs[0,0].hist(N_9_12, bins = hist_bins)
-axs[0,1].hist(N_12_15, bins = hist_bins)
-axs[1,0].hist(N_21_24, bins = hist_bins)
-axs[1,1].hist(N_0_03, bins = hist_bins)
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+axs[0,0].hist(N_9_12, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
+axs[0,1].hist(N_12_15, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
+axs[1,0].hist(N_21_24, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
+axs[1,1].hist(N_0_03, bins = hist_bins, alpha=0.5, histtype='bar', ec='black')
 
 axs[0,0].set_title('MLT 9-12')
 axs[0,1].set_title('MLT 12-15')
@@ -269,12 +269,12 @@ PLOTTING SUMMER AND WINTER SPLIT FOR NORTHERN AND SOUTHERN HEMISPHERE
 
 def boxplots_one_minusone(array_list_NH, array_list_SH):
     for i in range(4):
-        array_list_NH[i][array_list_NH[i] < 0.5] = -1
-        array_list_NH[i][(0.5 <= array_list_NH[i]) & (array_list_NH[i] < 2)] = 0
+        array_list_NH[i][array_list_NH[i] < 1] = -1
+        array_list_NH[i][(1 <= array_list_NH[i]) & (array_list_NH[i] < 2)] = 0
         array_list_NH[i][2 <=array_list_NH[i]] = 1
 
-        array_list_SH[i][array_list_SH[i] < 0.5] = -1
-        array_list_SH[i][(0.5 <= array_list_SH[i]) & (array_list_SH[i] < 2)] = 0
+        array_list_SH[i][array_list_SH[i] < 1] = -1
+        array_list_SH[i][(1 <= array_list_SH[i]) & (array_list_SH[i] < 2)] = 0
         array_list_SH[i][2 <=array_list_SH[i]] = 1
 
         
