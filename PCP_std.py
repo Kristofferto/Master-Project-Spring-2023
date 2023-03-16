@@ -11,10 +11,10 @@ sat_list = ['A', 'C']
 #path mac
 # path = 'Data/'
 # #path hjemme
-# path = 'D:/Git_Codes/Data/'
+path = 'D:/Git_Codes/Data/'
 
 # #path UiO
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 
 for sat in tqdm(sat_list, desc = 'Loading satellite data'):
@@ -70,7 +70,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                 end_prop = PCP_proper[np.argmin(np.abs(PCP_proper - end))]
 
 
-        if (np.all((MLAT[start:end] > 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
+        if (np.all((MLAT[start:end] < 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
                                                      (MLT_max >= MLT[start] >= MLT_min) & \
                                                      (MLT_min <= MLT[end] <= MLT_max) & \
                                                      ((end - start) > 30) & \
@@ -164,22 +164,22 @@ for sat in sat_list:
 
 #Saving arrays containing the calculated standard deviation ratios
 print(f'### Currently saving the f ratio data... ###')
-np.save(path + "Data_fratio_NH_Ne_9_12", np.array(f_list_Ne_9_12))
-np.save(path + "Data_fratio_NH_Fg_9_12", np.array(f_list_Fg_9_12))
+np.save(path + "Data_fratio_SH_Ne_9_12", np.array(f_list_Ne_9_12))
+np.save(path + "Data_fratio_SH_Fg_9_12", np.array(f_list_Fg_9_12))
 
-np.save(path + "Data_fratio_NH_Ne_12_15", np.array(f_list_Ne_12_15))
-np.save(path + "Data_fratio_NH_Fg_12_15", np.array(f_list_Fg_12_15))
+np.save(path + "Data_fratio_SH_Ne_12_15", np.array(f_list_Ne_12_15))
+np.save(path + "Data_fratio_SH_Fg_12_15", np.array(f_list_Fg_12_15))
 
-np.save(path + "Data_fratio_NH_Ne_21_24", np.array(f_list_Ne_21_24))
-np.save(path + "Data_fratio_NH_Fg_21_24", np.array(f_list_Fg_21_24))
+np.save(path + "Data_fratio_SH_Ne_21_24", np.array(f_list_Ne_21_24))
+np.save(path + "Data_fratio_SH_Fg_21_24", np.array(f_list_Fg_21_24))
 
-np.save(path + "Data_fratio_NH_Ne_0_03", np.array(f_list_Ne_0_03))
-np.save(path + "Data_fratio_NH_Fg_0_03", np.array(f_list_Fg_0_03))
+np.save(path + "Data_fratio_SH_Ne_0_03", np.array(f_list_Ne_0_03))
+np.save(path + "Data_fratio_SH_Fg_0_03", np.array(f_list_Fg_0_03))
 
-np.save(path + "Data_fratio_NH_array_index_9_12", np.array(f_list_PCP_index_9_12))
-np.save(path + "Data_fratio_NH_array_index_12_15", np.array(f_list_PCP_index_12_15))
-np.save(path + "Data_fratio_NH_array_index_21_24", np.array(f_list_PCP_index_21_24))
-np.save(path + "Data_fratio_NH_array_index_0_03", np.array(f_list_PCP_index_0_03))
+np.save(path + "Data_fratio_SH_array_index_9_12", np.array(f_list_PCP_index_9_12))
+np.save(path + "Data_fratio_SH_array_index_12_15", np.array(f_list_PCP_index_12_15))
+np.save(path + "Data_fratio_SH_array_index_21_24", np.array(f_list_PCP_index_21_24))
+np.save(path + "Data_fratio_SH_array_index_0_03", np.array(f_list_PCP_index_0_03))
 
 
 print('#### HER ER LISTA ####')
@@ -198,5 +198,6 @@ print(len(np.array(f_list_Ne_21_24)))
 print(len(np.array(f_list_PCP_index_0_03)) / 2)
 print(len(np.array(f_list_Ne_0_03)))
 
-print('Hvor mange patches brukt i std?')
+print('Hvor mange patches brukt i std nord?')
 print(len(np.array(f_list_Ne_9_12)) + len(np.array(f_list_Ne_12_15)) + len(np.array(f_list_Ne_21_24)) + len(np.array(f_list_Ne_0_03)))
+
