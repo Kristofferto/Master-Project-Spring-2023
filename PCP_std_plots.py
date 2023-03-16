@@ -13,10 +13,11 @@ hemisphere_indicator = ['NH', 'SH']
 #path mac
 # path = 'Data/'
 # #path hjemme
-# path = 'D:/Git_Codes/Data/'
+path = 'D:/Git_Codes/Data/'
+savepath = 'D:/Git_Codes/Figures/'
 
 # #path UiO
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 
 
 for sat in tqdm(sat_list, desc = 'Loading locally stored data'):
@@ -113,7 +114,8 @@ ax2.set_ylim([-5, 100])
 ax1.set_title('Nortern Hemisphere')
 ax2.set_title('Southern Hemisphere')
 ax1.set_ylabel('Standard deviation ratio f')
-plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
+# plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
+plt.savefig(savepath + 'Boxplot.png')
 # plt.show()
 plt.close()
 
@@ -163,7 +165,8 @@ ax[1,1].set_title('MLT 0-03')
 ax[0,0].set_ylabel('Standard deviation ratio f')
 ax[1,0].set_ylabel('Standard deviation ratio f')
 
-plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_NH_AC.png')
+# plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_NH_AC.png')
+plt.savefig(savepath + 'Timeseries_std_NH_AC.png')
 # plt.show()
 plt.close()
 
@@ -200,7 +203,8 @@ axs[1,1].set_title('MLT 0-03')
 axs[0,0].set_ylabel('Standard deviation ratio f')
 axs[1,0].set_ylabel('Standard deviation ratio f')
 
-plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_SH_AC.png')
+# plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_SH_AC.png')
+plt.savefig(savepath + 'Timeseries_std_SH_AC.png')
 # plt.show()
 plt.close()
 
@@ -224,7 +228,8 @@ axs[1,0].set_ylabel('Frequency')
 axs[1,0].set_xlabel('Standard deviation ratio f')
 axs[1,1].set_xlabel('Standard deviation ratio f')
 
-plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_SH_AC.png')
+# plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_SH_AC.png')
+plt.savefig(savepath + 'Hist_std_SH_AC.png')
 # plt.show()
 plt.close()
 
@@ -248,7 +253,8 @@ axs[1,0].set_ylabel('Frequency')
 axs[1,0].set_xlabel('Standard deviation ratio f')
 axs[1,1].set_xlabel('Standard deviation ratio f')
 
-plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
+# plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
+plt.savefig(savepath + 'Hist_std_NH_AC.png')
 # plt.show()
 
 plt.close()
@@ -263,27 +269,27 @@ print('Antall ratios sør:', len(S_9_12) + len(S_12_15) + len(S_21_24) + len(S_0
 PLOTTING SUMMER AND WINTER SPLIT FOR NORTHERN AND SOUTHERN HEMISPHERE
 """
 
-def boxplots(array):
+# def boxplots(array):
     
-    N_9_12[N_9_12 < 0.5] = -1
-    N_9_12[N_9_12 < 0.5] = -1
+#     N_9_12[N_9_12 < 0.5] = -1
+#     N_9_12[N_9_12 < 0.5] = -1
 
-    for i in range(len(N_9_12)):
-        if i <= find_index(S_index_9_12) - 1:
+#     for i in range(len(N_9_12)):
+#         if i <= find_index(S_index_9_12) - 1:
 
 
 
     
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
-    fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
-    ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
-    ax1.set_ylim([-5, 40])
-    ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
-    ax2.set_ylim([-5, 100])
-    ax1.set_title('Summer Nortern Hemisphere')
-    ax2.set_title('Winter Northern Hemisphere')
-    ax1.set_ylabel('Standard deviation ratio f')
-    # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-    # plt.show()
-    plt.close()
+    # fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
+    # fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
+    # ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    # ax1.set_ylim([-5, 40])
+    # ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    # ax2.set_ylim([-5, 100])
+    # ax1.set_title('Summer Nortern Hemisphere')
+    # ax2.set_title('Winter Northern Hemisphere')
+    # ax1.set_ylabel('Standard deviation ratio f')
+    # # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
+    # # plt.show()
+    # plt.close()
