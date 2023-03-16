@@ -11,10 +11,11 @@ sat_list = ['A', 'C']
 hemisphere_indicator = ['NH', 'SH']
 
 #path mac
-# path = 'Data/'
+path = 'Data/'
 # #path hjemme
-path = 'D:/Git_Codes/Data/'
+# path = 'D:/Git_Codes/Data/'
 savepath = 'D:/Git_Codes/Figures/'
+savepath_mac = 'Figures/'
 
 # #path UiO
 # path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
@@ -81,6 +82,8 @@ for indicator in hemisphere_indicator:
 # plt.legend()
 # plt.show()
 
+#Renaming the locally saved arrays for more efficient use later on
+#N stands for Northern Hemisphere, S stands for Southern Hemisphere
 N_9_12 = Data_fratio_NH_Ne_9_12
 S_9_12 = Data_fratio_SH_Ne_9_12
 N_index_9_12 = Data_fratio_NH_array_index_9_12
@@ -115,7 +118,8 @@ ax1.set_title('Nortern Hemisphere')
 ax2.set_title('Southern Hemisphere')
 ax1.set_ylabel('Standard deviation ratio f')
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-plt.savefig(savepath + 'Boxplot.png')
+# plt.savefig(savepath + 'Boxplot.png')
+plt.savefig(savepath_mac + 'Boxplot.png')
 # plt.show()
 plt.close()
 
@@ -164,7 +168,8 @@ ax[0,0].set_ylabel('Standard deviation ratio f')
 ax[1,0].set_ylabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_NH_AC.png')
-plt.savefig(savepath + 'Timeseries_std_NH_AC.png')
+# plt.savefig(savepath + 'Timeseries_std_NH_AC.png')
+plt.savefig(savepath_mac + 'Timeseries_std_NH_AC.png')
 # plt.show()
 plt.close()
 
@@ -202,7 +207,8 @@ axs[0,0].set_ylabel('Standard deviation ratio f')
 axs[1,0].set_ylabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_SH_AC.png')
-plt.savefig(savepath + 'Timeseries_std_SH_AC.png')
+# plt.savefig(savepath + 'Timeseries_std_SH_AC.png')
+plt.savefig(savepath_mac + 'Timeseries_std_SH_AC.png')
 # plt.show()
 plt.close()
 
@@ -227,7 +233,8 @@ axs[1,0].set_xlabel('Standard deviation ratio f')
 axs[1,1].set_xlabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_SH_AC.png')
-plt.savefig(savepath + 'Hist_std_SH_AC.png')
+# plt.savefig(savepath + 'Hist_std_SH_AC.png')
+plt.savefig(savepath_mac + 'Hist_std_SH_AC.png')
 # plt.show()
 plt.close()
 
@@ -252,7 +259,8 @@ axs[1,0].set_xlabel('Standard deviation ratio f')
 axs[1,1].set_xlabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
-plt.savefig(savepath + 'Hist_std_NH_AC.png')
+# plt.savefig(savepath + 'Hist_std_NH_AC.png')
+plt.savefig(savepath_mac + 'Hist_std_NH_AC.png')
 # plt.show()
 
 plt.close()
@@ -288,8 +296,10 @@ def boxplots_one_minusone(array_list_NH, array_list_SH):
     ax2.set_title('Southern Hemisphere')
     ax1.set_ylabel('Standard deviation ratio f')
     # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-    plt.savefig(savepath + 'Boxplotoneminusone.png')
+    # plt.savefig(savepath + 'Boxplotoneminusone.png')
+    plt.savefig(savepath_mac + 'Boxplotoneminusone.png')
     # plt.show()
     plt.close()
+    
 
 boxplots_one_minusone([N_9_12, N_12_15, N_21_24, N_0_03], [S_9_12, S_12_15, S_21_24, S_0_03])
