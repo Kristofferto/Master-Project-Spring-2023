@@ -130,8 +130,6 @@ def find_index(array):
             index = i 
             break 
     return index
-print(find_index(N_index_9_12))
-print(N_index_9_12[find_index(N_index_9_12)])
 
 #Plotting the timeseries of the standard deviation ratios calculated for the northern hemisphere
 fig2, ax = plt.subplots(2, 2, figsize = (12, 10))
@@ -269,27 +267,29 @@ print('Antall ratios sør:', len(S_9_12) + len(S_12_15) + len(S_21_24) + len(S_0
 PLOTTING SUMMER AND WINTER SPLIT FOR NORTHERN AND SOUTHERN HEMISPHERE
 """
 
-# def boxplots(array):
-    
-#     N_9_12[N_9_12 < 0.5] = -1
-#     N_9_12[N_9_12 < 0.5] = -1
+def boxplots_one_minusone(array_list_NH, array_list_SH):
+    for i in range(4):
+        array_list_NH[i][array_list_NH[i] < 0.5] = -1
+        array_list_NH[i][(0.5 <= array_list_NH[i]) & (array_list_NH[i] < 2)] = 0
+        array_list_NH[i][2 <=array_list_NH[i]] = 1
 
-#     for i in range(len(N_9_12)):
-#         if i <= find_index(S_index_9_12) - 1:
+        array_list_SH[i][array_list_SH[i] < 0.5] = -1
+        array_list_SH[i][(0.5 <= array_list_SH[i]) & (array_list_SH[i] < 2)] = 0
+        array_list_SH[i][2 <=array_list_SH[i]] = 1
 
+        
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
+    fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
+    ax1.boxplot([array_list_NH[0], array_list_NH[1], array_list_NH[2], array_list_NH[3]], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    ax1.set_ylim([-2, 2])
+    ax2.boxplot([array_list_SH[0], array_list_SH[1], array_list_SH[2], array_list_SH[3]], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    ax2.set_ylim([-2, 2])
+    ax1.set_title('Nortern Hemisphere')
+    ax2.set_title('Southern Hemisphere')
+    ax1.set_ylabel('Standard deviation ratio f')
+    # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
+    plt.savefig(savepath + 'Boxplotoneminusone.png')
+    # plt.show()
+    plt.close()
 
-
-    
-
-    # fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
-    # fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
-    # ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
-    # ax1.set_ylim([-5, 40])
-    # ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
-    # ax2.set_ylim([-5, 100])
-    # ax1.set_title('Summer Nortern Hemisphere')
-    # ax2.set_title('Winter Northern Hemisphere')
-    # ax1.set_ylabel('Standard deviation ratio f')
-    # # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-    # # plt.show()
-    # plt.close()
+boxplots_one_minusone([N_9_12, N_12_15, N_21_24, N_0_03], [S_9_12, S_12_15, S_21_24, S_0_03])
