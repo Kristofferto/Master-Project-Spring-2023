@@ -322,8 +322,8 @@ index_list_winter_21_24 = []
 index_list_winter_0_03 = []
 #Sorting values on seasonal dependency
 #Creating arrays for winter and summer respectively
-start_summer = datetime.datetime(1900, 3, 1)
-end_summer = datetime.datetime(1900, 3, 1)
+start_summer = datetime.datetime(1900, 4, 1)
+end_summer = datetime.datetime(1900, 10, 1)
 for i in range(len(index_list_NH)):
     if i <= find_index(index_list_NH) - 1: #Timestamp data for Sat A
         if start_summer <= Timestamp_A[index_list_NH[i]] <= end_summer:
