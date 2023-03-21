@@ -5,6 +5,7 @@ from tqdm import tqdm, trange
 import sys
 from scipy import stats
 import glob
+import datetime
 # data_list = ['Background_Ne', 'Foreground_Ne', 'Grad_Ne_at_100km', 'Grad_Ne_at_20km', 'Grad_Ne_at_50km', 'Grad_Ne_at_PCP_edge',  'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude', 'MLT']
 data_list = ['Timestamp', 'MLT']
 sat_list = ['A', 'C']
@@ -14,7 +15,7 @@ hemisphere_indicator = ['NH', 'SH']
 path = 'Data/'
 # #path hjemme
 # path = 'D:/Git_Codes/Data/'
-savepath = 'D:/Git_Codes/Figures/'
+# savepath = 'D:/Git_Codes/Figures/'
 savepath_mac = 'Figures/'
 
 # #path UiO
@@ -159,6 +160,7 @@ for i in range(len(N_0_03)):
         ax[1,1].scatter(Timestamp_A[N_index_0_03[i]] ,N_0_03[i], color = 'black')
     elif i > find_index(N_index_0_03) - 1:
         ax[1,1].scatter(Timestamp_C[N_index_0_03[i]] ,N_0_03[i], color = 'black')
+
 #Setting labels and titles
 ax[0,0].set_title('MLT 9-12')
 ax[0,1].set_title('MLT 12-15')
@@ -172,6 +174,8 @@ ax[1,0].set_ylabel('Standard deviation ratio f')
 plt.savefig(savepath_mac + 'Timeseries_std_NH_AC.png')
 # plt.show()
 plt.close()
+
+
 
 #Plotting the timeseries of the standard deviation ratios calculated for the southern hemisphere
 fig3, axs = plt.subplots(2, 2, figsize = (12, 10))
@@ -301,5 +305,103 @@ def boxplots_one_minusone(array_list_NH, array_list_SH):
     # plt.show()
     plt.close()
     
-
+#Calling the function to create the 1, 0, -1 boxplot
 boxplots_one_minusone([N_9_12, N_12_15, N_21_24, N_0_03], [S_9_12, S_12_15, S_21_24, S_0_03])
+
+
+
+
+index_list_summer_9_12 = []
+index_list_summer_12_15 = []
+index_list_summer_21_24 = []
+index_list_summer_0_03 = []
+
+index_list_winter_9_12 = []
+index_list_winter_12_15 = []
+index_list_winter_21_24 = []
+index_list_winter_0_03 = []
+#Sorting values on seasonal dependency
+#Creating arrays for winter and summer respectively
+start_summer = datetime.datetime(1900, 3, 1)
+end_summer = datetime.datetime(1900, 3, 1)
+for i in range(len(index_list_NH)):
+    if i <= find_index(index_list_NH) - 1: #Timestamp data for Sat A
+        if start_summer <= Timestamp_A[index_list_NH[i]] <= end_summer:
+            
+            
+    elif i > find_index(index_list_NH) - 1: #Timestamp data for Sat C
+        if start_summer <= Timestamp_C[index_list_NH[i]] <= end_summer:
+
+
+
+def seasonal_variation(array_list_NH, array_list_SH, index_list_NH, index_list_SH):
+
+    
+    #Seasonal boxplot
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
+    fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
+    ax1.boxplot([array_list_NH[0], array_list_NH[1], array_list_NH[2], array_list_NH[3]], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    ax1.set_ylim([-2, 2])
+    ax2.boxplot([array_list_SH[0], array_list_SH[1], array_list_SH[2], array_list_SH[3]], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
+    ax2.set_ylim([-2, 2])
+    ax1.set_title('Nortern Hemisphere')
+    ax2.set_title('Southern Hemisphere')
+    ax1.set_ylabel('Standard deviation ratio f')
+    # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
+    # plt.savefig(savepath + 'Seaesonal_variation.png')
+    plt.savefig(savepath_mac + 'Seaesonal_variation.png')
+    # plt.show()
+    plt.close()
+
+    #Seasonal histogram plot
+    #Winter
+    fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
+    fig5.suptitle('Histogram of the standard deviation ratio calculations during winter \n Swarm A and C, Northern Hemisphere')
+    hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+    axs[0,0].hist(NW_9_12, bins = hist_bins, histtype='bar', ec='black')
+    axs[0,1].hist(NW_12_15, bins = hist_bins, histtype='bar', ec='black')
+    axs[1,0].hist(NW_21_24, bins = hist_bins, histtype='bar', ec='black')
+    axs[1,1].hist(NW_0_03, bins = hist_bins, histtype='bar', ec='black')
+
+    axs[0,0].set_title('MLT 9-12')
+    axs[0,1].set_title('MLT 12-15')
+    axs[1,0].set_title('MLT 21-24')
+    axs[1,1].set_title('MLT 0-03')
+
+    axs[0,0].set_ylabel('Frequency')
+    axs[1,0].set_ylabel('Frequency')
+    axs[1,0].set_xlabel('Standard deviation ratio f')
+    axs[1,1].set_xlabel('Standard deviation ratio f')
+
+    # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
+    # plt.savefig(savepath + 'Hist_std_NH_AC.png')
+    plt.savefig(savepath_mac + 'Hist_std_NH_AC.png')
+    # plt.show()
+    
+    #Summer
+    fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
+    fig5.suptitle('Histogram of the standard deviation ratio calculations during winter \n Swarm A and C, Northern Hemisphere')
+    hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+    axs[0,0].hist(NS_9_12, bins = hist_bins, histtype='bar', ec='black')
+    axs[0,1].hist(NS_12_15, bins = hist_bins, histtype='bar', ec='black')
+    axs[1,0].hist(NS_21_24, bins = hist_bins, histtype='bar', ec='black')
+    axs[1,1].hist(NS_0_03, bins = hist_bins, histtype='bar', ec='black')
+
+    axs[0,0].set_title('MLT 9-12')
+    axs[0,1].set_title('MLT 12-15')
+    axs[1,0].set_title('MLT 21-24')
+    axs[1,1].set_title('MLT 0-03')
+
+    axs[0,0].set_ylabel('Frequency')
+    axs[1,0].set_ylabel('Frequency')
+    axs[1,0].set_xlabel('Standard deviation ratio f')
+    axs[1,1].set_xlabel('Standard deviation ratio f')
+
+    # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
+    # plt.savefig(savepath + 'Hist_std_NH_AC.png')
+    plt.savefig(savepath_mac + 'Hist_std_NH_AC.png')
+    # plt.show()
+
+    plt.close()
+    
+seasonal_variation()
