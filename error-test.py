@@ -4,20 +4,22 @@ import matplotlib.pyplot as plt
 import time
 import datetime as dt
 import pandas as pd
-import apexpy
+
 from time import sleep
 from tqdm import tqdm, trange
-"""
+
 data_list = ['Longitude', 'Timestamp', 'Latitude', 'Radius']
 sat_list = ['C']
 
 
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path mac
+path = 'Data/'
 
 for sat in sat_list:
     for name in data_list:
-        exec(f'{name} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
-
+        exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
+"""
 #KM
 Radius = Radius/1000 - 6371
 
@@ -130,22 +132,20 @@ print(PCP_flag_B[:200])
 print(PCP_index_B[:100])
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
+import datetime
 
-# Generate random data
-data = np.random.normal(size=100)
+start_summer = datetime.datetime(1900, 4, 1)
+end_summer = datetime.datetime(1900, 10, 1)
 
-# Calculate standard deviation
-std_dev = np.std(data)
+s_count = 0
+v_count = 0
 
-# Create box plot
-fig, ax = plt.subplots()
-ax.boxplot(data)
+for i in range(len(Timestamp_C)):
+    if start_summer.month <= Timestamp_C[i].month <= end_summer.month and \
+        start_summer.day <= Timestamp_C[i].day <= end_summer.day:
+        s_count += 1
+    else: 
+        v_count += 1
 
-# Add standard deviation to plot
-ax.axhline(y=std_dev, color='r', linestyle='-')
-ax.axhline(y=-std_dev, color='r', linestyle='-')
-
-# Show plot
-plt.show()
+print('Sommer:', s_count)
+print('Vinter:', v_count)
