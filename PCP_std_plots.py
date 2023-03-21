@@ -12,10 +12,10 @@ sat_list = ['A', 'C']
 hemisphere_indicator = ['NH', 'SH']
 
 #path mac
-path = 'Data/'
+# path = 'Data/'
 # #path hjemme
-# path = 'D:/Git_Codes/Data/'
-# savepath = 'D:/Git_Codes/Figures/'
+path = 'D:/Git_Codes/Data/'
+savepath = 'D:/Git_Codes/Figures/'
 savepath_mac = 'Figures/'
 
 # #path UiO
@@ -119,8 +119,8 @@ ax1.set_title('Nortern Hemisphere')
 ax2.set_title('Southern Hemisphere')
 ax1.set_ylabel('Standard deviation ratio f')
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-# plt.savefig(savepath + 'Boxplot.png')
-plt.savefig(savepath_mac + 'Boxplot.png')
+plt.savefig(savepath + 'Boxplot.png')
+# plt.savefig(savepath_mac + 'Boxplot.png')
 # plt.show()
 plt.close()
 
@@ -170,8 +170,8 @@ ax[0,0].set_ylabel('Standard deviation ratio f')
 ax[1,0].set_ylabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_NH_AC.png')
-# plt.savefig(savepath + 'Timeseries_std_NH_AC.png')
-plt.savefig(savepath_mac + 'Timeseries_std_NH_AC.png')
+plt.savefig(savepath + 'Timeseries_std_NH_AC.png')
+# plt.savefig(savepath_mac + 'Timeseries_std_NH_AC.png')
 # plt.show()
 plt.close()
 
@@ -211,8 +211,8 @@ axs[0,0].set_ylabel('Standard deviation ratio f')
 axs[1,0].set_ylabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Timeseries_std_SH_AC.png')
-# plt.savefig(savepath + 'Timeseries_std_SH_AC.png')
-plt.savefig(savepath_mac + 'Timeseries_std_SH_AC.png')
+plt.savefig(savepath + 'Timeseries_std_SH_AC.png')
+# plt.savefig(savepath_mac + 'Timeseries_std_SH_AC.png')
 # plt.show()
 plt.close()
 
@@ -237,8 +237,8 @@ axs[1,0].set_xlabel('Standard deviation ratio f')
 axs[1,1].set_xlabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_SH_AC.png')
-# plt.savefig(savepath + 'Hist_std_SH_AC.png')
-plt.savefig(savepath_mac + 'Hist_std_SH_AC.png')
+plt.savefig(savepath + 'Hist_std_SH_AC.png')
+# plt.savefig(savepath_mac + 'Hist_std_SH_AC.png')
 # plt.show()
 plt.close()
 
@@ -263,8 +263,8 @@ axs[1,0].set_xlabel('Standard deviation ratio f')
 axs[1,1].set_xlabel('Standard deviation ratio f')
 
 # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
-# plt.savefig(savepath + 'Hist_std_NH_AC.png')
-plt.savefig(savepath_mac + 'Hist_std_NH_AC.png')
+plt.savefig(savepath + 'Hist_std_NH_AC.png')
+# plt.savefig(savepath_mac + 'Hist_std_NH_AC.png')
 # plt.show()
 
 plt.close()
@@ -300,13 +300,14 @@ def boxplots_one_minusone(array_list_NH, array_list_SH):
     ax2.set_title('Southern Hemisphere')
     ax1.set_ylabel('Standard deviation ratio f')
     # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-    # plt.savefig(savepath + 'Boxplotoneminusone.png')
-    plt.savefig(savepath_mac + 'Boxplotoneminusone.png')
+    plt.savefig(savepath + 'Boxplotoneminusone.png')
+    # plt.savefig(savepath_mac + 'Boxplotoneminusone.png')
     # plt.show()
     plt.close()
     
 #Calling the function to create the 1, 0, -1 boxplot
 boxplots_one_minusone([N_9_12, N_12_15, N_21_24, N_0_03], [S_9_12, S_12_15, S_21_24, S_0_03])
+
 
 
 
@@ -324,19 +325,20 @@ index_list_winter_0_03 = []
 #Creating arrays for winter and summer respectively
 start_summer = datetime.datetime(1900, 4, 1)
 end_summer = datetime.datetime(1900, 10, 1)
-for i in range(len(index_list_NH)):
-    if i <= find_index(index_list_NH) - 1: #Timestamp data for Sat A
-        if start_summer <= Timestamp_A[index_list_NH[i]] <= end_summer:
+
+# for i in range(4):
+#     if i <= find_index(index_list_NH) - 1: #Timestamp data for Sat A
+#         if start_summer.month <= Timestamp_A[i].month <= end_summer.month and \
+#         start_summer.day <= Timestamp_A[i].day <= end_summer.day:
             
             
-    elif i > find_index(index_list_NH) - 1: #Timestamp data for Sat C
-        if start_summer <= Timestamp_C[index_list_NH[i]] <= end_summer:
+#     elif i > find_index(index_list_NH) - 1: #Timestamp data for Sat C
+#         if start_summer <= Timestamp_C[index_list_NH[i]] <= end_summer:
 
 
 
 def seasonal_variation(array_list_NH, array_list_SH, index_list_NH, index_list_SH):
 
-    
     #Seasonal boxplot
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
     fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
@@ -347,9 +349,9 @@ def seasonal_variation(array_list_NH, array_list_SH, index_list_NH, index_list_S
     ax1.set_title('Nortern Hemisphere')
     ax2.set_title('Southern Hemisphere')
     ax1.set_ylabel('Standard deviation ratio f')
-    # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Boxplot.png')
-    # plt.savefig(savepath + 'Seaesonal_variation.png')
-    plt.savefig(savepath_mac + 'Seaesonal_variation.png')
+    # plt.savefig('C:/Users/krisfau/Desktop/VSCode/FIGURES/Seaesonal_variation_boxplot.png')
+    plt.savefig(savepath + 'Seaesonal_variation_boxplot.png')
+    # plt.savefig(savepath_mac + 'Seaesonal_variation_boxplot.png')
     # plt.show()
     plt.close()
 
@@ -398,10 +400,9 @@ def seasonal_variation(array_list_NH, array_list_SH, index_list_NH, index_list_S
     axs[1,1].set_xlabel('Standard deviation ratio f')
 
     # plt.savefig(f'C:/Users/krisfau/Desktop/VSCode/FIGURES/Hist_std_NH_AC.png')
-    # plt.savefig(savepath + 'Hist_std_NH_AC.png')
-    plt.savefig(savepath_mac + 'Hist_std_NH_AC.png')
+    plt.savefig(savepath + 'Hist_std_NH_AC.png')
+    # plt.savefig(savepath_mac + 'Hist_std_NH_AC.png')
     # plt.show()
 
     plt.close()
     
-seasonal_variation()
