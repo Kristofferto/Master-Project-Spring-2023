@@ -9,16 +9,130 @@ from time import sleep
 from tqdm import tqdm, trange
 
 data_list = ['Longitude', 'Timestamp', 'Latitude', 'Radius']
-sat_list = ['C']
+sat_list = ['A','C']
+hemisphere_indicator = ['NH', 'SH']
+
 
 
 # path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# #path hjemme
+path = 'D:/Git_Codes/Data/'
 # path mac
-path = 'Data/'
+# path = 'Data/'
 
 for sat in sat_list:
     for name in data_list:
         exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
+
+for indicator in hemisphere_indicator:
+    #MLT 9-12
+    exec(f'Data_fratio_{indicator}_Ne_9_12 = np.load("{path}Data_fratio_{indicator}_Ne_9_12.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_Fg_9_12 = np.load("{path}Data_fratio_{indicator}_Fg_9_12.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_array_index_9_12 = np.load("{path}Data_fratio_{indicator}_array_index_9_12.npy", allow_pickle = True)')
+
+    #MLT 12-15
+    exec(f'Data_fratio_{indicator}_Ne_12_15 = np.load("{path}Data_fratio_{indicator}_Ne_12_15.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_Fg_12_15 = np.load("{path}Data_fratio_{indicator}_Fg_12_15.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_array_index_12_15 = np.load("{path}Data_fratio_{indicator}_array_index_12_15.npy", allow_pickle = True)')
+
+    #MLT 21-24
+    exec(f'Data_fratio_{indicator}_Ne_21_24 = np.load("{path}Data_fratio_{indicator}_Ne_21_24.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_Fg_21_24 = np.load("{path}Data_fratio_{indicator}_Fg_21_24.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_array_index_21_24 = np.load("{path}Data_fratio_{indicator}_array_index_21_24.npy", allow_pickle = True)')
+
+    #MLT 0-03
+    exec(f'Data_fratio_{indicator}_Ne_0_03 = np.load("{path}Data_fratio_{indicator}_Ne_0_03.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_Fg_0_03 = np.load("{path}Data_fratio_{indicator}_Fg_0_03.npy", allow_pickle = True)')
+    exec(f'Data_fratio_{indicator}_array_index_0_03 = np.load("{path}Data_fratio_{indicator}_array_index_0_03.npy", allow_pickle = True)')
+
+
+
+N_index_9_12 = Data_fratio_NH_array_index_9_12
+S_index_9_12 = Data_fratio_SH_array_index_9_12
+
+N_index_12_15 = Data_fratio_NH_array_index_12_15
+S_index_12_15 = Data_fratio_SH_array_index_12_15
+
+N_index_21_24 = Data_fratio_NH_array_index_21_24
+S_index_21_24 = Data_fratio_SH_array_index_21_24
+
+N_index_0_03 = Data_fratio_NH_array_index_0_03
+S_index_0_03 = Data_fratio_SH_array_index_0_03
+
+def find_index(array):
+    index = -1
+    for i in range(1, len(array)):
+        if array[i] < array[i-1]:
+            index = i 
+            break 
+    return index
+import datetime
+
+start_summer = datetime.datetime(1900, 4, 1)
+end_summer = datetime.datetime(1900, 10, 1)
+
+s_count = 0
+v_count = 0
+
+index_list_summer_9_12 = []
+index_list_summer_12_15 = []
+index_list_summer_21_24 = []
+index_list_summer_0_03 = []
+
+index_list_winter_9_12 = []
+index_list_winter_12_15 = []
+index_list_winter_21_24 = []
+index_list_winter_0_03 = []
+
+print(len(N_index_9_12))
+print(len(N_index_12_15))
+print(len(N_index_21_24))
+print(len(N_index_0_03))
+
+def seasonal_index_split(index_list):
+    for k in range(len(index_list)):
+        for i in range(len(index_list[k])):
+            if i <= find_index(index_list[k]) - 1: #Timestamp data for Sat A
+                if start_summer.month <= Timestamp_A[index_list[k][i]].month <= end_summer.month and \
+                start_summer.day <= Timestamp_A[index_list[k][i]].day <= end_summer.day:
+                    if k == 0:
+                        index_list_summer_9_12.append(index_list[k])
+                    elif k ==1:
+                        index_list_summer_12_15.append(index_list[k])
+                    elif k ==2:
+                        index_list_summer_21_24.append(index_list[k])
+                    elif k ==3:
+                        index_list_summer_0_03.append(index_list[k])
+                        
+            elif i > find_index(index_list) - 1: #Timestamp data for Sat C
+                if start_summer.month <= Timestamp_A[index_list[k][i]].month <= end_summer.month and \
+                start_summer.day <= Timestamp_A[index_list[k][i]].day <= end_summer.day:
+                    if k == 0:
+                        index_list_summer_9_12.append(index_list[k])
+                    elif k ==1:
+                        index_list_summer_12_15.append(index_list[k])
+                    elif k ==2:
+                        index_list_summer_21_24.append(index_list[k])
+                    elif k ==3:
+                        index_list_summer_0_03.append(index_list[k])
+
+seasonal_index_split([N_index_9_12, N_index_12_15, N_index_21_24, N_index_0_03])
+seasonal_index_split([S_index_9_12, S_index_12_15, S_index_21_24, S_index_0_03])
+
+print('##############')
+print(index_list_summer_9_12)
+
+for i in range(len(Timestamp_C)):
+    if start_summer.month <= Timestamp_C[i].month <= end_summer.month and \
+        start_summer.day <= Timestamp_C[i].day <= end_summer.day:
+        s_count += 1
+    else: 
+        v_count += 1
+
+print('Sommer:', s_count)
+print('Vinter:', v_count)
+
+
 """
 #KM
 Radius = Radius/1000 - 6371
@@ -132,20 +246,3 @@ print(PCP_flag_B[:200])
 print(PCP_index_B[:100])
 """
 
-import datetime
-
-start_summer = datetime.datetime(1900, 4, 1)
-end_summer = datetime.datetime(1900, 10, 1)
-
-s_count = 0
-v_count = 0
-
-for i in range(len(Timestamp_C)):
-    if start_summer.month <= Timestamp_C[i].month <= end_summer.month and \
-        start_summer.day <= Timestamp_C[i].day <= end_summer.day:
-        s_count += 1
-    else: 
-        v_count += 1
-
-print('Sommer:', s_count)
-print('Vinter:', v_count)
