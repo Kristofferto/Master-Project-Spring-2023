@@ -14,9 +14,9 @@ hemisphere_indicator = ['NH', 'SH']
 
 
 
-# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 # #path hjemme
-path = 'D:/Git_Codes/Data/'
+# path = 'D:/Git_Codes/Data/'
 # path mac
 # path = 'Data/'
 
@@ -46,6 +46,15 @@ for indicator in hemisphere_indicator:
     exec(f'Data_fratio_{indicator}_array_index_0_03 = np.load("{path}Data_fratio_{indicator}_array_index_0_03.npy", allow_pickle = True)')
 
 
+N_9_12 = Data_fratio_NH_Ne_9_12
+N_12_15 = Data_fratio_NH_Ne_12_15
+N_21_24 = Data_fratio_NH_Ne_21_24
+N_0_03 = Data_fratio_NH_Ne_0_03
+S_9_12 = Data_fratio_SH_Ne_9_12
+S_12_15 = Data_fratio_SH_Ne_12_15
+S_21_24 = Data_fratio_SH_Ne_21_24
+S_0_03 = Data_fratio_SH_Ne_0_03
+
 
 N_index_9_12 = Data_fratio_NH_array_index_9_12
 S_index_9_12 = Data_fratio_SH_array_index_9_12
@@ -68,69 +77,142 @@ def find_index(array):
     return index
 import datetime
 
-start_summer = datetime.datetime(1900, 4, 1)
-end_summer = datetime.datetime(1900, 10, 1)
+start_summer = datetime.datetime(2000, 4, 1)
+end_summer = datetime.datetime(2000, 10, 1)
 
 s_count = 0
 v_count = 0
 
-index_list_summer_9_12 = []
-index_list_summer_12_15 = []
-index_list_summer_21_24 = []
-index_list_summer_0_03 = []
+ratio_list_summer_9_12 = []
+ratio_list_summer_12_15 = []
+ratio_list_summer_21_24 = []
+ratio_list_summer_0_03 = []
 
-index_list_winter_9_12 = []
-index_list_winter_12_15 = []
-index_list_winter_21_24 = []
-index_list_winter_0_03 = []
+ratio_list_winter_9_12 = []
+ratio_list_winter_12_15 = []
+ratio_list_winter_21_24 = []
+ratio_list_winter_0_03 = []
 
-print(len(N_index_9_12))
-print(len(N_index_12_15))
-print(len(N_index_21_24))
-print(len(N_index_0_03))
+print('Totalt antall sommer før:', (len(N_index_9_12) + len(N_index_12_15) + len(N_index_21_24) + len(N_index_0_03)) / 2)
 
-def seasonal_index_split(index_list):
-    for k in range(len(index_list)):
-        for i in range(len(index_list[k])):
-            if i <= find_index(index_list[k]) - 1: #Timestamp data for Sat A
-                if start_summer.month <= Timestamp_A[index_list[k][i]].month <= end_summer.month and \
-                start_summer.day <= Timestamp_A[index_list[k][i]].day <= end_summer.day:
-                    if k == 0:
-                        index_list_summer_9_12.append(index_list[k])
-                    elif k ==1:
-                        index_list_summer_12_15.append(index_list[k])
-                    elif k ==2:
-                        index_list_summer_21_24.append(index_list[k])
-                    elif k ==3:
-                        index_list_summer_0_03.append(index_list[k])
-                        
-            elif i > find_index(index_list) - 1: #Timestamp data for Sat C
-                if start_summer.month <= Timestamp_A[index_list[k][i]].month <= end_summer.month and \
-                start_summer.day <= Timestamp_A[index_list[k][i]].day <= end_summer.day:
-                    if k == 0:
-                        index_list_summer_9_12.append(index_list[k])
-                    elif k ==1:
-                        index_list_summer_12_15.append(index_list[k])
-                    elif k ==2:
-                        index_list_summer_21_24.append(index_list[k])
-                    elif k ==3:
-                        index_list_summer_0_03.append(index_list[k])
+print('Totalt antall vinter før:', (len(S_index_9_12) + len(S_index_12_15) + len(S_index_21_24) + len(S_index_0_03)) / 2)
 
-seasonal_index_split([N_index_9_12, N_index_12_15, N_index_21_24, N_index_0_03])
-seasonal_index_split([S_index_9_12, S_index_12_15, S_index_21_24, S_index_0_03])
+# print(len(N_9_12))
+# print(len(N_index_9_12))
+# print(find_index(N_index_9_12))
 
-print('##############')
-print(index_list_summer_9_12)
+# quit()
 
-for i in range(len(Timestamp_C)):
-    if start_summer.month <= Timestamp_C[i].month <= end_summer.month and \
-        start_summer.day <= Timestamp_C[i].day <= end_summer.day:
-        s_count += 1
-    else: 
-        v_count += 1
+#and \start_summer.day < Timestamp_A[index_list[i]].day < end_summer.dayand \end_summer.day <= Timestamp_A[index_list[i]].day <= start_summer.day
 
-print('Sommer:', s_count)
-print('Vinter:', v_count)
+def seasonal_index_split(index_list,ratio_list, append_list_summer, append_list_winter, hemisphere):
+    overlapp = 0
+    for i in range(0, len(index_list), 2):
+        
+        if i <= find_index(index_list) - 1: #Timestamp data for Sat A
+            if start_summer.month < Timestamp_A[index_list[i]].month < end_summer.month and \
+                start_summer.month < Timestamp_A[index_list[i+1]].month < end_summer.month:
+                if hemisphere == 'NH':
+                    append_list_summer.append(ratio_list[int(i / 2)])
+                    # append_list_summer.append(ratio_list[i+1])
+                elif hemisphere == 'SH':
+                    append_list_winter.append(ratio_list[int(i / 2)])
+                    # append_list_winter.append(ratio_list[i+1])
+
+            elif (end_summer.month <= Timestamp_A[index_list[i]].month <= 12 or \
+                1 <= Timestamp_A[index_list[i]].month <= start_summer.month) and \
+                    (end_summer.month <= Timestamp_A[index_list[i+1]].month <= 12 or \
+                1 <= Timestamp_A[index_list[i+1]].month <= start_summer.month):
+                if hemisphere == 'NH':
+                    append_list_winter.append(ratio_list[int(i / 2)])
+                    # append_list_winter.append(ratio_list[i+1])
+                elif hemisphere == 'SH':
+                    append_list_summer.append(ratio_list[int(i / 2)])
+                    # append_list_summer.append(ratio_list[i+1])
+            else:
+                overlapp +=1
+
+                    
+        elif i > find_index(index_list) - 1: #Timestamp data for Sat C
+            if start_summer.month < Timestamp_C[index_list[i]].month < end_summer.month and \
+                start_summer.month < Timestamp_C[index_list[i+1]].month < end_summer.month:
+                if hemisphere == 'NH':
+                    append_list_summer.append(ratio_list[int(i / 2)])
+                    # append_list_summer.append(ratio_list[i+1])
+                elif hemisphere == 'SH':
+                    append_list_winter.append(ratio_list[int(i / 2)])
+                    # append_list_winter.append(ratio_list[i+1])
+
+            elif (end_summer.month <= Timestamp_C[index_list[i]].month <= 12 or \
+                1 <= Timestamp_C[index_list[i]].month <= start_summer.month) and \
+                    (end_summer.month <= Timestamp_C[index_list[i+1]].month <= 12 or \
+                1 <= Timestamp_C[index_list[i+1]].month <= start_summer.month):
+                if hemisphere == 'NH':
+                    append_list_winter.append(ratio_list[int(i / 2)])
+                    # append_list_winter.append(ratio_list[i+1])
+                elif hemisphere == 'SH':
+                    append_list_summer.append(ratio_list[int(i / 2)])
+                    # append_list_summer.append(ratio_list[i+1])
+            else:
+                overlapp +=1
+    return overlapp
+
+seasonal_index_split(N_index_9_12, N_9_12, ratio_list_summer_9_12, ratio_list_winter_9_12, 'NH')
+# print(seasonal_index_split(N_index_9_12, N_9_12, ratio_list_summer_9_12, ratio_list_winter_9_12, 'NH'))
+seasonal_index_split(N_index_12_15, N_12_15, ratio_list_summer_12_15, ratio_list_winter_12_15, 'NH')
+# print(seasonal_index_split(N_index_12_15, N_12_15, ratio_list_summer_12_15, ratio_list_winter_12_15, 'NH'))
+seasonal_index_split(N_index_21_24, N_21_24, ratio_list_summer_21_24, ratio_list_winter_21_24, 'NH')
+# print(seasonal_index_split(N_index_21_24, N_21_24, ratio_list_summer_21_24, ratio_list_winter_21_24, 'NH'))
+seasonal_index_split(N_index_0_03, N_0_03, ratio_list_summer_0_03, ratio_list_winter_0_03, 'NH')
+# print(seasonal_index_split(N_index_0_03, N_0_03, ratio_list_summer_0_03, ratio_list_winter_0_03, 'NH'))
+
+print('Totalt antall sommer underveis:', len(ratio_list_summer_9_12) + len(ratio_list_summer_12_15) + len(ratio_list_summer_21_24) + len(ratio_list_summer_0_03))
+
+print('Totalt antall vinter underveis:', len(ratio_list_winter_9_12) + len(ratio_list_winter_12_15) + len(ratio_list_winter_21_24) + len(ratio_list_winter_0_03))
+
+seasonal_index_split(S_index_9_12, S_9_12, ratio_list_summer_9_12, ratio_list_winter_9_12, 'SH')
+# print(seasonal_index_split(S_index_9_12, S_9_12, ratio_list_summer_9_12, ratio_list_winter_9_12, 'SH'))
+seasonal_index_split(S_index_12_15, S_12_15, ratio_list_summer_12_15, ratio_list_winter_12_15, 'SH')
+# print(seasonal_index_split(S_index_12_15, S_12_15, ratio_list_summer_12_15, ratio_list_winter_12_15, 'SH'))
+seasonal_index_split(S_index_21_24, S_21_24, ratio_list_summer_21_24, ratio_list_winter_21_24, 'SH')
+# print(seasonal_index_split(S_index_21_24, S_21_24, ratio_list_summer_21_24, ratio_list_winter_21_24, 'SH'))
+seasonal_index_split(S_index_0_03, S_0_03, ratio_list_summer_0_03, ratio_list_winter_0_03, 'SH')
+# print(seasonal_index_split(S_index_0_03, S_0_03, ratio_list_summer_0_03, ratio_list_winter_0_03, 'SH'))
+
+print('Totalt antall sommer etter:', len(ratio_list_summer_9_12) + len(ratio_list_summer_12_15) + len(ratio_list_summer_21_24) + len(ratio_list_summer_0_03))
+
+print('Totalt antall vinter etter:', len(ratio_list_winter_9_12) + len(ratio_list_winter_12_15) + len(ratio_list_winter_21_24) + len(ratio_list_winter_0_03))
+
+print(ratio_list_summer_9_12)
+
+
+# print('##############')
+# print(index_list_summer_9_12)
+# print('##############')
+# print(len(index_list_summer_9_12))
+# print(len(index_list_summer_12_15))
+# print(len(index_list_summer_21_24))
+# print(len(index_list_summer_0_03))
+# print('Totalt antall sommer:', len(index_list_summer_9_12) + len(index_list_summer_12_15) + len(index_list_summer_21_24) + len(index_list_summer_0_03))
+
+# print('##############')
+# print(len(index_list_winter_9_12))
+# print(len(index_list_winter_12_15))
+# print(len(index_list_winter_21_24))
+# print(len(index_list_winter_0_03))
+
+# print('Totalt antall vinter:', len(index_list_winter_9_12) + len(index_list_winter_12_15) + len(index_list_winter_21_24) + len(index_list_winter_0_03))
+
+
+# for i in range(len(Timestamp_C)):
+#     if start_summer.month <= Timestamp_C[i].month <= end_summer.month and \
+#         start_summer.day <= Timestamp_C[i].day <= end_summer.day:
+#         s_count += 1
+#     else: 
+#         v_count += 1
+
+# print('Sommer:', s_count)
+# print('Vinter:', v_count)
 
 
 """
