@@ -735,18 +735,3 @@ boxplots_one_minusone([N_9_12, N_12_15, N_21_24, N_0_03], [S_9_12, S_12_15, S_21
 
 
 
-# import pandas as pd
-
-def PCP_climatology(index_array):
-    max_date = datetime.datetime = (2020, 1, 1)
-
-    #Satellite A
-    for i in range(len(Timestamp_A)):
-        while (Timestamp_A[i] < max_date) == True:
-            for k in range(0, len(index_array), 2):
-                print(k)
-#     #Satellite C
-
-    
-
-#         # plot andres timeseries of polar cap patches for winter and summer.
