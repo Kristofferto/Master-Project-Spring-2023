@@ -132,11 +132,14 @@ def PCP_climatology(index_array):
     PCP_index_list_A = []
     PCP_index_list_C = []
 
-    #Satellite A
+    #Finding the index for when each PCP occurred
+
     for i in range(0, len(index_array), 2):
+        #Satellite A
         if i <= find_index(index_array) - 1:
             PCP_index_A = int((index_array[i+1] + index_array[i]) / 2)
             PCP_index_list_A.append(PCP_index_A)
+            #Satellite C
         elif i > find_index(index_array) - 1:
             PCP_index_C = int((index_array[i+1] + index_array[i]) / 2)
             PCP_index_list_C.append(PCP_index_C)
