@@ -180,6 +180,7 @@ def find_index(array):
             break 
     return index
 
+"""
 #Plotting the timeseries of the standard deviation ratios calculated for the northern hemisphere
 fig2, ax = plt.subplots(2, 2, figsize = (12, 10))
 fig2.autofmt_xdate()
@@ -257,7 +258,7 @@ axs[1,0].set_ylabel('Standard deviation ratio f')
 plt.savefig(savepath + 'Timeseries_std_SH_AC.png')
 # plt.show()
 plt.close()
-
+"""
 
 #Plotting histograms for the standard deviation ratios for the southern hemisphere
 fig4, axs = plt.subplots(2, 2, figsize = (12, 10))
@@ -365,7 +366,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax2.set_title('Southern Hemisphere')
     ax1.set_ylabel('Standard deviation ratio f')
 
-    plt.savefig(savepath + 'Sanity_Boxplotoneminusone.png')
+    plt.savefig(savepath + 'Side_Boxplotoneminusone.png')
     # plt.show()
     plt.close()
     
@@ -652,13 +653,13 @@ def sanity_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_su
     axs[1,1].set_xlabel('Standard deviation ratio f')
 
     if Hemisphere == 'NH':
-        fig6.suptitle('Sanity Test. \n Histogram of the standard deviation ratio calculations during winter. \n Northern Hemisphere.')
+        fig6.suptitle('Histogram of the standard deviation ratio calculations during winter. \n Northern Hemisphere.')
         
-        plt.savefig(savepath + 'Sanity_Seasonal_variation_Hist_std_NH_winter_AC.png')
+        plt.savefig(savepath + 'Side_Seasonal_variation_Hist_std_NH_winter_AC.png')
     elif Hemisphere == 'SH':
-        fig6.suptitle('Sanity Test. \n Histogram of the standard deviation ratio calculations during winter. \n Southern Hemisphere.')
+        fig6.suptitle('Histogram of the standard deviation ratio calculations during winter. \n Southern Hemisphere.')
         
-        plt.savefig(savepath + 'Sanity_Seasonal_variation_Hist_std_SH_winter_AC.png')
+        plt.savefig(savepath + 'Side_Seasonal_variation_Hist_std_SH_winter_AC.png')
 
 
     # plt.show()
@@ -684,13 +685,13 @@ def sanity_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_su
     axs[1,1].set_xlabel('Standard deviation ratio f')
 
     if Hemisphere == 'NH':
-        fig6.suptitle('Sanity Test. \n Histogram of the standard deviation ratio calculations during summer. \n Northern Hemisphere.')
+        fig6.suptitle('Histogram of the standard deviation ratio calculations during summer. \n Northern Hemisphere.')
         
-        plt.savefig(savepath + 'Sanity_Seasonal_variation_Hist_std_NH_summer_AC.png')
+        plt.savefig(savepath + 'Side_Seasonal_variation_Hist_std_NH_summer_AC.png')
     elif Hemisphere == 'SH':
-        fig6.suptitle('Sanity Test. \n Histogram of the standard deviation ratio calculations during summer. \n Southern Hemisphere.')
+        fig6.suptitle('Histogram of the standard deviation ratio calculations during summer. \n Southern Hemisphere.')
        
-        plt.savefig(savepath + 'Sanity_Seasonal_variation_Hist_std_SH_summer_AC.png')
+        plt.savefig(savepath + 'Side_Seasonal_variation_Hist_std_SH_summer_AC.png')
 
     # plt.show()
     plt.close()
@@ -714,13 +715,13 @@ def sanity_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_su
     ax2.set_title('Local Summer')
     ax1.set_ylabel('Standard deviation ratio f')
     if Hemisphere == 'NH':
-        fig.suptitle('Sanity Test. \n Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT. \n Northern Hemisphere.')
+        fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT. \n Northern Hemisphere.')
         
-        plt.savefig(savepath + 'Sanity_Seaesonal_variation_NH_boxplot.png')
+        plt.savefig(savepath + 'Side_Seaesonal_variation_NH_boxplot.png')
     elif Hemisphere == 'SH':
-        fig.suptitle('Sanity Test. \n Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT. \n Southern Hemisphere.')
+        fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT. \n Southern Hemisphere.')
 
-        plt.savefig(savepath + 'Sanity_Seaesonal_variation_SH_boxplot.png')
+        plt.savefig(savepath + 'Side_Seaesonal_variation_SH_boxplot.png')
     # plt.show()
     plt.close()
 
