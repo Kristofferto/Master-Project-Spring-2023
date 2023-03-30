@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm, trange
-import sys
 from scipy import stats
-import glob
+from  datetime import date
 import datetime
+
 # data_list = ['Background_Ne', 'Foreground_Ne', 'Grad_Ne_at_100km', 'Grad_Ne_at_20km', 'Grad_Ne_at_50km', 'Grad_Ne_at_PCP_edge',  'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude', 'MLT']
 data_list = ['Timestamp', 'MLAT']
 sat_list = ['A', 'C']
@@ -73,6 +73,7 @@ for indicator in hemisphere_indicator:
     exec(f'Data_fratio_{indicator}_Fg_18_21 = np.load("{path}Data_fratio_{indicator}_Fg_18_21.npy", allow_pickle = True)')
     exec(f'Data_fratio_{indicator}_array_index_18_21 = np.load("{path}Data_fratio_{indicator}_array_index_18_21.npy", allow_pickle = True)')
 
+
 N_9_12 = Data_fratio_NH_Ne_9_12
 S_9_12 = Data_fratio_SH_Ne_9_12
 N_index_9_12 = Data_fratio_NH_array_index_9_12
@@ -123,17 +124,108 @@ def find_index(array):
             break 
     return index
 
+#Function to find the time spent above |MLAT| = 77 degrees
+def Hour_date_NH(timestamps, latitudes):
+        # Define the latitude threshold
+    LAT_THRESHOLD = 77
+   
 
-def Hour_date():
-    pass 
+    # Create an empty dictionary to store the total time spent over the latitude threshold for each day
+    time_over_lat = {}
 
-def PCP_climatology(index_array):
-    max_date = datetime.datetime = (2020, 1, 1)
+    # Initialize the start time to the first timestamp if the first latitude measurement is below the threshold
+    if latitudes[0] >= LAT_THRESHOLD:
+        start_time = timestamps[0]
+    else:
+        start_time = None
+
+
+    # Loop over each timestamp and corresponding latitude measurement
+    for i in range(1, len(timestamps)):
+        # Check if the current latitude measurement is above the threshold
+        if latitudes[i] >= LAT_THRESHOLD:
+            # Check if the previous latitude measurement was also above the threshold
+            if latitudes[i-1] >= LAT_THRESHOLD:
+                continue  # If yes, continue to the next timestamp
+            else:
+                # If no, record the start time of the passage over the threshold
+                start_time = timestamps[i]
+        else:
+            # Check if the previous latitude measurement was above the threshold
+            if latitudes[i-1] >= LAT_THRESHOLD:
+                # If yes, record the end time of the passage over the threshold
+                end_time = timestamps[i]
+                # Calculate the time difference in hours
+                time_diff = (end_time - start_time).total_seconds() / 3600
+                # Add the time difference to the total time spent over the threshold for the corresponding day
+                day = start_time.date()
+                if day not in time_over_lat:
+                    time_over_lat[day] = time_diff
+                else:
+                    time_over_lat[day] += time_diff
+
+    # Print the total time spent over the threshold for each day
+    """
+    for day in sorted(time_over_lat.keys()):
+        print(day, time_over_lat[day])
+    """
+    return time_over_lat
+
+def Hour_date_SH(timestamps, latitudes):
+    # Define the latitude threshold
+    LAT_THRESHOLD = -77
+   
+
+    # Create an empty dictionary to store the total time spent over the latitude threshold for each day
+    time_under_lat = {}
+
+    # Initialize the start time to the first timestamp if the first latitude measurement is below the threshold
+    if latitudes[0] <= LAT_THRESHOLD:
+        start_time = timestamps[0]
+    else:
+        start_time = None
+
+    # Loop over each timestamp and corresponding latitude measurement
+    for i in range(1, len(timestamps)):
+        # Check if the current latitude measurement is above the threshold
+        if latitudes[i] <= LAT_THRESHOLD:
+            # Check if the previous latitude measurement was also above the threshold
+            if latitudes[i-1] <= LAT_THRESHOLD:
+                continue  # If yes, continue to the next timestamp
+            else:
+                # If no, record the start time of the passage over the threshold
+                start_time = timestamps[i]
+        else:
+            # Check if the previous latitude measurement was above the threshold
+            if latitudes[i-1] <= LAT_THRESHOLD:
+                # If yes, record the end time of the passage over the threshold
+                end_time = timestamps[i]
+                # Calculate the time difference in hours
+                time_diff = (end_time - start_time).total_seconds() / 3600
+                # Add the time difference to the total time spent over the threshold for the corresponding day
+                day = start_time.date()
+                if day not in time_under_lat:
+                    time_under_lat[day] = time_diff
+                else:
+                    time_under_lat[day] += time_diff
+
+    # Print the total time spent over the threshold for each day
+    """
+    for day in sorted(time_under_lat.keys()):
+        print(day, time_under_lat[day])
+    """
+    return time_under_lat
+
+    
+    
+    
+
+def PCP_climatology_PCP_index(index_array):
+    #max_date = datetime.datetime = (2020, 1, 1)
     PCP_index_list_A = []
     PCP_index_list_C = []
 
     #Finding the index for when each PCP occurred
-
     for i in range(0, len(index_array), 2):
         #Satellite A
         if i <= find_index(index_array) - 1:
@@ -144,20 +236,140 @@ def PCP_climatology(index_array):
             PCP_index_C = int((index_array[i+1] + index_array[i]) / 2)
             PCP_index_list_C.append(PCP_index_C)
 
-
-
-
-
-    print(len(PCP_index_list_A))
-    print(len(PCP_index_list_C))
     return PCP_index_list_A, PCP_index_list_C
-#        while (Timestamp_A[i] < max_date) == True:
-#            for k in range(0, len(index_array), 2):
-#                print(k)
-#     
-PCP_climatology(N_index_9_12)
 
-print(N_index_9_12[630:640])
-print(N_index_9_12[:10])
 
-#         # plot andres timeseries of polar cap patches for winter and summer.
+#Northern hemisphere, index arrays separated into Swarm A and Swarm C
+NH_9_12_A, NH_9_12_C = PCP_climatology_PCP_index(N_index_9_12)
+NH_12_15_A, NH_12_15_C = PCP_climatology_PCP_index(N_index_12_15)
+NH_21_24_A, NH_21_24_C = PCP_climatology_PCP_index(N_index_21_24)
+NH_0_03_A, NH_0_03_C = PCP_climatology_PCP_index(N_index_0_03)
+NH_3_6_A, NH_3_6_C = PCP_climatology_PCP_index(N_index_3_6)
+NH_6_9_A, NH_6_9_C = PCP_climatology_PCP_index(N_index_6_9)
+NH_15_18_A, NH_15_18_C = PCP_climatology_PCP_index(N_index_15_18)
+NH_18_21_A, NH_18_21_C = PCP_climatology_PCP_index(N_index_18_21)
+
+#Southern hemisphere, index arrays separated into Swarm A and Swarm C
+SH_9_12_A, SH_9_12_C = PCP_climatology_PCP_index(S_index_9_12)
+SH_12_15_A, SH_12_15_C = PCP_climatology_PCP_index(S_index_12_15)
+SH_21_24_A, SH_21_24_C = PCP_climatology_PCP_index(S_index_21_24)
+SH_0_03_A, SH_0_03_C = PCP_climatology_PCP_index(S_index_0_03)
+SH_3_6_A, SH_3_6_C = PCP_climatology_PCP_index(S_index_3_6)
+SH_6_9_A, SH_6_9_C = PCP_climatology_PCP_index(S_index_6_9)
+SH_15_18_A, SH_15_18_C = PCP_climatology_PCP_index(S_index_15_18)
+SH_18_21_A, SH_18_21_C = PCP_climatology_PCP_index(S_index_18_21)
+
+#adding the arrays together in order to find the PCP occurence for each date in the northern and southern hemisphere
+NH_Swarm_A = NH_9_12_A + NH_12_15_A + NH_21_24_A + NH_0_03_A + NH_3_6_A + NH_6_9_A + NH_15_18_A + NH_18_21_A
+NH_Swarm_C = NH_9_12_C + NH_12_15_C + NH_21_24_C + NH_0_03_C + NH_3_6_C + NH_6_9_C + NH_15_18_C + NH_18_21_C
+
+SH_Swarm_A = SH_9_12_A + SH_12_15_A + SH_21_24_A + SH_0_03_A + SH_3_6_A + SH_6_9_A + SH_15_18_A + SH_18_21_A
+SH_Swarm_C = SH_9_12_C + SH_12_15_C + SH_21_24_C + SH_0_03_C + SH_3_6_C + SH_6_9_C + SH_15_18_C + SH_18_21_C
+
+NH_Swarm_A_time = Hour_date_NH(Timestamp_A, MLAT_A)
+NH_Swarm_C_time = Hour_date_NH(Timestamp_C, MLAT_C)
+
+SH_Swarm_A_time = Hour_date_SH(Timestamp_A, MLAT_A)
+SH_Swarm_C_time = Hour_date_SH(Timestamp_C, MLAT_C)
+
+def PCP_occurrence_rate(Hemisphere, index_list_A, index_list_C):
+    counts_A = {}
+    counts_C = {}
+
+# loop through each index in the data_indices array
+    for index in index_list_A:
+        # convert the date string to a datetime object
+        # date_obj = datetime.datetime.strptime(index, '%Y-%m-%d').date()
+        date_obj_A = Timestamp_A[index].date()
+        # use the date as the key in the dictionary and increment the count for that date
+        counts_A[date_obj_A] = counts_A.get(date_obj_A, 0) + 1
+        
+    for index in index_list_C:
+        # convert the date string to a datetime object
+        # date_obj = datetime.datetime.strptime(index, '%Y-%m-%d').date()
+        date_obj_C = Timestamp_C[index].date()
+        # use the date as the key in the dictionary and increment the count for that date
+        counts_C[date_obj_C] = counts_C.get(date_obj_C, 0) + 1
+    """
+# print the counts for each day
+    for date, count in counts_A.items():
+        print(f"{date}: {count}")
+    
+    for date_C, count_C in counts_C.items():
+        print(f"{date_C}: {count_C}")
+    """
+    dates_A = list(counts_A.keys())
+    PCP_occurrence_A = list(counts_A.values())
+
+    dates_C = list(counts_C.keys())
+    PCP_occurrence_C = list(counts_C.values())
+
+    
+    if Hemisphere == 'NH':
+        Hours_A = NH_Swarm_A_time
+        Hours_C = NH_Swarm_C_time
+
+    
+    elif Hemisphere == 'SH':
+        Hours_A = SH_Swarm_A_time
+        Hours_C = SH_Swarm_C_time
+
+        
+    
+    Set_Dates_A = set(counts_A.keys())
+    Set_Hours_A = set(Hours_A.keys())
+
+    Set_Dates_C = set(counts_C.keys())
+    Set_Hours_C = set(Hours_C.keys())
+
+    common_dates_A = sorted(Set_Dates_A.intersection(Set_Hours_A))
+    common_dates_C = sorted(Set_Dates_C.intersection(Set_Hours_C))
+
+    ratios_A = [counts_A[date] / Hours_A[date] for date in common_dates_A]
+    ratios_C = [counts_C[date] / Hours_C[date] for date in common_dates_C]
+
+    
+    plt.scatter(common_dates_A, ratios_A, label = 'Swarm A', s=20)
+    plt.scatter(common_dates_C, ratios_C, label = 'Swarm C', s=20)
+    plt.xlabel('Year')
+    plt.ylabel('Occurrence rate')
+    plt.xticks(rotation=45)
+    plt.legend()
+    if Hemisphere == 'NH':
+        plt.title('NH climatology')
+        plt.savefig(savepath + 'NH_climatology.png')
+    elif Hemisphere == 'SH':
+        plt.title('SH climatology')
+        plt.savefig(savepath + 'SH_climatology.png')
+
+    plt.close()
+    return common_dates_A, common_dates_C, ratios_A, ratios_C
+
+
+NH_common_dates_A, NH_common_dates_C, NH_ratios_A, NH_ratios_C = PCP_occurrence_rate('NH', NH_Swarm_A, NH_Swarm_C)
+SH_common_dates_A, SH_common_dates_C, SH_ratios_A, SH_ratios_C = PCP_occurrence_rate('SH', SH_Swarm_A, SH_Swarm_C)
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(16, 8))
+
+# Plot the data on the first subplot
+ax1.set_title('Northern Hemisphere')
+ax1.scatter(NH_common_dates_A, NH_ratios_A, label = 'Swarm A', s=20, color = 'red')
+ax1.scatter(NH_common_dates_C, NH_ratios_C, label = 'Swarm C', s=20, color = 'blue')
+ax1.axhline(y=3)
+
+
+# Plot the data on the second subplot
+ax2.set_title('Southern Hemisphere')
+ax2.scatter(SH_common_dates_A, SH_ratios_A, label = 'Swarm A', s=20, color = 'red')
+ax2.scatter(SH_common_dates_C, SH_ratios_C, label = 'Swarm C', s=20, color = 'blue')
+ax2.axhline(y=3)
+
+fig.suptitle('PCP climatology study. \n PCP occurrence rate from 2014 - 2019.')
+plt.xlabel('Year')
+ax1.set_ylabel('Occurence rate NH')
+ax2.set_ylabel('Occurence rate SH')
+plt.legend()
+
+plt.savefig(savepath + 'Total_climatology.png')
+plt.close()
+
