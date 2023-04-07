@@ -2,21 +2,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm, trange
-import sys
 from scipy import stats
 # data_list = ['Background_Ne', 'Foreground_Ne', 'Grad_Ne_at_100km', 'Grad_Ne_at_20km', 'Grad_Ne_at_50km', 'Grad_Ne_at_PCP_edge',  'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude', 'MLT']
 data_list = ['Ne', 'PCP_flag', 'Timestamp', 'MLT', 'MLAT', 'Foreground_Ne']
 sat_list = ['A', 'C']
 
-#path mac
-path = 'Data/'
-# #path hjemme
-# path = 'D:/Git_Codes/Data/'
+# path mac
+path_mac = 'Data/'
+savepath_mac = 'Figures/'
 
-# #path UiO
-# path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path hjemme
+path_hjemme = 'D:/Git_Codes/Data/'
+savepath_hjemme = 'D:/Git_Codes/Figures/'
 
+# path UiO
+path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
+savepath = savepath_mac
+path = path_mac
+
+#Loading the satellite data
 for sat in tqdm(sat_list, desc = 'Loading satellite data'):
     for name in data_list:
         exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
@@ -39,12 +45,12 @@ for sat in sat_list:
 
 
 def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_flag, PCP_proper):
+    ###Function to calculate the standard deviation between density measurements in the trailing vs leading edge###
     PCP_count = 0    
 
     for i in trange(0, len(PCP), 2, desc = F'Calculating the standard deviation for satellite {sat}'):
-        #, desc = F'Finding and plotting PCP for satellite {sat}'
+
         if (6 <= MLT_max <= 18) & (6 <= MLT_min <= 18):
-            
             if np.abs(MLAT[PCP[i]]) > np.abs(MLAT[PCP[i+1]]):
                 start = PCP[i+1]
                 end = PCP[i]
@@ -58,7 +64,6 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                 end_prop = PCP_proper[np.argmin(np.abs(PCP_proper - end))]
 
         elif ((18 <= MLT_max <= 24) & (18 <= MLT_min <= 24)) | (( 0 <= MLT_max <= 6) & (0 <= MLT_min <= 6)):
-            
             if np.abs(MLAT[PCP[i]]) < np.abs(MLAT[PCP[i+1]]):
                 start = PCP[i+1]
                 end = PCP[i]
@@ -71,7 +76,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                 start_prop = PCP_proper[np.argmin(np.abs(PCP_proper - start))]
                 end_prop = PCP_proper[np.argmin(np.abs(PCP_proper - end))]
 
-
+        #Currently set to the northern hemisphere
         if (np.all((MLAT[start:end] > 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
                                                      (MLT_max >= MLT[start] >= MLT_min) & \
                                                      (MLT_min <= MLT[end] <= MLT_max) & \
@@ -86,9 +91,11 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
             
             #Using a linear regression tool from scipy/stats to calculate the linear regression of the PCP trailing and leading edges
             #This also provides us with the standard deviation 
+            #Calculating the standard deviation for the trailing (slope) and leading edge (slope 1) using density measurements
             slope, intercept, r_value, p_value, std_err = stats.linregress(MLAT[start:start_prop], Ne[start:start_prop])
             slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(MLAT[end_prop:end], Ne[end_prop:end])
             
+            #Calculating the standard deviation for the trailing (slope3) and leading edge (slope 4) using foreground density measurements
             slope3, intercept3, r_value3, p_value3, std_err2 = stats.linregress(MLAT[start:start_prop], Foreground[start:start_prop])
             slope4, intercept4, r_value4, p_value4, std_err3 = stats.linregress(MLAT[end_prop:end], Foreground[end_prop:end])
 
@@ -130,7 +137,6 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                     f_list_PCP_index_0_03.append(start)
                     f_list_PCP_index_0_03.append(end)
 
-                #Dette er lagt til!#¤&%#¤%¤#%¤#%#¤%#¤%¤#
                 elif (18 > MLT[start] > 15) & (15 <= MLT[end] < 18):
                     f_list_Ne_15_18.append(f_Ne)
                     f_list_Fg_15_18.append(f_Foreground)
@@ -163,7 +169,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                 PCP_count +=1
 
 #Empty lists for appending the calculated standard deviation ratios
-#Two lists for every MLT interval, one calculated using density and one using foreground density
+#Two lists for every MLT interval, one calculated using density measurements and one using foreground density
 #MLT 9-12
 f_list_Ne_9_12  = []
 f_list_Fg_9_12  = []
@@ -188,7 +194,6 @@ f_list_Fg_18_21 = []
 #MLT 3-6
 f_list_Ne_3_6   = []
 f_list_Fg_3_6   = []
-
 
 #Index for the PCP used in calculating the ratio
 f_list_PCP_index_9_12   = []
@@ -236,6 +241,7 @@ np.save(path + "Data_fratio_NH_Fg_18_21", np.array(f_list_Fg_18_21))
 np.save(path + "Data_fratio_NH_Ne_3_6", np.array(f_list_Ne_3_6))
 np.save(path + "Data_fratio_NH_Fg_3_6", np.array(f_list_Fg_3_6))
 
+#Saving arrays contaiing the indices for the calculations
 np.save(path + "Data_fratio_NH_array_index_9_12", np.array(f_list_PCP_index_9_12))
 np.save(path + "Data_fratio_NH_array_index_12_15", np.array(f_list_PCP_index_12_15))
 np.save(path + "Data_fratio_NH_array_index_21_24", np.array(f_list_PCP_index_21_24))
@@ -246,23 +252,7 @@ np.save(path + "Data_fratio_NH_array_index_18_21", np.array(f_list_PCP_index_18_
 np.save(path + "Data_fratio_NH_array_index_3_6", np.array(f_list_PCP_index_3_6))
 
 
-print('#### HER ER LISTA ####')
-print(np.array(f_list_PCP_index_9_12))
-print('#### HER ER LISTA ####')
-
-print(len(np.array(f_list_PCP_index_9_12)) / 2)
-print(len(np.array(f_list_Ne_9_12)))
-
-print(len(np.array(f_list_PCP_index_12_15)) / 2)
-print(len(np.array(f_list_Ne_12_15)))
-
-print(len(np.array(f_list_PCP_index_21_24)) / 2)
-print(len(np.array(f_list_Ne_21_24)))
-
-print(len(np.array(f_list_PCP_index_0_03)) / 2)
-print(len(np.array(f_list_Ne_0_03)))
-
-print('Hvor mange patches brukt i std?')
+print('PCPs used in the calculations:')
 print(len(np.array(f_list_Ne_9_12)) + len(np.array(f_list_Ne_12_15)) + len(np.array(f_list_Ne_21_24)) + len(np.array(f_list_Ne_0_03)) \
       + len(np.array(f_list_Ne_15_18)) + len(np.array(f_list_Ne_6_9)) + len(np.array(f_list_Ne_18_21)) + len(np.array(f_list_Ne_3_6)))
 

@@ -1,14 +1,25 @@
 import numpy as np
-import matplotlib.pyplot as plt
-
 import pandas as pd
 import apexpy
 from tqdm import tqdm, trange
+
 data_list = ['Longitude', 'Timestamp', 'Latitude', 'Radius']
 sat_list = ['A', 'B', 'C']
 
+# path mac
+path_mac = 'Data/'
+savepath_mac = 'Figures/'
 
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path hjemme
+path_hjemme = 'D:/Git_Codes/Data/'
+savepath_hjemme = 'D:/Git_Codes/Figures/'
+
+# path UiO
+path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
+
+savepath = savepath_mac
+path = path_mac
 
 for sat in sat_list:
     for name in data_list:
@@ -30,6 +41,7 @@ for sat in sat_list:
     MLT_array = np.zeros(len(Timestamp))
     MLAT_array = np.zeros(len(Timestamp))
     
+    #Calculating the MLT and MLAT data using apexpy
     for i in trange(len(Timestamp)):
         apex_out = apexpy.Apex(Timestamp[i])
         atime = pd.to_datetime(Timestamp[i])
@@ -40,7 +52,7 @@ for sat in sat_list:
     
     #Saving the magnetic local time and magnetic latitude data
     print(f'### Currently saving the MLT and MLAT data for satellite {sat}... ###')
-    np.save(f"C:/Users/krisfau/Desktop/VSCode/Data/Data_{sat}_MLT", MLT_array)
-    np.save(f"C:/Users/krisfau/Desktop/VSCode/Data/Data_{sat}_MLAT", MLAT_array)
+    np.save(path + f"Data_{sat}_MLT", MLT_array)
+    np.save(path + f"Data_{sat}_MLAT", MLAT_array)
 
 print('### The MLT data has been generated and stored locally ###')

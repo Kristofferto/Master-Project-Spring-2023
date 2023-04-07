@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from spacepy import pycdf
 import os
 import pandas as pd
@@ -47,7 +46,7 @@ class SWARM_Data_Retrieval:
 
 
     def name_file(self, year, month, day):
-        #Function that names the file we want to read
+        ###Function that names the file we want to read###
         file_name = f'SW_OPER_IPD{self.sat_name}IRR_2F_{year}{month}{day}T000000_{year}{month}{day}T235959_0301.cdf'
         return file_name
 
@@ -128,23 +127,3 @@ if _name_ == '_main_':
     end_time = time.time()
     print(f'Time elapsed for satellite {sat_name}: {end_time - start_time:.2f} s')
     print('The program is now finished.')
-
-
-
-
-    
-    # start_time = time.time()
-    # obj2 = SWARM_Data_Retrieval(input_list_2)
-    # obj2.run()
-    # end_time = time.time()
-    # print(f'Time elapsed for satellite B: {end_time - start_time:.2f} s')
-    #
-    # start_time = time.time()
-    #
-    # obj3 = SWARM_Data_Retrieval(input_list_3)
-    # obj3.run()
-    # end_time = time.time()
-    # print(f'Time elapsed for satellite A: {end_time - start_time:.2f} s')
-
-    # plt.plot(obj1.Timestamp, obj1.Latitude)
-    # plt.show()

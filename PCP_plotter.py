@@ -1,43 +1,42 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 from tqdm import tqdm, trange
-# data_list = ['Background_Ne', 'Foreground_Ne', 'Grad_Ne_at_100km', 'Grad_Ne_at_20km', 'Grad_Ne_at_50km', 'Grad_Ne_at_PCP_edge',  'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude', 'MLT']
+
 data_list = ['Ne', 'PCP_flag', 'Timestamp', 'MLT', 'MLAT', 'Background_Ne']
 sat_list = ['A', 'B', 'C']
 
-#path mac
-# path = 'Data/'
-# #path hjemme
-# path = 'D:\\Git_Codes\\Data\\'
+# path mac
+path_mac = 'Data/'
+savepath_mac = 'Figures/'
 
-# #path UiO
-path = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+# path hjemme
+path_hjemme = 'D:/Git_Codes/Data/'
+savepath_hjemme = 'D:/Git_Codes/Figures/'
 
+# path UiO
+path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
+savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
+savepath = savepath_mac
+path = path_mac
+
+#Loading the satellite data
 for sat in tqdm(sat_list, desc = 'Loading satellite data'):
     for name in data_list:
         exec(f'{name}_{sat} = np.load("{path}Data_{sat}_{name}.npy", allow_pickle = True)')
 
+#Locating where the PCP flag index changes from 0 to 1 and 1 to 0
 for sat in sat_list:
     exec(f'change01 = np.where((PCP_flag_{sat} == 0) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},1)))[0]')
     exec(f'change10 = np.where((PCP_flag_{sat} == 0) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},-1)))[0]')
     PCP_indices = np.concatenate((change01, change10))
     exec(f'PCP_index_{sat} = np.sort(PCP_indices)')
 
-# DO I NEED TO PLOT WHERE THE TRAILING AND LEADING EDGE 
-# for sat in sat_list:
-#     exec(f'change14 = np.where((PCP_flag_{sat} == 4) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},1)))[0]')
-#     exec(f'change41 = np.where((PCP_flag_{sat} == 4) & (PCP_flag_{sat} != np.roll(PCP_flag_{sat},-1)))[0]')
-#     PCP_proper = np.concatenate((change14, change41))
-#     exec(f'PCP_proper_{sat} = np.sort(PCP_proper)')
-
-
 
 def PCP_plotter(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP_flag):
+    ###Function to plots PCPs five at a time###
     PCP_count = 0    
  
-
     for i in trange(0, len(PCP), 2, desc = F'Finding and plotting PCP for satellite {sat}'):
 
         #Setting the start and end of every patch on the dayside
@@ -75,11 +74,9 @@ def PCP_plotter(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Background, PCP
             #Interpolating so that the PCPs have the same length
             y1 = np.interp(x_range, np.linspace(0, 100, len(MLAT[start:end])), Ne[start:end])
 
-            
             # plt.xlabel('MLAT')
             plt.ylabel('Ne ($10^4 cm^{-3}$)')
             plt.plot(x_range, y1 /1e4, label = f'SWARM {sat}. Patch number: {PCP_count}')
-
 
             #Plotting five PCPs on the same plot
             if PCP_count % 5 == 0:
