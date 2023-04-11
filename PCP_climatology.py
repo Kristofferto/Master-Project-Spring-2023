@@ -266,8 +266,6 @@ NH_Swarm_C_time = Hour_date_NH(Timestamp_C, MLAT_C)
 SH_Swarm_A_time = Hour_date_SH(Timestamp_A, MLAT_A)
 SH_Swarm_C_time = Hour_date_SH(Timestamp_C, MLAT_C)
 
-start_summer = datetime.datetime(2000, 4, 1)
-end_summer = datetime.datetime(2000, 10, 1)
 
 def PCP_occurrence_rate(Hemisphere, index_list_A, index_list_C):
     ###Funtion for plotting the PCP climatology study, i.e. PCP occurrence rate in the northern and southern hemisphere###
@@ -334,15 +332,29 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(16, 8))
 
 # Plot the data on the first subplot
 ax1.set_title('Northern Hemisphere')
+ax1.set_ylim(0, 3)
 ax1.scatter(NH_common_dates_A, NH_ratios_A, label = 'Swarm A', s=20, color = 'red')
 ax1.scatter(NH_common_dates_C, NH_ratios_C, label = 'Swarm C', s=20, color = 'blue')
-ax1.axhline(y=3)
+
+
+
+
 
 #Plot the data on the second subplot
 ax2.set_title('Southern Hemisphere')
+ax2.set_ylim(0, 3)
 ax2.scatter(SH_common_dates_A, SH_ratios_A, label = 'Swarm A', s=20, color = 'red')
 ax2.scatter(SH_common_dates_C, SH_ratios_C, label = 'Swarm C', s=20, color = 'blue')
-ax2.axhline(y=3)
+
+
+for year in range(2014, 2020):
+    ax1.axvspan(datetime.date(year, 5, 1), datetime.date(year, 9, 30), facecolor='yellow', alpha=0.3)
+    ax1.axvspan(datetime.date(year, 10, 1), datetime.date(year + 1, 4, 30), facecolor='blue', alpha=0.3)
+
+    ax2.axvspan(datetime.date(year, 5, 1), datetime.date(year, 9, 30), facecolor='yellow', alpha=0.3)
+    ax2.axvspan(datetime.date(year, 10, 1), datetime.date(year + 1, 4, 30), facecolor='blue', alpha=0.3)
+
+
 
 fig.suptitle('PCP climatology study. \n PCP occurrence rate from 2014 - 2019.')
 plt.xlabel('Year')
@@ -351,5 +363,6 @@ ax2.set_ylabel('Occurence rate SH')
 plt.legend()
 
 plt.savefig(savepath + 'Total_climatology.png')
+plt.show()
 plt.close()
 
