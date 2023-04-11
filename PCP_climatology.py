@@ -363,6 +363,5 @@ ax2.set_ylabel('Occurence rate SH')
 plt.legend()
 
 plt.savefig(savepath + 'Total_climatology.png')
-plt.show()
 plt.close()
 
