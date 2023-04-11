@@ -77,7 +77,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                 end_prop = PCP_proper[np.argmin(np.abs(PCP_proper - end))]
 
         #Currently set to the northern hemisphere
-        if (np.all((MLAT[start:end] > 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
+        if (np.all((MLAT[start:end] < 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
                                                      (MLT_max >= MLT[start] >= MLT_min) & \
                                                      (MLT_min <= MLT[end] <= MLT_max) & \
                                                      ((end - start) > 15) & \
@@ -217,39 +217,39 @@ for sat in sat_list:
 
 #Saving arrays containing the calculated standard deviation ratios
 print(f'### Currently saving the f ratio data... ###')
-np.save(path + "Data_fratio_NH_Ne_9_12", np.array(f_list_Ne_9_12))
-np.save(path + "Data_fratio_NH_Fg_9_12", np.array(f_list_Fg_9_12))
+np.save(path + "Data_fratio_SH_Ne_9_12", np.array(f_list_Ne_9_12))
+np.save(path + "Data_fratio_SH_Fg_9_12", np.array(f_list_Fg_9_12))
 
-np.save(path + "Data_fratio_NH_Ne_12_15", np.array(f_list_Ne_12_15))
-np.save(path + "Data_fratio_NH_Fg_12_15", np.array(f_list_Fg_12_15))
+np.save(path + "Data_fratio_SH_Ne_12_15", np.array(f_list_Ne_12_15))
+np.save(path + "Data_fratio_SH_Fg_12_15", np.array(f_list_Fg_12_15))
 
-np.save(path + "Data_fratio_NH_Ne_21_24", np.array(f_list_Ne_21_24))
-np.save(path + "Data_fratio_NH_Fg_21_24", np.array(f_list_Fg_21_24))
+np.save(path + "Data_fratio_SH_Ne_21_24", np.array(f_list_Ne_21_24))
+np.save(path + "Data_fratio_SH_Fg_21_24", np.array(f_list_Fg_21_24))
 
-np.save(path + "Data_fratio_NH_Ne_0_03", np.array(f_list_Ne_0_03))
-np.save(path + "Data_fratio_NH_Fg_0_03", np.array(f_list_Fg_0_03))
+np.save(path + "Data_fratio_SH_Ne_0_03", np.array(f_list_Ne_0_03))
+np.save(path + "Data_fratio_SH_Fg_0_03", np.array(f_list_Fg_0_03))
 
-np.save(path + "Data_fratio_NH_Ne_15_18", np.array(f_list_Ne_15_18))
-np.save(path + "Data_fratio_NH_Fg_15_18", np.array(f_list_Fg_15_18))
+np.save(path + "Data_fratio_SH_Ne_15_18", np.array(f_list_Ne_15_18))
+np.save(path + "Data_fratio_SH_Fg_15_18", np.array(f_list_Fg_15_18))
 
-np.save(path + "Data_fratio_NH_Ne_6_9", np.array(f_list_Ne_6_9))
-np.save(path + "Data_fratio_NH_Fg_6_9", np.array(f_list_Fg_6_9))
+np.save(path + "Data_fratio_SH_Ne_6_9", np.array(f_list_Ne_6_9))
+np.save(path + "Data_fratio_SH_Fg_6_9", np.array(f_list_Fg_6_9))
 
-np.save(path + "Data_fratio_NH_Ne_18_21", np.array(f_list_Ne_18_21))
-np.save(path + "Data_fratio_NH_Fg_18_21", np.array(f_list_Fg_18_21))
+np.save(path + "Data_fratio_SH_Ne_18_21", np.array(f_list_Ne_18_21))
+np.save(path + "Data_fratio_SH_Fg_18_21", np.array(f_list_Fg_18_21))
 
-np.save(path + "Data_fratio_NH_Ne_3_6", np.array(f_list_Ne_3_6))
-np.save(path + "Data_fratio_NH_Fg_3_6", np.array(f_list_Fg_3_6))
+np.save(path + "Data_fratio_SH_Ne_3_6", np.array(f_list_Ne_3_6))
+np.save(path + "Data_fratio_SH_Fg_3_6", np.array(f_list_Fg_3_6))
 
 #Saving arrays contaiing the indices for the calculations
-np.save(path + "Data_fratio_NH_array_index_9_12", np.array(f_list_PCP_index_9_12))
-np.save(path + "Data_fratio_NH_array_index_12_15", np.array(f_list_PCP_index_12_15))
-np.save(path + "Data_fratio_NH_array_index_21_24", np.array(f_list_PCP_index_21_24))
-np.save(path + "Data_fratio_NH_array_index_0_03", np.array(f_list_PCP_index_0_03))
-np.save(path + "Data_fratio_NH_array_index_15_18", np.array(f_list_PCP_index_15_18))
-np.save(path + "Data_fratio_NH_array_index_6_9", np.array(f_list_PCP_index_6_9))
-np.save(path + "Data_fratio_NH_array_index_18_21", np.array(f_list_PCP_index_18_21))
-np.save(path + "Data_fratio_NH_array_index_3_6", np.array(f_list_PCP_index_3_6))
+np.save(path + "Data_fratio_SH_array_index_9_12", np.array(f_list_PCP_index_9_12))
+np.save(path + "Data_fratio_SH_array_index_12_15", np.array(f_list_PCP_index_12_15))
+np.save(path + "Data_fratio_SH_array_index_21_24", np.array(f_list_PCP_index_21_24))
+np.save(path + "Data_fratio_SH_array_index_0_03", np.array(f_list_PCP_index_0_03))
+np.save(path + "Data_fratio_SH_array_index_15_18", np.array(f_list_PCP_index_15_18))
+np.save(path + "Data_fratio_SH_array_index_6_9", np.array(f_list_PCP_index_6_9))
+np.save(path + "Data_fratio_SH_array_index_18_21", np.array(f_list_PCP_index_18_21))
+np.save(path + "Data_fratio_SH_array_index_3_6", np.array(f_list_PCP_index_3_6))
 
 
 print('PCPs used in the calculations:')
