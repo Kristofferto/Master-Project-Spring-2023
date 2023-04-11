@@ -24,8 +24,8 @@ path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
 
-savepath = savepath_mac
-path = path_mac
+savepath = savepath_UiO
+path = path_UiO
 
 #Loading satellite data
 for sat in tqdm(sat_list, desc = 'Loading locally stored data'):
@@ -265,6 +265,9 @@ NH_Swarm_C_time = Hour_date_NH(Timestamp_C, MLAT_C)
 
 SH_Swarm_A_time = Hour_date_SH(Timestamp_A, MLAT_A)
 SH_Swarm_C_time = Hour_date_SH(Timestamp_C, MLAT_C)
+
+start_summer = datetime.datetime(2000, 4, 1)
+end_summer = datetime.datetime(2000, 10, 1)
 
 def PCP_occurrence_rate(Hemisphere, index_list_A, index_list_C):
     ###Funtion for plotting the PCP climatology study, i.e. PCP occurrence rate in the northern and southern hemisphere###

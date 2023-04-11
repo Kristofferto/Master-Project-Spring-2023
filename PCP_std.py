@@ -19,8 +19,8 @@ savepath_hjemme = 'D:/Git_Codes/Figures/'
 path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
-savepath = savepath_mac
-path = path_mac
+savepath = savepath_UiO
+path = path_UiO
 
 #Loading the satellite data
 for sat in tqdm(sat_list, desc = 'Loading satellite data'):
