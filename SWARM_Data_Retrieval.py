@@ -17,7 +17,7 @@ class SWARM_Data_Retrieval:
         self.end_month= str(input_list[5]).zfill(2)
         self.end_day  = str(input_list[6]).zfill(2)
         #List containing the variables we are interested in saving
-        self.array_list = ['Background_Ne', 'Foreground_Ne', 'Grad_Ne_at_100km', 'Grad_Ne_at_20km', 'Grad_Ne_at_50km', 'Grad_Ne_at_PCP_edge',  'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude']
+        self.array_list = ['Background_Ne', 'Foreground_Ne', 'Longitude', 'Ne', 'PCP_flag', 'Radius', 'Timestamp', 'Latitude']
 
         #Creating empty lists for the different variables defined in 'array_list'
         for name in self.array_list:
@@ -106,7 +106,7 @@ class SWARM_Data_Retrieval:
         self.save_data()
 
 
-if _name_ == '_main_':
+if __name__ == '__main__':
 
     #The chosen satellite and date to evaluate
     sat_name    = 'A'
