@@ -99,7 +99,7 @@ class SWARM_Data_Retrieval:
         #Deleting irrelevant data
         print('### The data is currently being trimmed down... ### \n')
 
-        self.data_chopper()
+        #self.data_chopper()
 
         #Saving the trimmed arrays for easier use later on
         print('### The data is currently being Stored... ### \n')
