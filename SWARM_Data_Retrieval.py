@@ -127,3 +127,4 @@ if _name_ == '_main_':
     end_time = time.time()
     print(f'Time elapsed for satellite {sat_name}: {end_time - start_time:.2f} s')
     print('The program is now finished.')
+
