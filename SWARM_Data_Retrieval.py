@@ -75,7 +75,7 @@ class SWARM_Data_Retrieval:
     def save_data(self):
         ###Function to save the data as binary numpy arrays###
         for name in self.array_list:
-            exec(f'np.save("SWARM_{self.sat_name}_DATA/TEST_Data_{self.sat_name}_{name}", self.{name})')
+            exec(f'np.save("SWARM_{self.sat_name}_DATA/Data_{self.sat_name}_{name}", self.{name})')
 
 
     def run(self):
