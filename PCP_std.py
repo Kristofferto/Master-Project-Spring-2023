@@ -15,12 +15,14 @@ savepath_mac = 'Figures/'
 path_hjemme = 'D:/Git_Codes/Data/'
 savepath_hjemme = 'D:/Git_Codes/Figures/'
 
+path_hjemme_test = 'D:/Git_Codes/NyData/'
+
 # path UiO
 path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
 savepath = savepath_mac
-path = path_mac
+path = path_hjemme_test
 
 #Loading the satellite data
 for sat in tqdm(sat_list, desc = 'Loading satellite data'):
@@ -78,7 +80,7 @@ def PCP_std(PCP, MLT, MLT_max, MLT_min, MLAT, Ne, Time, sat, Foreground, PCP_fla
                 end_prop = PCP_proper[np.argmin(np.abs(PCP_proper - end))]
 
         #Currently set to the northern hemisphere
-        if (np.all((MLAT[start:end] > 0)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
+        if (np.all((MLAT[start:end] <= -77)) == True) & (np.all((Ne[start:end] > 0)) == True) & \
                                                      (MLT_max >= MLT[start] >= MLT_min) & \
                                                      (MLT_min <= MLT[end] <= MLT_max) & \
                                                      ((end - start) > 15) & \
@@ -215,11 +217,12 @@ for sat in sat_list:
         MLT_min = MLT_min_list[i]
         exec(f'PCP_std(PCP_index_{sat}, MLT_{sat}, MLT_max, MLT_min, MLAT_{sat}, Ne_{sat}, Timestamp_{sat}, sat, Foreground_Ne_{sat}, PCP_flag_{sat}, PCP_proper_{sat})')
         plt.close()
-print('PCPs used in the calculations:')
-print(len(np.array(f_list_Ne_9_12)) + len(np.array(f_list_Ne_12_15)) + len(np.array(f_list_Ne_21_24)) + len(np.array(f_list_Ne_0_03)) \
-      + len(np.array(f_list_Ne_15_18)) + len(np.array(f_list_Ne_6_9)) + len(np.array(f_list_Ne_18_21)) + len(np.array(f_list_Ne_3_6)))
 
-quit()
+# print('PCPs used in the calculations:')
+# print(len(np.array(f_list_Ne_9_12)) + len(np.array(f_list_Ne_12_15)) + len(np.array(f_list_Ne_21_24)) + len(np.array(f_list_Ne_0_03)) \
+#       + len(np.array(f_list_Ne_15_18)) + len(np.array(f_list_Ne_6_9)) + len(np.array(f_list_Ne_18_21)) + len(np.array(f_list_Ne_3_6)))
+
+# quit()
 
 #Saving arrays containing the calculated standard deviation ratios
 print(f'### Currently saving the f ratio data... ###')
