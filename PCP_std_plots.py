@@ -22,8 +22,8 @@ path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
 
-savepath = savepath_hjemme
-path = path_hjemme_test
+savepath = savepath_mac
+path = path_mac
 
 #Loading the satellite data
 for sat in tqdm(sat_list, desc = 'Loading locally stored data'):
@@ -118,14 +118,14 @@ S_index_18_21 = Data_fratio_SH_array_index_18_21
 
 #Creating boxplots for the standard deviation ratio for the northern and southern hemisphere.
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
-fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
+fig.suptitle('Boxplot for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
 ax1.boxplot([N_9_12, N_12_15, N_21_24, N_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
 ax1.set_ylim([-5, 40])
 ax2.boxplot([S_9_12, S_12_15, S_21_24, S_0_03], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
 ax2.set_ylim([-5, 100])
 ax1.set_title('Nortern Hemisphere')
 ax2.set_title('Southern Hemisphere')
-ax1.set_ylabel('Standard deviation ratio f')
+ax1.set_ylabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
 plt.savefig(savepath + 'Boxplot.png')
 # plt.show()
@@ -146,7 +146,7 @@ def find_index(array):
 
 #Plotting histograms for the standard deviation ratios for the southern hemisphere
 fig4, axs = plt.subplots(2, 2, figsize = (12, 10))
-fig4.suptitle('Histogram of the standard deviation ratio calculations. \n Sorted using MLT. \n Southern Hemisphere.')
+fig4.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Southern Hemisphere.')
 hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 axs[0,0].hist(S_9_12, bins = hist_bins, histtype='bar', ec='black')
 axs[0,1].hist(S_12_15, bins = hist_bins, histtype='bar', ec='black')
@@ -160,17 +160,40 @@ axs[1,1].set_title('MLT 0-03')
 
 axs[0,0].set_ylabel('Frequency')
 axs[1,0].set_ylabel('Frequency')
-axs[1,0].set_xlabel('Standard deviation ratio f')
-axs[1,1].set_xlabel('Standard deviation ratio f')
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
 plt.savefig(savepath + 'Hist_std_SH_AC.png')
 # plt.show()
 plt.close()
 
+fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.')
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+axs[0,0].hist(S_6_9, bins = hist_bins, histtype='bar', ec='black')
+axs[0,1].hist(S_15_18, bins = hist_bins, histtype='bar', ec='black')
+axs[1,0].hist(S_18_21, bins = hist_bins, histtype='bar', ec='black')
+axs[1,1].hist(S_3_6, bins = hist_bins, histtype='bar', ec='black')
+
+axs[0,0].set_title('MLT 6-9')
+axs[0,1].set_title('MLT 15-18')
+axs[1,0].set_title('MLT 18-21')
+axs[1,1].set_title('MLT 3-6')
+
+axs[0,0].set_ylabel('Frequency')
+axs[1,0].set_ylabel('Frequency')
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+
+plt.savefig(savepath + 'Hist_Side_std_SH_AC.png')
+# plt.show()
+plt.close()
+
+
 
 #Plotting histograms for the standard deviation ratios for the northern hemisphere
 fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
-fig5.suptitle('Histogram of the standard deviation ratio calculations. \n Sorted using MLT. \n Northern Hemisphere.')
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.')
 hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 axs[0,0].hist(N_9_12, bins = hist_bins, histtype='bar', ec='black')
 axs[0,1].hist(N_12_15, bins = hist_bins, histtype='bar', ec='black')
@@ -184,14 +207,35 @@ axs[1,1].set_title('MLT 0-03')
 
 axs[0,0].set_ylabel('Frequency')
 axs[1,0].set_ylabel('Frequency')
-axs[1,0].set_xlabel('Standard deviation ratio f')
-axs[1,1].set_xlabel('Standard deviation ratio f')
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
 plt.savefig(savepath + 'Hist_std_NH_AC.png')
 # plt.show()
 plt.close()
 
 
+fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.')
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+axs[0,0].hist(N_6_9, bins = hist_bins, histtype='bar', ec='black')
+axs[0,1].hist(N_15_18, bins = hist_bins, histtype='bar', ec='black')
+axs[1,0].hist(N_18_21, bins = hist_bins, histtype='bar', ec='black')
+axs[1,1].hist(N_3_6, bins = hist_bins, histtype='bar', ec='black')
+
+axs[0,0].set_title('MLT 6-9')
+axs[0,1].set_title('MLT 15-18')
+axs[1,0].set_title('MLT 18-21')
+axs[1,1].set_title('MLT 3-6')
+
+axs[0,0].set_ylabel('Frequency')
+axs[1,0].set_ylabel('Frequency')
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+
+plt.savefig(savepath + 'Hist_Side_std_NH_AC.png')
+# plt.show()
+plt.close()
 
 """
 PLOTTING SUMMER AND WINTER SPLIT FOR NORTHERN AND SOUTHERN HEMISPHERE
@@ -207,7 +251,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
         array_list_SH[i][(1 <= array_list_SH[i]) & (array_list_SH[i] < 2)] = 0
         array_list_SH[i][2 <=array_list_SH[i]] = 1
 
-        
+    #Box plot
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
     fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
     ax1.boxplot([array_list_NH[0], array_list_NH[1], array_list_NH[2], array_list_NH[3]], labels = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03'])
@@ -216,9 +260,43 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax2.set_ylim([-2, 2])
     ax1.set_title('Nortern Hemisphere')
     ax2.set_title('Southern Hemisphere')
-    ax1.set_ylabel('Standard deviation ratio f')
+    ax1.set_ylabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
     plt.savefig(savepath + 'Boxplotoneminusone.png')
+    # plt.show()
+    plt.close()
+
+    #Bar plot
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
+    fig.suptitle('Bar plot showing the occurrence of GDI in PCPs. \n Sorted using MLT.')
+    
+    No_GDI_NH = [(array_list_NH[0] == -1).sum(), (array_list_NH[1] == -1).sum(), (array_list_NH[2] == -1).sum(), (array_list_NH[3] == -1).sum()]
+    Inc_GDI_NH = [(array_list_NH[0] == 0).sum(), (array_list_NH[1] == 0).sum(), (array_list_NH[2] == 0).sum(), (array_list_NH[3] == 0).sum()]
+    GDI_NH = [(array_list_NH[0] == 1).sum(), (array_list_NH[1] == 1).sum(), (array_list_NH[2] == 1).sum(), (array_list_NH[3] == 1).sum()]
+
+    No_GDI_SH = [(array_list_SH[0] == -1).sum(), (array_list_SH[1] == -1).sum(), (array_list_SH[2] == -1).sum(), (array_list_SH[3] == -1).sum()]
+    Inc_GDI_SH = [(array_list_SH[0] == 0).sum(), (array_list_SH[1] == 0).sum(), (array_list_SH[2] == 0).sum(), (array_list_SH[3] == 0).sum()]
+    GDI_SH = [(array_list_SH[0] == 1).sum(), (array_list_SH[1] == 1).sum(), (array_list_SH[2] == 1).sum(), (array_list_SH[3] == 1).sum()]
+
+    
+    X = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03']
+    X_axis = np.arange(len(X))    
+
+    ax1.bar(X_axis - 0.2, No_GDI_NH, width = 0.2, color ='r', align = 'center')
+    ax1.bar(X_axis, Inc_GDI_NH, width = 0.2, color ='b', align = 'center')
+    ax1.bar(X_axis + 0.2, GDI_NH, width = 0.2, color ='g', align = 'center')
+
+    ax2.bar(X_axis - 0.2, No_GDI_SH, width = 0.2, color ='r', align = 'center')
+    ax2.bar(X_axis, Inc_GDI_SH, width = 0.2, color ='b', align = 'center')
+    ax2.bar(X_axis + 0.2, GDI_SH, width = 0.2, color ='g', align = 'center')
+
+    ax1.set_xticks(X_axis, X)
+    ax2.set_xticks(X_axis, X)
+    ax1.set_title('Nortern Hemisphere')
+    ax2.set_title('Southern Hemisphere')
+    ax1.set_ylabel('Number of patches')
+
+    plt.savefig(savepath + 'Barplot.png')
     # plt.show()
     plt.close()
 
@@ -232,7 +310,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
         San_array_list_SH[i][(1 <= San_array_list_SH[i]) & (San_array_list_SH[i] < 2)] = 0
         San_array_list_SH[i][2 <=San_array_list_SH[i]] = 1
 
-        
+    #Boxplot
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
     fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
     ax1.boxplot([San_array_list_NH[0], San_array_list_NH[1], San_array_list_NH[2], San_array_list_NH[3]], labels = ['MLT 6-9', 'MLT 15-18', 'MLT 18-21', 'MLT 3-6'])
@@ -241,9 +319,41 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax2.set_ylim([-2, 2])
     ax1.set_title('Nortern Hemisphere')
     ax2.set_title('Southern Hemisphere')
-    ax1.set_ylabel('Standard deviation ratio f')
+    ax1.set_ylabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
     plt.savefig(savepath + 'Side_Boxplotoneminusone.png')
+    # plt.show()
+    plt.close()
+
+    #Bar plot
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
+    fig.suptitle('Bar plot showing the occurrence of GDI in PCPs. \n Sorted using MLT.')
+
+    Side_No_GDI_NH = [(San_array_list_NH[0] == -1).sum(), (San_array_list_NH[1] == -1).sum(), (San_array_list_NH[2] == -1).sum(), (San_array_list_NH[3] == -1).sum()]
+    Side_Inc_GDI_NH = [(San_array_list_NH[0] == 0).sum(), (San_array_list_NH[1] == 0).sum(), (San_array_list_NH[2] == 0).sum(), (San_array_list_NH[3] == 0).sum()]
+    Side_GDI_NH = [(San_array_list_NH[0] == 1).sum(), (San_array_list_NH[1] == 1).sum(), (San_array_list_NH[2] == 1).sum(), (San_array_list_NH[3] == 1).sum()]
+
+    Side_No_GDI_SH = [(San_array_list_SH[0] == -1).sum(), (San_array_list_SH[1] == -1).sum(), (San_array_list_SH[2] == -1).sum(), (San_array_list_SH[3] == -1).sum()]
+    Side_Inc_GDI_SH = [(San_array_list_SH[0] == 0).sum(), (San_array_list_SH[1] == 0).sum(), (San_array_list_SH[2] == 0).sum(), (San_array_list_SH[3] == 0).sum()]
+    Side_GDI_SH = [(San_array_list_SH[0] == 1).sum(), (San_array_list_SH[1] == 1).sum(), (San_array_list_SH[2] == 1).sum(), (San_array_list_SH[3] == 1).sum()]
+
+    X = ['MLT 6-9', 'MLT 15-18', 'MLT 18-21', 'MLT 3-6']
+    X_axis = np.arange(len(X))
+    ax1.bar(X_axis - 0.2, Side_No_GDI_NH, width = 0.2, color ='r', align = 'center')
+    ax1.bar(X_axis, Side_Inc_GDI_NH, width = 0.2, color ='b', align = 'center')
+    ax1.bar(X_axis + 0.2, Side_GDI_NH, width = 0.2, color ='g', align = 'center')
+
+    ax2.bar(X_axis - 0.2, Side_No_GDI_SH, width = 0.2, color ='r', align = 'center')
+    ax2.bar(X_axis, Side_Inc_GDI_SH, width = 0.2, color ='b', align = 'center')
+    ax2.bar(X_axis + 0.2, Side_GDI_SH, width = 0.2, color ='g', align = 'center')
+
+    ax1.set_xticks(X_axis, X)
+    ax2.set_xticks(X_axis, X)
+    ax1.set_title('Nortern Hemisphere')
+    ax2.set_title('Southern Hemisphere')
+    ax1.set_ylabel('Number of patches')
+
+    plt.savefig(savepath + 'Side_Barplot.png')
     # plt.show()
     plt.close()
     
@@ -403,8 +513,8 @@ def seasonal_variation_plots(Hemisphere, array_list_winter, array_list_summer):
 
     axs[0,0].set_ylabel('Frequency')
     axs[1,0].set_ylabel('Frequency')
-    axs[1,0].set_xlabel('Standard deviation ratio f')
-    axs[1,1].set_xlabel('Standard deviation ratio f')
+    axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+    axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
     if Hemisphere == 'NH':
         fig6.suptitle('Histogram of the standard deviation ratio calculations during winter. \n Northern Hemisphere.')
@@ -432,8 +542,8 @@ def seasonal_variation_plots(Hemisphere, array_list_winter, array_list_summer):
 
     axs[0,0].set_ylabel('Frequency')
     axs[1,0].set_ylabel('Frequency')
-    axs[1,0].set_xlabel('Standard deviation ratio f')
-    axs[1,1].set_xlabel('Standard deviation ratio f')
+    axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+    axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
     if Hemisphere == 'NH':
         fig6.suptitle('Histogram of the standard deviation ratio calculations during summer. \n Northern Hemisphere.')
@@ -463,7 +573,7 @@ def seasonal_variation_plots(Hemisphere, array_list_winter, array_list_summer):
 
     ax1.set_title('Local Winter')
     ax2.set_title('Local Summer')
-    ax1.set_ylabel('Standard deviation ratio f')
+    ax1.set_ylabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
     if Hemisphere == 'NH':
         fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT. \n Northern Hemisphere.')
@@ -497,8 +607,8 @@ def duskdawn_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_
 
     axs[0,0].set_ylabel('Frequency')
     axs[1,0].set_ylabel('Frequency')
-    axs[1,0].set_xlabel('Standard deviation ratio f')
-    axs[1,1].set_xlabel('Standard deviation ratio f')
+    axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+    axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
     if Hemisphere == 'NH':
         fig6.suptitle('Histogram of the standard deviation ratio calculations during winter. \n Northern Hemisphere.')
@@ -525,8 +635,8 @@ def duskdawn_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_
 
     axs[0,0].set_ylabel('Frequency')
     axs[1,0].set_ylabel('Frequency')
-    axs[1,0].set_xlabel('Standard deviation ratio f')
-    axs[1,1].set_xlabel('Standard deviation ratio f')
+    axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+    axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
     if Hemisphere == 'NH':
         fig6.suptitle('Histogram of the standard deviation ratio calculations during summer. \n Northern Hemisphere.')
@@ -556,7 +666,7 @@ def duskdawn_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_
 
     ax1.set_title('Local Winter')
     ax2.set_title('Local Summer')
-    ax1.set_ylabel('Standard deviation ratio f')
+    ax1.set_ylabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
     if Hemisphere == 'NH':
         fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT. \n Northern Hemisphere.')
         plt.savefig(savepath + 'Side_Seaesonal_variation_NH_boxplot.png')

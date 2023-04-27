@@ -25,8 +25,8 @@ path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
 savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
 
-savepath = savepath_hjemme
-path = path_hjemme_test
+savepath = savepath_mac
+path = path_mac
 
 #Loading satellite data
 for sat in tqdm(sat_list, desc = 'Loading locally stored data'):
@@ -349,18 +349,18 @@ ax2.scatter(SH_common_dates_C, SH_ratios_C, label = 'Swarm C', s=20, color = 'bl
 
 
 for year in range(2014, 2020):
-    ax1.axvspan(datetime.date(year, 5, 1), datetime.date(year, 9, 30), facecolor='yellow', alpha=0.3)
-    ax1.axvspan(datetime.date(year, 10, 1), datetime.date(year + 1, 4, 30), facecolor='blue', alpha=0.3)
+    ax1.axvspan(datetime.date(year, 3, 21), datetime.date(year, 9, 23), facecolor='yellow', alpha=0.3)
+    ax1.axvspan(datetime.date(year, 9, 24), datetime.date(year + 1, 3, 20), facecolor='blue', alpha=0.3)
 
-    ax2.axvspan(datetime.date(year, 5, 1), datetime.date(year, 9, 30), facecolor='yellow', alpha=0.3)
-    ax2.axvspan(datetime.date(year, 10, 1), datetime.date(year + 1, 4, 30), facecolor='blue', alpha=0.3)
+    ax2.axvspan(datetime.date(year, 3, 21), datetime.date(year, 9, 23), facecolor='yellow', alpha=0.3)
+    ax2.axvspan(datetime.date(year, 9, 24), datetime.date(year + 1, 3, 20), facecolor='blue', alpha=0.3)
 
 
 
-fig.suptitle('PCP climatology study. \n PCP occurrence rate from 2014 - 2019.')
+fig.suptitle('PCP climatology study. \n PCP occurrence rate from 2014 to 2019.')
 plt.xlabel('Year')
-ax1.set_ylabel('Occurence rate NH')
-ax2.set_ylabel('Occurence rate SH')
+ax1.set_ylabel('Occurrence rate NH \n (#/$h_{PC}$)')
+ax2.set_ylabel('Occurrence rate SH \n (#/$h_{PC}$)')
 plt.legend()
 
 plt.savefig(savepath + 'Total_climatology.png')
