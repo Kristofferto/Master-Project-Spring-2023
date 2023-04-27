@@ -297,7 +297,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax1.set_ylabel('Number of patches')
 
     plt.savefig(savepath + 'Barplot.png')
-    plt.legend(loc = 'Upper right')
+    plt.legend(loc = 'upper right')
     # plt.show()
     plt.close()
 
@@ -357,7 +357,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
 
     plt.savefig(savepath + 'Side_Barplot.png')
     # plt.show()
-    plt.legend(loc = 'Upper right')
+    plt.legend(loc = 'upper right')
     plt.close()
     
 
