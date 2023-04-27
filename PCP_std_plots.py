@@ -286,9 +286,9 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax1.bar(X_axis, Inc_GDI_NH, width = 0.2, color ='b', align = 'center')
     ax1.bar(X_axis + 0.2, GDI_NH, width = 0.2, color ='g', align = 'center')
 
-    ax2.bar(X_axis - 0.2, No_GDI_SH, width = 0.2, color ='r', align = 'center')
-    ax2.bar(X_axis, Inc_GDI_SH, width = 0.2, color ='b', align = 'center')
-    ax2.bar(X_axis + 0.2, GDI_SH, width = 0.2, color ='g', align = 'center')
+    ax2.bar(X_axis - 0.2, No_GDI_SH, width = 0.2, color ='r', align = 'center', label = 'No GDI')
+    ax2.bar(X_axis, Inc_GDI_SH, width = 0.2, color ='b', align = 'center', label = 'Inconclusive')
+    ax2.bar(X_axis + 0.2, GDI_SH, width = 0.2, color ='g', align = 'center', label = 'GDI')
 
     ax1.set_xticks(X_axis, X)
     ax2.set_xticks(X_axis, X)
@@ -297,6 +297,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax1.set_ylabel('Number of patches')
 
     plt.savefig(savepath + 'Barplot.png')
+    plt.legend(loc = 'Upper right')
     # plt.show()
     plt.close()
 
@@ -323,6 +324,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
 
     plt.savefig(savepath + 'Side_Boxplotoneminusone.png')
     # plt.show()
+
     plt.close()
 
     #Bar plot
@@ -343,9 +345,9 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax1.bar(X_axis, Side_Inc_GDI_NH, width = 0.2, color ='b', align = 'center')
     ax1.bar(X_axis + 0.2, Side_GDI_NH, width = 0.2, color ='g', align = 'center')
 
-    ax2.bar(X_axis - 0.2, Side_No_GDI_SH, width = 0.2, color ='r', align = 'center')
-    ax2.bar(X_axis, Side_Inc_GDI_SH, width = 0.2, color ='b', align = 'center')
-    ax2.bar(X_axis + 0.2, Side_GDI_SH, width = 0.2, color ='g', align = 'center')
+    ax2.bar(X_axis - 0.2, Side_No_GDI_SH, width = 0.2, color ='r', align = 'center', label = 'No GDI')
+    ax2.bar(X_axis, Side_Inc_GDI_SH, width = 0.2, color ='b', align = 'center', label = 'Inconclusive')
+    ax2.bar(X_axis + 0.2, Side_GDI_SH, width = 0.2, color ='g', align = 'center', label = 'GDI')
 
     ax1.set_xticks(X_axis, X)
     ax2.set_xticks(X_axis, X)
@@ -355,6 +357,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
 
     plt.savefig(savepath + 'Side_Barplot.png')
     # plt.show()
+    plt.legend(loc = 'Upper right')
     plt.close()
     
 
