@@ -114,9 +114,9 @@ if __name__ == '__main__':
     start_month = 7
     start_day   = 15
 
-    end_year    = 2014
-    end_month   = 7
-    end_day     = 20
+    end_year    = 2020
+    end_month   = 12
+    end_day     = 31
 
     input_list   = [sat_name, start_year, start_month, start_day, end_year, end_month, end_day]
 

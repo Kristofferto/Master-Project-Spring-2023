@@ -10,20 +10,9 @@ data_list = ['Timestamp', 'MLAT']
 sat_list = ['A', 'C']
 hemisphere_indicator = ['NH', 'SH']
 
-# path mac
+#Path
 path_mac = 'Data/'
 savepath_mac = 'Figures/'
-
-# path hjemme
-path_hjemme = 'D:/Git_Codes/Data/'
-savepath_hjemme = 'D:/Git_Codes/Figures/'
-path_hjemme_test = 'D:/Git_Codes/NyData/'
-
-
-# path UiO
-path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
-savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
-
 
 savepath = savepath_mac
 path = path_mac
@@ -286,7 +275,6 @@ def PCP_occurrence_rate(Hemisphere, index_list_A, index_list_C):
         #Use the date as the key in the dictionary and increment the PCP count for that date
         counts_C[date_obj_C] = counts_C.get(date_obj_C, 0) + 1
 
-    
     if Hemisphere == 'NH':
         Hours_A = NH_Swarm_A_time
         Hours_C = NH_Swarm_C_time
@@ -295,7 +283,6 @@ def PCP_occurrence_rate(Hemisphere, index_list_A, index_list_C):
         Hours_A = SH_Swarm_A_time
         Hours_C = SH_Swarm_C_time
 
-    
     Set_Dates_A = set(counts_A.keys())
     Set_Hours_A = set(Hours_A.keys())
 
@@ -308,7 +295,8 @@ def PCP_occurrence_rate(Hemisphere, index_list_A, index_list_C):
     ratios_A = [counts_A[date] / Hours_A[date] for date in common_dates_A]
     ratios_C = [counts_C[date] / Hours_C[date] for date in common_dates_C]
 
-    
+    """
+    #If you want to plot the hemispheres separately
     plt.scatter(common_dates_A, ratios_A, label = 'Swarm A', s=20)
     plt.scatter(common_dates_C, ratios_C, label = 'Swarm C', s=20)
     plt.xlabel('Year')
@@ -323,46 +311,46 @@ def PCP_occurrence_rate(Hemisphere, index_list_A, index_list_C):
         plt.savefig(savepath + 'SH_climatology.png')
 
     plt.close()
+    """
     return common_dates_A, common_dates_C, ratios_A, ratios_C
 
-
+#Calculating the Occurrence Rates
 NH_common_dates_A, NH_common_dates_C, NH_ratios_A, NH_ratios_C = PCP_occurrence_rate('NH', NH_Swarm_A, NH_Swarm_C)
 SH_common_dates_A, SH_common_dates_C, SH_ratios_A, SH_ratios_C = PCP_occurrence_rate('SH', SH_Swarm_A, SH_Swarm_C)
 
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(16, 8))
 
-# Plot the data on the first subplot
-ax1.set_title('Northern Hemisphere')
+#Plottin data on the first subplot - Northen Hemisphere
+ax1.set_title('Northern Hemisphere', fontsize = 15)
 ax1.set_ylim(0, 3)
 ax1.scatter(NH_common_dates_A, NH_ratios_A, label = 'Swarm A', s=20, color = 'red')
 ax1.scatter(NH_common_dates_C, NH_ratios_C, label = 'Swarm C', s=20, color = 'blue')
 
-
-
-
-
-#Plot the data on the second subplot
-ax2.set_title('Southern Hemisphere')
+#Plottin data on the second subplot - Southern Hemisphere
+ax2.set_title('Southern Hemisphere', fontsize = 15)
 ax2.set_ylim(0, 3)
 ax2.scatter(SH_common_dates_A, SH_ratios_A, label = 'Swarm A', s=20, color = 'red')
 ax2.scatter(SH_common_dates_C, SH_ratios_C, label = 'Swarm C', s=20, color = 'blue')
-
 
 for year in range(2014, 2020):
     ax1.axvspan(datetime.date(year, 3, 21), datetime.date(year, 9, 23), facecolor='yellow', alpha=0.3)
     ax1.axvspan(datetime.date(year, 9, 24), datetime.date(year + 1, 3, 20), facecolor='blue', alpha=0.3)
 
-    ax2.axvspan(datetime.date(year, 3, 21), datetime.date(year, 9, 23), facecolor='yellow', alpha=0.3)
-    ax2.axvspan(datetime.date(year, 9, 24), datetime.date(year + 1, 3, 20), facecolor='blue', alpha=0.3)
+    ax2.axvspan(datetime.date(year, 3, 21), datetime.date(year, 9, 23), facecolor='blue', alpha=0.3)
+    ax2.axvspan(datetime.date(year, 9, 24), datetime.date(year + 1, 3, 20), facecolor='yellow', alpha=0.3)
 
 
-
-fig.suptitle('PCP climatology study. \n PCP occurrence rate from 2014 to 2019.')
-plt.xlabel('Year')
-ax1.set_ylabel('Occurrence rate NH \n (#/$h_{PC}$)')
-ax2.set_ylabel('Occurrence rate SH \n (#/$h_{PC}$)')
+#Plotting
+fig.suptitle('PCP climatology study. \n PCP occurrence rate from 2014 to 2019.', fontsize = 15)
+plt.xlabel('Year', fontsize = 15)
+ax1.set_ylabel('Occurrence rate NH \n (#/$h_{PC}$)', fontsize = 15)
+ax2.set_ylabel('Occurrence rate SH \n (#/$h_{PC}$)', fontsize = 15)
+ax1.tick_params(axis = 'x', labelsize =15)
+ax1.tick_params(axis = 'y', labelsize =15)
+ax2.tick_params(axis = 'x', labelsize =15)
+ax2.tick_params(axis = 'y', labelsize =15)
 plt.legend()
 
-plt.savefig(savepath + 'Total_climatology.png')
+plt.savefig(savepath + 'Total_climatology_local.png')
 plt.close()
 

@@ -6,17 +6,9 @@ from tqdm import tqdm, trange
 data_list = ['Longitude', 'Timestamp', 'Latitude', 'Radius']
 sat_list = ['A', 'B', 'C']
 
-# path mac
+#Path
 path_mac = 'Data/'
 savepath_mac = 'Figures/'
-
-# path hjemme
-path_hjemme = 'D:/Git_Codes/Data/'
-savepath_hjemme = 'D:/Git_Codes/Figures/'
-
-# path UiO
-path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
-savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
 
 savepath = savepath_mac
 path = path_mac

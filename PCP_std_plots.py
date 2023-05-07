@@ -7,20 +7,9 @@ data_list = ['Timestamp', 'MLAT']
 sat_list = ['A', 'C']
 hemisphere_indicator = ['NH', 'SH']
 
-# path mac
+#Path
 path_mac = 'Data/'
 savepath_mac = 'Figures/'
-
-# path hjemme
-path_hjemme = 'D:/Git_Codes/Data/'
-savepath_hjemme = 'D:/Git_Codes/Figures/'
-path_hjemme_test = 'D:/Git_Codes/NyData/'
-
-
-# path UiO
-path_UiO = 'C:/Users/krisfau/Desktop/VSCode/Data/'
-savepath_UiO = 'C:/Users/krisfau/Desktop/VSCode/FIGURES/'
-
 
 savepath = savepath_mac
 path = path_mac
@@ -116,6 +105,16 @@ N_index_18_21 = Data_fratio_NH_array_index_18_21
 S_index_18_21 = Data_fratio_SH_array_index_18_21
 
 
+#Function to find where the indices starts to indicate data for satellite C and not A 
+# - this is used to indicate where the timestamp data needs to be changed from satellite A to satellite C
+def find_index(array):
+    index = -1
+    for i in range(1, len(array)):
+        if array[i] < array[i-1]:
+            index = i 
+            break 
+    return index
+
 #Creating boxplots for the standard deviation ratio for the northern and southern hemisphere.
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
 fig.suptitle('Boxplot for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
@@ -132,58 +131,72 @@ plt.savefig(savepath + 'Boxplot.png')
 plt.close()
 
 
-
-#Function to find where the indices starts to indicate data for satellite C and not A 
-# - this is used to indicate where the timestamp data needs to be changed from satellite A to satellite C
-def find_index(array):
-    index = -1
-    for i in range(1, len(array)):
-        if array[i] < array[i-1]:
-            index = i 
-            break 
-    return index
-
-
-#Plotting histograms for the standard deviation ratios for the southern hemisphere
+###Plotting histograms for the standard deviation ratios for the southern hemisphere###
 fig4, axs = plt.subplots(2, 2, figsize = (12, 10))
-fig4.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Southern Hemisphere.')
+fig4.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Southern Hemisphere.', fontsize =15)
 hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 axs[0,0].hist(S_9_12, bins = hist_bins, histtype='bar', ec='black')
 axs[0,1].hist(S_12_15, bins = hist_bins, histtype='bar', ec='black')
 axs[1,0].hist(S_21_24, bins = hist_bins, histtype='bar', ec='black')
 axs[1,1].hist(S_0_03, bins = hist_bins, histtype='bar', ec='black')
 
-axs[0,0].set_title('MLT 9-12')
-axs[0,1].set_title('MLT 12-15')
-axs[1,0].set_title('MLT 21-24')
-axs[1,1].set_title('MLT 0-03')
+axs[0,0].set_title('MLT 9-12', fontsize =15)
+axs[0,1].set_title('MLT 12-15', fontsize =15)
+axs[1,0].set_title('MLT 21-24', fontsize =15)
+axs[1,1].set_title('MLT 0-03', fontsize =15)
 
-axs[0,0].set_ylabel('Frequency')
-axs[1,0].set_ylabel('Frequency')
-axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
-axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[0,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0,0].tick_params(axis = 'x', labelsize =15)
+axs[0,0].tick_params(axis = 'y', labelsize =15)
+axs[0,1].tick_params(axis = 'x', labelsize =15)
+axs[0,1].tick_params(axis = 'y', labelsize =15)
+axs[1,0].tick_params(axis = 'x', labelsize =15)
+axs[1,0].tick_params(axis = 'y', labelsize =15)
+axs[1,1].tick_params(axis = 'x', labelsize =15)
+axs[1,1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
 
 plt.savefig(savepath + 'Hist_std_SH_AC.png')
 # plt.show()
 plt.close()
 
 fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
-fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.')
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Southern Hemisphere.', fontsize =15)
 hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 axs[0,0].hist(S_6_9, bins = hist_bins, histtype='bar', ec='black')
 axs[0,1].hist(S_15_18, bins = hist_bins, histtype='bar', ec='black')
 axs[1,0].hist(S_18_21, bins = hist_bins, histtype='bar', ec='black')
 axs[1,1].hist(S_3_6, bins = hist_bins, histtype='bar', ec='black')
 
-axs[0,0].set_title('MLT 6-9')
-axs[0,1].set_title('MLT 15-18')
-axs[1,0].set_title('MLT 18-21')
-axs[1,1].set_title('MLT 3-6')
+axs[0,0].set_title('MLT 6-9', fontsize =15)
+axs[0,1].set_title('MLT 15-18', fontsize =15)
+axs[1,0].set_title('MLT 18-21', fontsize =15)
+axs[1,1].set_title('MLT 3-6', fontsize =15)
 
-axs[0,0].set_ylabel('Frequency')
-axs[1,0].set_ylabel('Frequency')
-axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
-axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[0,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0,0].tick_params(axis = 'x', labelsize =15)
+axs[0,0].tick_params(axis = 'y', labelsize =15)
+axs[0,1].tick_params(axis = 'x', labelsize =15)
+axs[0,1].tick_params(axis = 'y', labelsize =15)
+axs[1,0].tick_params(axis = 'x', labelsize =15)
+axs[1,0].tick_params(axis = 'y', labelsize =15)
+axs[1,1].tick_params(axis = 'x', labelsize =15)
+axs[1,1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
 
 plt.savefig(savepath + 'Hist_Side_std_SH_AC.png')
 # plt.show()
@@ -191,24 +204,37 @@ plt.close()
 
 
 
-#Plotting histograms for the standard deviation ratios for the northern hemisphere
+###Plotting histograms for the standard deviation ratios for the northern hemisphere###
 fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
-fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.')
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.', fontsize =15)
 hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 axs[0,0].hist(N_9_12, bins = hist_bins, histtype='bar', ec='black')
 axs[0,1].hist(N_12_15, bins = hist_bins, histtype='bar', ec='black')
 axs[1,0].hist(N_21_24, bins = hist_bins, histtype='bar', ec='black')
 axs[1,1].hist(N_0_03, bins = hist_bins, histtype='bar', ec='black')
 
-axs[0,0].set_title('MLT 9-12')
-axs[0,1].set_title('MLT 12-15')
-axs[1,0].set_title('MLT 21-24')
-axs[1,1].set_title('MLT 0-03')
+axs[0,0].set_title('MLT 9-12', fontsize =15)
+axs[0,1].set_title('MLT 12-15', fontsize =15)
+axs[1,0].set_title('MLT 21-24', fontsize =15)
+axs[1,1].set_title('MLT 0-03', fontsize =15)
 
-axs[0,0].set_ylabel('Frequency')
-axs[1,0].set_ylabel('Frequency')
-axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
-axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[0,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0,0].tick_params(axis = 'x', labelsize =15)
+axs[0,0].tick_params(axis = 'y', labelsize =15)
+axs[0,1].tick_params(axis = 'x', labelsize =15)
+axs[0,1].tick_params(axis = 'y', labelsize =15)
+axs[1,0].tick_params(axis = 'x', labelsize =15)
+axs[1,0].tick_params(axis = 'y', labelsize =15)
+axs[1,1].tick_params(axis = 'x', labelsize =15)
+axs[1,1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
 
 plt.savefig(savepath + 'Hist_std_NH_AC.png')
 # plt.show()
@@ -216,26 +242,166 @@ plt.close()
 
 
 fig5, axs = plt.subplots(2, 2, figsize = (12, 10))
-fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.')
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.', fontsize =15)
 hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 axs[0,0].hist(N_6_9, bins = hist_bins, histtype='bar', ec='black')
 axs[0,1].hist(N_15_18, bins = hist_bins, histtype='bar', ec='black')
 axs[1,0].hist(N_18_21, bins = hist_bins, histtype='bar', ec='black')
 axs[1,1].hist(N_3_6, bins = hist_bins, histtype='bar', ec='black')
 
-axs[0,0].set_title('MLT 6-9')
-axs[0,1].set_title('MLT 15-18')
-axs[1,0].set_title('MLT 18-21')
-axs[1,1].set_title('MLT 3-6')
+axs[0,0].set_title('MLT 6-9', fontsize =15)
+axs[0,1].set_title('MLT 15-18', fontsize =15)
+axs[1,0].set_title('MLT 18-21', fontsize =15)
+axs[1,1].set_title('MLT 3-6', fontsize =15)
 
-axs[0,0].set_ylabel('Frequency')
-axs[1,0].set_ylabel('Frequency')
-axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
-axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
+axs[0,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0,0].tick_params(axis = 'x', labelsize =15)
+axs[0,0].tick_params(axis = 'y', labelsize =15)
+axs[0,1].tick_params(axis = 'x', labelsize =15)
+axs[0,1].tick_params(axis = 'y', labelsize =15)
+axs[1,0].tick_params(axis = 'x', labelsize =15)
+axs[1,0].tick_params(axis = 'y', labelsize =15)
+axs[1,1].tick_params(axis = 'x', labelsize =15)
+axs[1,1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
 
 plt.savefig(savepath + 'Hist_Side_std_NH_AC.png')
 # plt.show()
 plt.close()
+
+
+###Northern Hemisphere - Dayside Nightside comparison###
+fig5, axs = plt.subplots(1, 2, figsize = (12, 10))
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.', fontsize =15)
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+dayside = np.concatenate((N_9_12, N_12_15))
+nightside = np.concatenate((N_21_24, N_0_03))
+axs[0].hist(dayside, bins = hist_bins, histtype='bar', ec='black')
+axs[1].hist(nightside, bins = hist_bins, histtype='bar', ec='black')
+
+axs[0].set_title('MLT Dayside', fontsize =15)
+axs[1].set_title('MLT Nightside', fontsize =15)
+
+axs[0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1].set_ylabel('Occurrence Number', fontsize =15)
+
+axs[0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0].tick_params(axis = 'x', labelsize =15)
+axs[0].tick_params(axis = 'y', labelsize =15)
+axs[1].tick_params(axis = 'x', labelsize =15)
+axs[1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
+
+plt.savefig(savepath + 'NH_dayside_nightside.png')
+# plt.show()
+plt.close()
+
+fig5, axs = plt.subplots(1, 2, figsize = (12, 10))
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Northern Hemisphere.', fontsize =15)
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+dayside = np.concatenate((N_6_9, N_15_18))
+nightside = np.concatenate((N_18_21, N_3_6))
+axs[0].hist(dayside, bins = hist_bins, histtype='bar', ec='black')
+axs[1].hist(nightside, bins = hist_bins, histtype='bar', ec='black')
+
+axs[0].set_title('MLT Dayside', fontsize =15)
+axs[1].set_title('MLT Nightside', fontsize =15)
+
+axs[0].set_ylabel('Occurrence Number', fontsize =15)
+axs[1].set_ylabel('Occurrence Number', fontsize =15)
+
+axs[0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0].tick_params(axis = 'x', labelsize =15)
+axs[0].tick_params(axis = 'y', labelsize =15)
+axs[1].tick_params(axis = 'x', labelsize =15)
+axs[1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
+
+plt.savefig(savepath + 'Side_NH_dayside_nightside.png')
+# plt.show()
+plt.close()
+
+###Southern Hemisphere - Dayside Nightside comparison###
+fig5, axs = plt.subplots(1, 2, figsize = (12, 10))
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Southern Hemisphere.', fontsize =15)
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+dayside = np.concatenate((S_9_12, S_12_15))
+nightside = np.concatenate((S_21_24, S_0_03))
+axs[0].hist(dayside, bins = hist_bins, histtype='bar', ec='black')
+axs[1].hist(nightside, bins = hist_bins, histtype='bar', ec='black')
+
+axs[0].set_title('MLT Dayside', fontsize =15)
+axs[1].set_title('MLT Nightside', fontsize =15)
+
+axs[0].set_ylabel('Occurrence Number', fontsize =15)
+#axs[1].set_ylabel('Occurrence Number', fontsize =15)
+
+axs[0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0].tick_params(axis = 'x', labelsize =15)
+axs[0].tick_params(axis = 'y', labelsize =15)
+axs[1].tick_params(axis = 'x', labelsize =15)
+axs[1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
+
+plt.savefig(savepath + 'SH_dayside_nightside.png')
+# plt.show()
+plt.close()
+
+fig5, axs = plt.subplots(1, 2, figsize = (12, 10))
+fig5.suptitle('Histogram of the standard deviation ratio. \n Sorted using MLT. \n Southern Hemisphere.', fontsize =15)
+hist_bins = [0, 2, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+dayside = np.concatenate((S_6_9, S_15_18))
+nightside = np.concatenate((S_18_21, S_3_6))
+axs[0].hist(dayside, bins = hist_bins, histtype='bar', ec='black')
+axs[1].hist(nightside, bins = hist_bins, histtype='bar', ec='black')
+
+axs[0].set_title('MLT Dayside', fontsize =15)
+axs[1].set_title('MLT Nightside', fontsize =15)
+
+axs[0].set_ylabel('Occurrence Number', fontsize =15)
+#axs[1].set_ylabel('Occurrence Number', fontsize =15)
+
+axs[0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+axs[1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)', fontsize =15)
+
+axs[0].tick_params(axis = 'x', labelsize =15)
+axs[0].tick_params(axis = 'y', labelsize =15)
+axs[1].tick_params(axis = 'x', labelsize =15)
+axs[1].tick_params(axis = 'y', labelsize =15)
+
+for ax in axs.flatten():
+    ax.set_yscale('log')
+    ax.set_ylim(top = 10**3.2)
+
+plt.savefig(savepath + 'Side_SH_dayside_nightside.png')
+# plt.show()
+plt.close()
+
+
+
+
 
 """
 PLOTTING SUMMER AND WINTER SPLIT FOR NORTHERN AND SOUTHERN HEMISPHERE
@@ -266,9 +432,9 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     # plt.show()
     plt.close()
 
-    #Bar plot
+    #Bar plot noon/midnight MLTs
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
-    fig.suptitle('Bar plot showing the occurrence of GDI in PCPs. \n Sorted using MLT.')
+    fig.suptitle('Bar plot showing the occurrence of GDI in PCPs. \n Sorted using MLT.', fontsize =15)
     
     No_GDI_NH = [(array_list_NH[0] == -1).sum(), (array_list_NH[1] == -1).sum(), (array_list_NH[2] == -1).sum(), (array_list_NH[3] == -1).sum()]
     Inc_GDI_NH = [(array_list_NH[0] == 0).sum(), (array_list_NH[1] == 0).sum(), (array_list_NH[2] == 0).sum(), (array_list_NH[3] == 0).sum()]
@@ -278,7 +444,11 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     Inc_GDI_SH = [(array_list_SH[0] == 0).sum(), (array_list_SH[1] == 0).sum(), (array_list_SH[2] == 0).sum(), (array_list_SH[3] == 0).sum()]
     GDI_SH = [(array_list_SH[0] == 1).sum(), (array_list_SH[1] == 1).sum(), (array_list_SH[2] == 1).sum(), (array_list_SH[3] == 1).sum()]
 
-    
+    print('Polar cap patches NH dayside:', (No_GDI_NH[0]) + (No_GDI_NH[1]) + (Inc_GDI_NH[0]) + (Inc_GDI_NH[1]) + (GDI_NH[0]) + (GDI_NH[1]))
+    print('Polar cap patches SH dayside:', (No_GDI_SH[0]) + (No_GDI_SH[1]) + (Inc_GDI_SH[0]) + (Inc_GDI_SH[1]) + (GDI_SH[0]) + (GDI_SH[1]))
+    print('Polar cap patches NH nightside:', (No_GDI_NH[2]) + (No_GDI_NH[3]) + (Inc_GDI_NH[2]) + (Inc_GDI_NH[3]) + (GDI_NH[2]) + (GDI_NH[3]))
+    print('Polar cap patches SH nightside:', (No_GDI_SH[2]) + (No_GDI_SH[3]) + (Inc_GDI_SH[2]) + (Inc_GDI_SH[3]) + (GDI_SH[2]) + (GDI_SH[3]))
+
     X = ['MLT 9-12', 'MLT 12-15', 'MLT 21-24', 'MLT 0-03']
     X_axis = np.arange(len(X))    
 
@@ -286,18 +456,23 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     ax1.bar(X_axis, Inc_GDI_NH, width = 0.2, color ='b', align = 'center')
     ax1.bar(X_axis + 0.2, GDI_NH, width = 0.2, color ='g', align = 'center')
 
-    ax2.bar(X_axis - 0.2, No_GDI_SH, width = 0.2, color ='r', align = 'center', label = 'No GDI')
-    ax2.bar(X_axis, Inc_GDI_SH, width = 0.2, color ='b', align = 'center', label = 'Inconclusive')
-    ax2.bar(X_axis + 0.2, GDI_SH, width = 0.2, color ='g', align = 'center', label = 'GDI')
+    ax2.bar(X_axis - 0.2, No_GDI_SH, width = 0.2, color ='r', align = 'center', label = '$f < 1$')
+    ax2.bar(X_axis, Inc_GDI_SH, width = 0.2, color ='b', align = 'center', label = '$1 \u2264 f < 2$')
+    ax2.bar(X_axis + 0.2, GDI_SH, width = 0.2, color ='g', align = 'center', label = '$f \u2265 2$')
 
     ax1.set_xticks(X_axis, X)
     ax2.set_xticks(X_axis, X)
-    ax1.set_title('Nortern Hemisphere')
-    ax2.set_title('Southern Hemisphere')
-    ax1.set_ylabel('Number of patches')
+    ax1.tick_params(axis = 'x', labelsize =15)
+    ax1.tick_params(axis = 'y', labelsize =15)
+    ax2.tick_params(axis = 'x', labelsize =15)
+    ax2.tick_params(axis = 'y', labelsize =15)
+    ax1.set_title('Nortern Hemisphere', fontsize =15)
+    ax2.set_title('Southern Hemisphere', fontsize =15)
+    ax1.set_ylabel('Number of polar cap patches', fontsize =15)
 
-    plt.savefig(savepath + 'Barplot.png')
     plt.legend(loc = 'upper right')
+    plt.savefig(savepath + 'Barplot.png')
+
     # plt.show()
     plt.close()
 
@@ -311,7 +486,7 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
         San_array_list_SH[i][(1 <= San_array_list_SH[i]) & (San_array_list_SH[i] < 2)] = 0
         San_array_list_SH[i][2 <=San_array_list_SH[i]] = 1
 
-    #Boxplot
+    #Boxplot dusk/dawn MLTs
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
     fig.suptitle('Boxplots for the standard deviation ratio between the trailing and leading edge of PCPs. \n Sorted using MLT.')
     ax1.boxplot([San_array_list_NH[0], San_array_list_NH[1], San_array_list_NH[2], San_array_list_NH[3]], labels = ['MLT 6-9', 'MLT 15-18', 'MLT 18-21', 'MLT 3-6'])
@@ -327,9 +502,9 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
 
     plt.close()
 
-    #Bar plot
+    #Bar plot dusk/dawn MLTs
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize = (12, 10))
-    fig.suptitle('Bar plot showing the occurrence of GDI in PCPs. \n Sorted using MLT.')
+    fig.suptitle('Bar plot showing the occurrence of GDI in PCPs. \n Sorted using MLT.', fontsize =15)
 
     Side_No_GDI_NH = [(San_array_list_NH[0] == -1).sum(), (San_array_list_NH[1] == -1).sum(), (San_array_list_NH[2] == -1).sum(), (San_array_list_NH[3] == -1).sum()]
     Side_Inc_GDI_NH = [(San_array_list_NH[0] == 0).sum(), (San_array_list_NH[1] == 0).sum(), (San_array_list_NH[2] == 0).sum(), (San_array_list_NH[3] == 0).sum()]
@@ -339,25 +514,36 @@ def boxplots_one_minusone(array_list_NH, array_list_SH, San_array_list_NH, San_a
     Side_Inc_GDI_SH = [(San_array_list_SH[0] == 0).sum(), (San_array_list_SH[1] == 0).sum(), (San_array_list_SH[2] == 0).sum(), (San_array_list_SH[3] == 0).sum()]
     Side_GDI_SH = [(San_array_list_SH[0] == 1).sum(), (San_array_list_SH[1] == 1).sum(), (San_array_list_SH[2] == 1).sum(), (San_array_list_SH[3] == 1).sum()]
 
+    print('Polar cap patches NH dayside side:', (Side_No_GDI_NH[0]) + (Side_No_GDI_NH[1]) + (Side_Inc_GDI_NH[0]) + (Side_Inc_GDI_NH[1]) + (Side_GDI_NH[0]) + (Side_GDI_NH[1]))
+    print('Polar cap patches SH dayside side:', (Side_No_GDI_SH[0]) + (Side_No_GDI_SH[1]) + (Side_Inc_GDI_SH[0]) + (Side_Inc_GDI_SH[1]) + (Side_GDI_SH[0]) + (Side_GDI_SH[1]))
+    print('Polar cap patches NH nightside side:', (Side_No_GDI_NH[2]) + (Side_No_GDI_NH[3]) + (Side_Inc_GDI_NH[2]) + (Side_Inc_GDI_NH[3]) + (Side_GDI_NH[2]) + (Side_GDI_NH[3]))
+    print('Polar cap patches SH nightside side:', (Side_No_GDI_SH[2]) + (Side_No_GDI_SH[3]) + (Side_Inc_GDI_SH[2]) + (Side_Inc_GDI_SH[3]) + (Side_GDI_SH[2]) + (Side_GDI_SH[3]))
+
+
     X = ['MLT 6-9', 'MLT 15-18', 'MLT 18-21', 'MLT 3-6']
     X_axis = np.arange(len(X))
     ax1.bar(X_axis - 0.2, Side_No_GDI_NH, width = 0.2, color ='r', align = 'center')
     ax1.bar(X_axis, Side_Inc_GDI_NH, width = 0.2, color ='b', align = 'center')
     ax1.bar(X_axis + 0.2, Side_GDI_NH, width = 0.2, color ='g', align = 'center')
 
-    ax2.bar(X_axis - 0.2, Side_No_GDI_SH, width = 0.2, color ='r', align = 'center', label = 'No GDI')
-    ax2.bar(X_axis, Side_Inc_GDI_SH, width = 0.2, color ='b', align = 'center', label = 'Inconclusive')
-    ax2.bar(X_axis + 0.2, Side_GDI_SH, width = 0.2, color ='g', align = 'center', label = 'GDI')
+    ax2.bar(X_axis - 0.2, Side_No_GDI_SH, width = 0.2, color ='r', align = 'center', label = '$f < 1$')
+    ax2.bar(X_axis, Side_Inc_GDI_SH, width = 0.2, color ='b', align = 'center', label = '$1 \u2264 f < 2$')
+    ax2.bar(X_axis + 0.2, Side_GDI_SH, width = 0.2, color ='g', align = 'center', label = '$f \u2265 2$')
 
     ax1.set_xticks(X_axis, X)
     ax2.set_xticks(X_axis, X)
-    ax1.set_title('Nortern Hemisphere')
-    ax2.set_title('Southern Hemisphere')
-    ax1.set_ylabel('Number of patches')
+    ax1.tick_params(axis = 'x', labelsize =15)
+    ax1.tick_params(axis = 'y', labelsize =15)
+    ax2.tick_params(axis = 'x', labelsize =15)
+    ax2.tick_params(axis = 'y', labelsize =15)
+    ax1.set_title('Nortern Hemisphere', fontsize =15)
+    ax2.set_title('Southern Hemisphere', fontsize =15)
+    ax1.set_ylabel('Number of polar cap patches', fontsize =15)
 
+    plt.legend(loc = 'upper right')
     plt.savefig(savepath + 'Side_Barplot.png')
     # plt.show()
-    plt.legend(loc = 'upper right')
+    
     plt.close()
     
 
@@ -514,8 +700,8 @@ def seasonal_variation_plots(Hemisphere, array_list_winter, array_list_summer):
     axs[1,0].set_title('MLT 21-24')
     axs[1,1].set_title('MLT 0-3')
 
-    axs[0,0].set_ylabel('Frequency')
-    axs[1,0].set_ylabel('Frequency')
+    axs[0,0].set_ylabel('Occurrence Number')
+    axs[1,0].set_ylabel('Occurrence Number')
     axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
     axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
@@ -543,8 +729,8 @@ def seasonal_variation_plots(Hemisphere, array_list_winter, array_list_summer):
     axs[1,0].set_title('MLT 21-24')
     axs[1,1].set_title('MLT 0-3')
 
-    axs[0,0].set_ylabel('Frequency')
-    axs[1,0].set_ylabel('Frequency')
+    axs[0,0].set_ylabel('Occurrence Number')
+    axs[1,0].set_ylabel('Occurrence Number')
     axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
     axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
@@ -608,8 +794,8 @@ def duskdawn_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_
     axs[1,0].set_title('MLT 18-21')
     axs[1,1].set_title('MLT 3-6')
 
-    axs[0,0].set_ylabel('Frequency')
-    axs[1,0].set_ylabel('Frequency')
+    axs[0,0].set_ylabel('Occurrence Number')
+    axs[1,0].set_ylabel('Occurrence Number')
     axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
     axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
@@ -636,8 +822,8 @@ def duskdawn_seasonal_variation_plots(Hemisphere, array_list_winter, array_list_
     axs[1,0].set_title('MLT 18-21')
     axs[1,1].set_title('MLT 3-6')
 
-    axs[0,0].set_ylabel('Frequency')
-    axs[1,0].set_ylabel('Frequency')
+    axs[0,0].set_ylabel('Occurrence Number')
+    axs[1,0].set_ylabel('Occurrence Number')
     axs[1,0].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
     axs[1,1].set_xlabel('Standard deviation ratio f \n ($\sigma_{te}$ / $\sigma_{le}$)')
 
